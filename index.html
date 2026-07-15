@@ -24,9 +24,11 @@ button:active { transform: scale(0.98); }
 .status { margin-top: 12px; color: #48bb78; font-size: 0.9rem; min-height: 1.4em; }
 .clear-btn { background: #fc8181; margin-left: 10px; }
 .clear-btn:hover { background: #f56565; }
-.qr-section { margin: 24px 0; text-align: center; }
-.qr-section p { color: #718096; font-size: 0.85rem; margin-bottom: 8px; }
-#qrcode { display: inline-block; padding: 12px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+.cloud-area { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1020px; }
+#wordcloud-canvas { width: 100%; max-width: 900px; height: 600px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); flex: 1; min-width: 300px; }
+.qr-side { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px; }
+.qr-side p { color: #718096; font-size: 0.75rem; }
+#qrcode { padding: 6px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 #qrcode img, #qrcode canvas { display: block; }
 </style>
 </head>
@@ -41,13 +43,14 @@ button:active { transform: scale(0.98); }
 </div>
 
 <p class="word-count" id="wordCount">目前 0 筆</p>
-<canvas id="wordcloud-canvas"></canvas>
-<p class="status" id="status"></p>
-
-<div class="qr-section">
-  <p>手機掃碼開啟此頁</p>
-  <div id="qrcode"></div>
+<div class="cloud-area">
+  <canvas id="wordcloud-canvas"></canvas>
+  <div class="qr-side">
+    <div id="qrcode"></div>
+    <p>手機掃碼開啟</p>
+  </div>
 </div>
+<p class="status" id="status"></p>
 
 <script>
 const firebaseConfig = {
@@ -181,8 +184,8 @@ wordInput.focus();
 
 new QRCode(document.getElementById('qrcode'), {
   text: window.location.href,
-  width: 150,
-  height: 150,
+  width: 80,
+  height: 80,
   colorDark: '#1a365d',
   colorLight: '#ffffff',
   correctLevel: QRCode.CorrectLevel.H
