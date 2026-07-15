@@ -20,7 +20,7 @@ button { padding: 12px 28px; font-size: 1.1rem; background: #4299e1; color: #fff
 button:hover { background: #3182ce; }
 button:active { transform: scale(0.98); }
 .word-count { color: #718096; font-size: 0.95rem; margin-bottom: 10px; }
-#wordcloud-canvas { width: 100%; max-width: 900px; height: 500px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+#wordcloud-canvas { width: 100%; max-width: 900px; height: 600px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
 .status { margin-top: 12px; color: #48bb78; font-size: 0.9rem; min-height: 1.4em; }
 .clear-btn { background: #fc8181; margin-left: 10px; }
 .clear-btn:hover { background: #f56565; }
@@ -98,7 +98,7 @@ function renderWordCloud(words) {
     WordCloud(canvas, {
       list: list,
       gridSize: Math.round(16 * rect.width / 800),
-      weightFactor: function (w) { return Math.pow(w, 0.4) * (rect.width / 16); },
+      weightFactor: function (w) { return Math.pow(w, 0.5) * (rect.width / 60); },
       fontFamily: 'Segoe UI, Arial, sans-serif',
       color: function () {
         const colors = ['#4299e1','#48bb78','#ed8936','#9f7aea','#fc8181','#f6ad55','#68d391','#a3bffa'];
