@@ -88,7 +88,7 @@ function renderWordCloud(words) {
     WordCloud(canvas, {
       list: list,
       gridSize: Math.round(16 * rect.width / 800),
-      weightFactor: function (w) { return Math.pow(w, 0.6) * (rect.width / 200); },
+      weightFactor: function (w) { return Math.pow(w, 0.5) * (rect.width / 80); },
       fontFamily: 'Segoe UI, Arial, sans-serif',
       color: function () {
         const colors = ['#4299e1','#48bb78','#ed8936','#9f7aea','#fc8181','#f6ad55','#68d391','#a3bffa'];
