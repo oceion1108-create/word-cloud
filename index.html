@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>即時文字雲</title>
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.0.2/wordcloud2.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+h1 { color: #1a365d; margin: 20px 0 10px; font-size: 2rem; }
+.subtitle { color: #4a5568; margin-bottom: 20px; }
+.submit-area { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+input[type="text"] { padding: 12px 20px; font-size: 1.1rem; border: 2px solid #e2e8f0; border-radius: 10px; width: 250px; outline: none; transition: border-color 0.2s; }
+input[type="text"]:focus { border-color: #4299e1; }
+button { padding: 12px 28px; font-size: 1.1rem; background: #4299e1; color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; font-weight: 600; }
+button:hover { background: #3182ce; }
+button:active { transform: scale(0.98); }
+.word-count { color: #718096; font-size: 0.95rem; margin-bottom: 10px; }
+#wordcloud-canvas { width: 100%; max-width: 900px; height: 500px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.status { margin-top: 12px; color: #48bb78; font-size: 0.9rem; min-height: 1.4em; }
+.clear-btn { background: #fc8181; margin-left: 10px; }
+.clear-btn:hover { background: #f56565; }
+</style>
+</head>
+<body>
+<h1>即時文字雲</h1>
+<p class="subtitle">輸入文字，所有人的回應會即時顯示在雲端</p>
+
+<div class="submit-area">
+  <input type="text" id="wordInput" placeholder="輸入你想說的話…" maxlength="30">
+  <button id="submitBtn">送出</button>
+  <button id="clearBtn" class="clear-btn">清除全部</button>
+</div>
+
+<p class="word-count" id="wordCount">目前 0 筆</p>
+<canvas id="wordcloud-canvas"></canvas>
+<p class="status" id="status"></p>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCJlbk8bKzgBJ7evlZZlhtatgjPsQsVZR8",
+  authDomain: "word-cloud-6e807.firebaseapp.com",
+  projectId: "word-cloud-6e807",
+  storageBucket: "word-cloud-6e807.firebasestorage.app",
+  appId: "1:584148582276:web:ff042e07f80583fe6a67d1"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const COLLECTION = 'wordcloud_words';
+const canvas = document.getElementById('wordcloud-canvas');
+const wordInput = document.getElementById('wordInput');
+const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
+const statusEl = document.getElementById('status');
+const wordCountEl = document.getElementById('wordCount');
+
+function setStatus(msg, isError) {
+  statusEl.textContent = msg;
+  statusEl.style.color = isError ? '#fc8181' : '#48bb78';
+}
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * window.devicePixelRatio;
+  canvas.height = rect.height * window.devicePixelRatio;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+}
+
+function renderWordCloud(words) {
+  resizeCanvas();
+  const rect = canvas.getBoundingClientRect();
+  const list = words.map(w => [w.word, w.count]);
+  try {
+    if (list.length === 0) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      ctx.fillStyle = '#a0aec0';
+      ctx.font = '20px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('還沒有文字，快來輸入第一個吧！', rect.width / 2, rect.height / 2);
+      return;
+    }
+    WordCloud(canvas, {
+      list: list,
+      gridSize: Math.round(16 * rect.width / 800),
+      weightFactor: function (w) { return Math.pow(w, 0.6) * (rect.width / 200); },
+      fontFamily: 'Segoe UI, Arial, sans-serif',
+      color: function () {
+        const colors = ['#4299e1','#48bb78','#ed8936','#9f7aea','#fc8181','#f6ad55','#68d391','#a3bffa'];
+        return colors[Math.floor(Math.random() * colors.length)];
+      },
+      rotateRatio: 0.3,
+      shuffle: true,
+      shape: 'circle',
+      ellipticity: 0.65,
+      weightMode: 'size',
+      clearCanvas: true,
+      backgroundColor: '#ffffff'
+    });
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function processWords(docs) {
+  const freq = {};
+  docs.forEach(doc => {
+    const word = (doc.data().word || '').trim();
+    if (word) freq[word] = (freq[word] || 0) + 1;
+  });
+  const list = Object.entries(freq).map(([word, count]) => ({ word, count }));
+  list.sort((a, b) => b.count - a.count);
+  wordCountEl.textContent = `目前 ${docs.length} 筆，共 ${list.length} 個不重複詞`;
+  renderWordCloud(list);
+}
+
+const unsubscribe = db.collection(COLLECTION).onSnapshot(snapshot => {
+  processWords(snapshot.docs);
+}, error => {
+  console.error('Firestore 錯誤:', error);
+  setStatus('連線錯誤，請檢查 Firebase 設定', true);
+});
+
+submitBtn.addEventListener('click', async () => {
+  const word = wordInput.value.trim();
+  if (!word) { setStatus('請輸入文字', true); return; }
+  submitBtn.disabled = true;
+  try {
+    await db.collection(COLLECTION).add({ word, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    wordInput.value = '';
+    setStatus('已送出！');
+  } catch (e) {
+    setStatus('送出失敗: ' + e.message, true);
+  } finally {
+    submitBtn.disabled = false;
+    wordInput.focus();
+  }
+});
+
+wordInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitBtn.click();
+});
+
+clearBtn.addEventListener('click', async () => {
+  if (!confirm('確定清除所有文字？')) return;
+  clearBtn.disabled = true;
+  try {
+    const snapshot = await db.collection(COLLECTION).get();
+    const batch = db.batch();
+    snapshot.docs.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+    setStatus('已清除所有文字');
+  } catch (e) {
+    setStatus('清除失敗: ' + e.message, true);
+  } finally {
+    clearBtn.disabled = false;
+  }
+});
+
+window.addEventListener('resize', () => {
+  const docs = [];
+  db.collection(COLLECTION).get().then(sn => processWords(sn.docs));
+});
+
+wordInput.focus();
+</script>
+</body>
+</html>
