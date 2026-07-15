@@ -26,7 +26,7 @@ button:active { transform: scale(0.98); }
 .clear-btn:hover { background: #f56565; }
 .cloud-area { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1020px; }
 #wordcloud-canvas { width: 100%; max-width: 900px; height: 600px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); flex: 1; min-width: 300px; }
-.qr-side { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px; }
+.qr-side { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 0; }
 .qr-side p { color: #718096; font-size: 0.75rem; }
 #qrcode { padding: 6px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
 #qrcode img, #qrcode canvas { display: block; }
@@ -101,7 +101,7 @@ function renderWordCloud(words) {
     WordCloud(canvas, {
       list: list,
       gridSize: Math.round(16 * rect.width / 800),
-      weightFactor: function (w) { return Math.pow(w, 0.5) * (rect.width / 60); },
+      weightFactor: function (w) { return Math.pow(w, 0.6) * (rect.width / 20); },
       fontFamily: 'Segoe UI, Arial, sans-serif',
       color: function () {
         const colors = ['#4299e1','#48bb78','#ed8936','#9f7aea','#fc8181','#f6ad55','#68d391','#a3bffa'];
