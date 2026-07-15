@@ -13,7 +13,7 @@
 body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
 h1 { color: #1a365d; margin: 20px 0 10px; font-size: 2rem; }
 .subtitle { color: #4a5568; margin-bottom: 20px; }
-.submit-area { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+.submit-area { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; align-items: center; }
 input[type="text"] { padding: 12px 20px; font-size: 1.1rem; border: 2px solid #e2e8f0; border-radius: 10px; width: 250px; outline: none; transition: border-color 0.2s; }
 input[type="text"]:focus { border-color: #4299e1; }
 button { padding: 12px 28px; font-size: 1.1rem; background: #4299e1; color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; font-weight: 600; }
@@ -26,9 +26,7 @@ button:active { transform: scale(0.98); }
 .clear-btn:hover { background: #f56565; }
 .cloud-area { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1020px; }
 #wordcloud-canvas { width: 100%; max-width: 900px; height: 600px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); flex: 1; min-width: 300px; }
-.qr-side { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 0; }
-.qr-side p { color: #718096; font-size: 0.75rem; }
-#qrcode { padding: 6px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+#qrcode { padding: 4px; background: #fff; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); line-height: 0; }
 #qrcode img, #qrcode canvas { display: block; }
 </style>
 </head>
@@ -37,6 +35,7 @@ button:active { transform: scale(0.98); }
 <p class="subtitle">輸入文字，所有人的回應會即時顯示在雲端</p>
 
 <div class="submit-area">
+  <div id="qrcode"></div>
   <input type="text" id="wordInput" placeholder="輸入你想說的話…" maxlength="30">
   <button id="submitBtn">送出</button>
   <button id="clearBtn" class="clear-btn">清除全部</button>
@@ -45,10 +44,7 @@ button:active { transform: scale(0.98); }
 <p class="word-count" id="wordCount">目前 0 筆</p>
 <div class="cloud-area">
   <canvas id="wordcloud-canvas"></canvas>
-  <div class="qr-side">
-    <div id="qrcode"></div>
-    <p>手機掃碼開啟</p>
-  </div>
+
 </div>
 <p class="status" id="status"></p>
 
