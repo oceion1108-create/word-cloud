@@ -99,11 +99,7 @@ body {
 .status { text-align: center; margin-top: 16px; font-size: 0.85rem; min-height: 1.4em; }
 .status.success { color: #81c784; }
 .status.error { color: #ef5350; }
-.qr-area {
-  display: flex; justify-content: center; margin-bottom: 12px;
-}
-#qrcode { background: #fff; border-radius: 10px; padding: 8px; line-height: 0; }
-#qrcode img, #qrcode canvas { display: block; }
+/* QR code removed */
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 .timeline-section {
   margin-top: 36px; background: rgba(255,255,255,0.04);
@@ -241,8 +237,6 @@ input[type="range"]::-moz-range-thumb {
       字詞重複率越高，字體會變得越大、越<em>閃耀</em>！
     </p>
   </div>
-
-  <div class="qr-area"><div id="qrcode"></div></div>
 
   <div class="main-area">
     <div class="left-panel">
@@ -526,14 +520,7 @@ clearBtn.addEventListener('click', async () => {
 
 window.addEventListener('resize', () => renderWordCloud());
 
-new QRCode(document.getElementById('qrcode'), {
-  text: window.location.href,
-  width: 80,
-  height: 80,
-  colorDark: '#0d1117',
-  colorLight: '#ffffff',
-  correctLevel: QRCode.CorrectLevel.H
-});
+/* QR Code 已移除 */
 
 /* ─── 五感互動機制 ─── */
 
