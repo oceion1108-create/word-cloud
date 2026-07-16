@@ -25,25 +25,25 @@
       --card-bg: rgba(255,255,255,0.06);
       --card-border: rgba(255,255,255,0.15);
     }
-    .theme-teal {
-      --bg1: #0d1f1a; --bg2: #1a2e28; --bg3: #163e32;
+    .theme-emerald {
+      --bg1: #0a1f14; --bg2: #0d2e1f; --bg3: #0f3d29;
       --accent: #26a69a; --accent2: #80cbc4;
       --success: #a5d6a7; --warn: #ffcc80;
     }
-    .theme-warm {
-      --bg1: #1f120d; --bg2: #2e1d1a; --bg3: #3e2616;
-      --accent: #ff8a65; --accent2: #ffab91;
-      --success: #a5d6a7; --warn: #ffd54f;
+    .theme-bunny {
+      --bg1: #1f0d1a; --bg2: #2e1a28; --bg3: #3d2235;
+      --accent: #f48fb1; --accent2: #f8bbd0;
+      --success: #c5e1a5; --warn: #ffe082;
     }
-    .theme-purple {
-      --bg1: #140d1f; --bg2: #221a2e; --bg3: #2e163e;
-      --accent: #ce93d8; --accent2: #b39ddb;
-      --success: #a5d6a7; --warn: #ffe082;
+    .theme-aurora {
+      --bg1: #1f170d; --bg2: #2e2215; --bg3: #3d2d1c;
+      --accent: #ffb74d; --accent2: #ffd54f;
+      --success: #a5d6a7; --warn: #ffab91;
     }
-    .theme-green {
-      --bg1: #0d1f12; --bg2: #1a2e1f; --bg3: #163e1d;
-      --accent: #66bb6a; --accent2: #81c784;
-      --success: #a5d6a7; --warn: #ffd54f;
+    .theme-deepsea {
+      --bg1: #0d111f; --bg2: #141a2e; --bg3: #1a2240;
+      --accent: #64b5f6; --accent2: #90caf9;
+      --success: #81c784; --warn: #fff176;
     }
     .reveal { font-family: 'Segoe UI', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
     .reveal h1, .reveal h2, .reveal h3 { font-family: inherit; font-weight: 700; }
@@ -213,24 +213,63 @@
     }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-    /* === 主題切換按鈕 === */
-    .theme-switcher {
+    /* === 主題風格切換導覽列 === */
+    .theme-bar {
       position: fixed; top: 16px; right: 16px; z-index: 999;
-      display: flex; gap: 6px; background: rgba(0,0,0,0.5);
-      padding: 6px 10px; border-radius: 24px;
-      backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; gap: 8px; background: rgba(10,10,20,0.7);
+      padding: 8px 12px; border-radius: 28px;
+      backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
     }
-    .theme-dot {
-      width: 22px; height: 22px; border-radius: 50%; cursor: pointer;
-      border: 2px solid transparent; transition: all 0.25s;
+    .theme-btn {
+      padding: 6px 14px; border-radius: 20px; border: none;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+      cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+      color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.07);
+      white-space: nowrap;
     }
-    .theme-dot:hover { transform: scale(1.2); }
-    .theme-dot.active { border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    .theme-dot[data-theme="default"] { background: linear-gradient(135deg,#0d1117,#1a1a2e); }
-    .theme-dot[data-theme="teal"]    { background: linear-gradient(135deg,#0d1f1a,#1a2e28); }
-    .theme-dot[data-theme="warm"]    { background: linear-gradient(135deg,#1f120d,#2e1d1a); }
-    .theme-dot[data-theme="purple"]  { background: linear-gradient(135deg,#140d1f,#221a2e); }
-    .theme-dot[data-theme="green"]   { background: linear-gradient(135deg,#0d1f12,#1a2e1f); }
+    .theme-btn:hover {
+      transform: translateY(-2px); color: #fff;
+      box-shadow: 0 0 18px rgba(255,255,255,0.15);
+    }
+    .theme-btn.active {
+      color: #fff; transform: translateY(-2px);
+    }
+    .theme-btn[data-theme="neon"] {
+      background: linear-gradient(135deg, #0d1117, #1a1a2e);
+      border: 1px solid rgba(79,195,247,0.3);
+    }
+    .theme-btn[data-theme="neon"].active {
+      border-color: #4fc3f7; box-shadow: 0 0 20px rgba(79,195,247,0.35);
+    }
+    .theme-btn[data-theme="emerald"] {
+      background: linear-gradient(135deg, #0a1f14, #0d2e1f);
+      border: 1px solid rgba(38,166,154,0.3);
+    }
+    .theme-btn[data-theme="emerald"].active {
+      border-color: #26a69a; box-shadow: 0 0 20px rgba(38,166,154,0.35);
+    }
+    .theme-btn[data-theme="bunny"] {
+      background: linear-gradient(135deg, #1f0d1a, #2e1a28);
+      border: 1px solid rgba(244,143,177,0.3);
+    }
+    .theme-btn[data-theme="bunny"].active {
+      border-color: #f48fb1; box-shadow: 0 0 20px rgba(244,143,177,0.35);
+    }
+    .theme-btn[data-theme="aurora"] {
+      background: linear-gradient(135deg, #1f170d, #2e2215);
+      border: 1px solid rgba(255,183,77,0.3);
+    }
+    .theme-btn[data-theme="aurora"].active {
+      border-color: #ffb74d; box-shadow: 0 0 20px rgba(255,183,77,0.35);
+    }
+    .theme-btn[data-theme="deepsea"] {
+      background: linear-gradient(135deg, #0d111f, #141a2e);
+      border: 1px solid rgba(100,181,246,0.3);
+    }
+    .theme-btn[data-theme="deepsea"].active {
+      border-color: #64b5f6; box-shadow: 0 0 20px rgba(100,181,246,0.35);
+    }
 
     /* === 測驗題 === */
     .quiz-question { font-size: 0.65em; font-weight: 700; margin-bottom: 0.6em; color: #fff; }
@@ -325,6 +364,100 @@
       font-weight: 500; letter-spacing: 0.04em;
     }
 
+    #confetti-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9999;
+    }
+
+    /* 互動式時間線 */
+    .tl-wrap { max-width: 820px; margin: 0.4em auto 0; }
+    .tl-header { font-size: 0.55em; color: var(--accent2); font-weight: 700; margin-bottom: 16px; letter-spacing: 0.04em; }
+    .tl-track-wrap { position: relative; padding: 10px 0 20px; overflow-x: auto; }
+    .tl-line {
+      position: absolute; top: 50%; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, rgba(79,195,247,0.2), rgba(79,195,247,0.6), rgba(232,100,58,0.6), rgba(232,100,58,0.2));
+      transform: translateY(-50%); border-radius: 2px;
+    }
+    .tl-dots { display: flex; justify-content: space-between; position: relative; min-width: 500px; }
+    .tl-dot {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      cursor: pointer; position: relative; z-index: 1; flex: 1;
+      transition: transform 0.25s;
+    }
+    .tl-dot:hover { transform: translateY(-3px); }
+    .tl-dot-circle {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2.5px solid; transition: all 0.3s;
+    }
+    .tl-dot.active .tl-dot-circle {
+      box-shadow: 0 0 12px currentColor;
+      transform: scale(1.25);
+    }
+    .tl-dot-label { font-size: 0.35em; color: #888; white-space: nowrap; transition: color 0.3s; }
+    .tl-dot.active .tl-dot-label { color: #fff; font-weight: 600; }
+    .tl-dot-date { font-size: 0.3em; color: #555; white-space: nowrap; }
+    .tl-card {
+      margin-top: 6px; padding: 14px 18px;
+      background: var(--card-bg); border-radius: 10px;
+      border-left: 3px solid var(--accent2);
+      min-height: 50px; transition: all 0.35s ease;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .tl-card .tl-card-title { font-size: 0.5em; font-weight: 700; color: #fff; }
+    .tl-card .tl-card-date { font-size: 0.38em; color: var(--accent2); }
+    .tl-card .tl-card-desc { font-size: 0.38em; color: #ccc; line-height: 1.6; }
+    .tl-card .tl-card-note {
+      margin-top: 4px; font-size: 0.35em; color: var(--accent);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tl-card-placeholder { color: #555; font-size: 0.42em; text-align: center; padding: 10px 0; }
+
+    /* 成績加權模擬器 */
+    .grade-wrap { max-width: 720px; margin: 0.3em auto 0; }
+    .grade-header { font-size: 0.52em; color: var(--accent2); font-weight: 700; margin-bottom: 14px; }
+    .grade-main { display: flex; gap: 20px; align-items: flex-start; }
+    .grade-pie-wrap { flex-shrink: 0; }
+    .grade-cols { display: flex; gap: 16px; flex: 1; }
+    .grade-col { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .grade-col-title { font-size: 0.42em; font-weight: 700; margin-bottom: 2px; }
+    .grade-item {
+      background: rgba(255,255,255,0.05); border-radius: 8px; padding: 8px 12px;
+    }
+    .grade-item-header {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.36em; color: #ccc; margin-bottom: 4px;
+    }
+    .grade-sub { color: #666; font-size: 0.75em; }
+    .grade-score { color: #fff; font-weight: 700; min-width: 24px; text-align: right; }
+    .grade-item input[type="range"] { width: 100%; height: 4px; }
+    .grade-subtotal {
+      font-size: 0.36em; color: #888; text-align: right; padding: 2px 4px 0;
+    }
+    .grade-subtotal span { color: #fff; font-weight: 700; }
+    .grade-pie-wrap {
+      background: rgba(255,255,255,0.06); border-radius: 12px;
+      padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .grade-pie-wrap canvas { display: block; }
+    .grade-pie-legend { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.38em; color: #ccc; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+    input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      height: 5px; border-radius: 3px; outline: none;
+      background: linear-gradient(90deg, #ef5350, #ffb74d, #81c784);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent2); border: 2px solid #fff; cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent2); border: 2px solid #fff; cursor: pointer;
+    }
+
     @media (max-width: 768px) {
       .wc-section { grid-template-columns: 1fr; height: auto; }
       .wc-canvas-wrap { height: 300px; }
@@ -332,18 +465,22 @@
       .pillar-grid { grid-template-columns: 1fr; }
       .grid-2col, .grid-3col, .grid-4col { grid-template-columns: 1fr; }
       .stat-row { flex-direction: column; }
+      .grade-main { flex-direction: column; align-items: center; }
+      .grade-cols { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
+<canvas id="confetti-canvas"></canvas>
+
 <!-- 主題切換器 -->
-<div class="theme-switcher" id="themeSwitcher">
-  <div class="theme-dot active" data-theme="default" title="深海色"></div>
-  <div class="theme-dot" data-theme="teal" title="湖水綠"></div>
-  <div class="theme-dot" data-theme="warm" title="暖陽橙"></div>
-  <div class="theme-dot" data-theme="purple" title="薰衣紫"></div>
-  <div class="theme-dot" data-theme="green" title="森林綠"></div>
+<div class="theme-bar" id="themeBar">
+  <button class="theme-btn active" data-theme="neon">經典霓虹</button>
+  <button class="theme-btn" data-theme="emerald">翡翠綠鱷</button>
+  <button class="theme-btn" data-theme="bunny">甜蜜兔兔</button>
+  <button class="theme-btn" data-theme="aurora">極光金黃</button>
+  <button class="theme-btn" data-theme="deepsea">深海藍調</button>
 </div>
 <div class="footer-brand" id="footerBrand">✦ 三年四班 班親會</div>
 
@@ -439,62 +576,17 @@
       </div>
     </section>
 
-    <!-- 6. 重要行事曆 — 滑動輪播 -->
+    <!-- 6. 重要行事曆 — 互動式時間線 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
       <h2>本學期學校重要行事</h2>
-      <div class="carousel-wrap">
-        <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide">
-            <div class="cs-icon">🛡️</div>
-            <h3>9月 — 防災演練</h3>
-            <p>9 月 20 日進行全校防災演練，提升學生緊急應變能力。</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">💉</div>
-            <h3>10月 — 流感疫苗</h3>
-            <p>10 月 22 日安排校園流感疫苗接種，請家長填寫同意書。</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">📝</div>
-            <h3>11月 — 期中評量</h3>
-            <p>11 月 7-8 日舉行期中評量，請協助孩子及早準備。</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">🚌</div>
-            <h3>11月 — 戶外教育</h3>
-            <p>11 月 14 日舉辦戶外教學，相關通知將另行發放。</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">🎨</div>
-            <h3>11月 — 學藝競賽</h3>
-            <p>11 月 29 日舉行校內學藝競賽，鼓勵孩子展現才華。</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">🏟️</div>
-            <h3>12月 — 校慶運動會</h3>
-            <p>12 月 21 日舉辦校慶運動會，歡迎家長踴躍參加！</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">📖</div>
-            <h3>1月 — 期末評量</h3>
-            <p>1 月 14-15 日舉行期末評量，為學期學習畫下句點。</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">🎊</div>
-            <h3>1月 — 休業式</h3>
-            <p>1 月 20 日舉行休業式，準備迎接寒假！</p>
-          </div>
-          <div class="carousel-slide">
-            <div class="cs-icon">📚</div>
-            <h3>2月 — 開學日</h3>
-            <p>2 月 5 日為下學期開學日，期待孩子們回到校園！</p>
-          </div>
+      <div class="tl-wrap">
+        <div class="tl-track-wrap">
+          <div class="tl-line"></div>
+          <div class="tl-dots" id="tlDots"></div>
         </div>
-      </div>
-      <div class="carousel-nav">
-        <button class="carousel-arrow" id="carouselPrev">‹</button>
-        <div class="carousel-dots" id="carouselDots"></div>
-        <button class="carousel-arrow" id="carouselNext">›</button>
+        <div class="tl-card" id="tlCard">
+          <div class="tl-card-placeholder">🎯 點擊上方事件展開行程</div>
+        </div>
       </div>
     </section>
 
@@ -553,18 +645,71 @@
       </div>
     </section>
 
-    <!-- 10. 成績計算 -->
+    <!-- 10. 成績計算與加權模擬器 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
       <h2>三、經營方式：課程安排 (3)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">成績計算</h3>
-      <div class="grade-box">
-        <div class="g-num">50%</div>
-        <div class="g-label">平時成績</div>
-        <div style="font-size:0.35em;color:#888;margin-top:2px;">（包含作業繳交與學習態度）</div>
-        <div class="g-divider"></div>
-        <div class="g-num">50%</div>
-        <div class="g-label">期中、期末考成績</div>
-        <div class="g-sub">（依據學校規定之比例計算）</div>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">成績計算 — 日常與考試各佔 50%</h3>
+      <div class="grade-wrap">
+        <div class="grade-main">
+          <div class="grade-pie-wrap">
+            <canvas id="gradePie"></canvas>
+            <div class="grade-pie-legend">
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#4fc3f7"></span>
+                <span>日常 50%：<span id="legendDailyS">82.5</span> 分</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#e8643a"></span>
+                <span>考試 50%：<span id="legendExamS">72.0</span> 分</span>
+              </div>
+            </div>
+          </div>
+          <div class="grade-cols">
+            <div class="grade-col">
+              <div class="grade-col-title" style="color:#4fc3f7">📘 日常成績</div>
+              <div class="grade-item" data-cat="daily" data-key="hw">
+                <div class="grade-item-header">
+                  <span>作業 <span class="grade-sub">(30%)</span></span>
+                  <span class="grade-score" id="dailyHwVal">85</span>
+                </div>
+                <input type="range" class="grade-slider" min="0" max="100" value="85">
+              </div>
+              <div class="grade-item" data-cat="daily" data-key="quiz">
+                <div class="grade-item-header">
+                  <span>小考 <span class="grade-sub">(40%)</span></span>
+                  <span class="grade-score" id="dailyQuizVal">72</span>
+                </div>
+                <input type="range" class="grade-slider" min="0" max="100" value="72">
+              </div>
+              <div class="grade-item" data-cat="daily" data-key="part">
+                <div class="grade-item-header">
+                  <span>課堂參與 <span class="grade-sub">(30%)</span></span>
+                  <span class="grade-score" id="dailyPartVal">90</span>
+                </div>
+                <input type="range" class="grade-slider" min="0" max="100" value="90">
+              </div>
+              <div class="grade-subtotal">日常加權：<span id="dailyWeighted">82.5</span> 分</div>
+            </div>
+            <div class="grade-col">
+              <div class="grade-col-title" style="color:#e8643a">📕 考試成績</div>
+              <div class="grade-item" data-cat="exam" data-key="mid">
+                <div class="grade-item-header">
+                  <span>期中考 <span class="grade-sub">(50%)</span></span>
+                  <span class="grade-score" id="examMidVal">68</span>
+                </div>
+                <input type="range" class="grade-slider" min="0" max="100" value="68">
+              </div>
+              <div class="grade-item" data-cat="exam" data-key="final">
+                <div class="grade-item-header">
+                  <span>期末考 <span class="grade-sub">(50%)</span></span>
+                  <span class="grade-score" id="examFinalVal">76</span>
+                </div>
+                <input type="range" class="grade-slider" min="0" max="100" value="76">
+              </div>
+              <div class="grade-subtotal">考試加權：<span id="examWeighted">72.0</span> 分</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -764,14 +909,14 @@
 <script>
 // === 主題切換 ===
 (function() {
-  const dots = document.querySelectorAll('.theme-dot');
+  const btns = document.querySelectorAll('.theme-btn');
   const revealEl = document.querySelector('.reveal');
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      dots.forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
-      const theme = dot.dataset.theme;
-      revealEl.className = 'reveal' + (theme === 'default' ? '' : ' theme-' + theme);
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const theme = btn.dataset.theme;
+      revealEl.className = 'reveal' + (theme === 'neon' ? '' : ' theme-' + theme);
     });
   });
 })();
@@ -1019,6 +1164,507 @@ document.addEventListener('DOMContentLoaded', function() {
   Reveal.on('slidechanged', e => {
     if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(renderWC, 150);
   });
+});
+
+/* ─── 五感互動機制 ─── */
+
+/* 1. Web Audio API */
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx || audioCtx.state === 'closed') {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch (e) { return null; }
+  }
+  if (audioCtx.state === 'suspended') { audioCtx.resume().catch(() => {}); }
+  return audioCtx;
+}
+
+function playClickSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(600, now);
+  osc.frequency.exponentialRampToValueAtTime(1800, now + 0.06);
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(3000, now);
+  filter.frequency.exponentialRampToValueAtTime(500, now + 0.08);
+  gain.gain.setValueAtTime(0.15, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.12);
+}
+
+function playChord() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(f, now);
+    osc.frequency.exponentialRampToValueAtTime(f * 1.02, now + 0.4);
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2000 + i * 500, now);
+    filter.frequency.exponentialRampToValueAtTime(400, now + 0.6);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.linearRampToValueAtTime(0.06, now + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+    osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+    osc.start(now + i * 0.06); osc.stop(now + 0.9);
+  });
+}
+
+function playRefreshSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(400, now);
+  osc.frequency.exponentialRampToValueAtTime(1200, now + 0.15);
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(800, now);
+  filter.frequency.exponentialRampToValueAtTime(2000, now + 0.15);
+  filter.Q.setValueAtTime(2, now);
+  gain.gain.setValueAtTime(0.08, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.2);
+  const noise = ctx.createOscillator();
+  const noiseGain = ctx.createGain();
+  noise.type = 'sawtooth';
+  noise.frequency.setValueAtTime(80, now);
+  noise.frequency.exponentialRampToValueAtTime(40, now + 0.15);
+  noiseGain.gain.setValueAtTime(0.03, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  noise.connect(noiseGain); noiseGain.connect(ctx.destination);
+  noise.start(now); noise.stop(now + 0.15);
+}
+
+function playNote(freq, dur) {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, now);
+  osc.frequency.exponentialRampToValueAtTime(freq * 1.01, now + dur * 0.3);
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(3000, now);
+  filter.frequency.exponentialRampToValueAtTime(600, now + dur * 0.8);
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+  gain.gain.setValueAtTime(0.10, now + dur * 0.5);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + dur + 0.05);
+}
+
+function playItemSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, now);
+  osc.frequency.exponentialRampToValueAtTime(1760, now + 0.04);
+  gain.gain.setValueAtTime(0.06, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.08);
+}
+
+function playNavSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(800, now);
+  osc.frequency.exponentialRampToValueAtTime(1200, now + 0.03);
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(2400, now);
+  filter.frequency.exponentialRampToValueAtTime(600, now + 0.06);
+  gain.gain.setValueAtTime(0.07, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.08);
+}
+
+/* 2. Vibration */
+function vibrate(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
+/* 3. Confetti 彩帶物理 */
+(function() {
+  const cCanvas = document.getElementById('confetti-canvas');
+  if (!cCanvas) return;
+  const cCtx = cCanvas.getContext('2d');
+  let particles = [];
+  let animId = null;
+  const GRAVITY = 0.12, DRAG = 0.98;
+  const COLORS = ['#4fc3f7','#e8643a','#81c784','#ffb74d','#ce93d8','#f48fb1','#80deea','#ffeb3b','#ff6f00'];
+
+  function resize() {
+    cCanvas.width = window.innerWidth * window.devicePixelRatio;
+    cCanvas.height = window.innerHeight * window.devicePixelRatio;
+    cCanvas.style.width = window.innerWidth + 'px';
+    cCanvas.style.height = window.innerHeight + 'px';
+    cCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+
+  function create(count) {
+    const w = window.innerWidth, h = window.innerHeight;
+    for (let i = 0; i < count; i++) {
+      const isRibbon = Math.random() > 0.5;
+      particles.push({
+        x: w * 0.15 + Math.random() * w * 0.7,
+        y: h * 0.1 + Math.random() * h * 0.15,
+        vx: (Math.random() - 0.5) * 7,
+        vy: -Math.random() * 9 - 3,
+        w: isRibbon ? 8 + Math.random() * 6 : 4 + Math.random() * 4,
+        h: isRibbon ? 3 + Math.random() * 3 : 4 + Math.random() * 4,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.2,
+        alpha: 0.9 + Math.random() * 0.1,
+        life: 1,
+        decay: 0.005 + Math.random() * 0.008,
+        shape: isRibbon ? 'ribbon' : 'rect'
+      });
+    }
+  }
+
+  function animate() {
+    const w = window.innerWidth, h = window.innerHeight;
+    cCtx.clearRect(0, 0, w, h);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vy += GRAVITY;
+      p.vx *= DRAG;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      p.life -= p.decay;
+      if (p.y > h + 20 || p.x < -20 || p.x > w + 20 || p.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+      cCtx.save();
+      cCtx.translate(p.x, p.y);
+      cCtx.rotate(p.rotation);
+      cCtx.globalAlpha = p.life * p.alpha;
+      cCtx.fillStyle = p.color;
+      if (p.shape === 'ribbon') {
+        cCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        cCtx.fillRect(-p.w / 2 + 2, -p.h / 2 - 1, p.w * 0.6, p.h * 0.5);
+      } else {
+        cCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
+      cCtx.restore();
+    }
+    if (particles.length > 0) {
+      animId = requestAnimationFrame(animate);
+    } else {
+      cCtx.clearRect(0, 0, w, h);
+      animId = null;
+    }
+  }
+
+  window.fireConfetti = function(count) {
+    resize();
+    create(count || 60);
+    if (!animId) animate();
+  };
+  window.addEventListener('resize', resize);
+})();
+
+/* ─── 互動式時間線 ─── */
+(function() {
+  const EVENTS = [
+    { month: '9月', date: '9/20', title: '防災演練', desc: '全校防災演練，提升學生緊急應變能力。', color: '#4fc3f7', note: 261.63 },
+    { month: '10月', date: '10/22', title: '流感疫苗', desc: '校園流感疫苗接種，請家長填寫同意書。', color: '#81c784', note: 293.66 },
+    { month: '11月', date: '11/7–8', title: '期中評量', desc: '舉行期中評量，請協助孩子及早準備。', color: '#ffb74d', note: 329.63 },
+    { month: '11月', date: '11/14', title: '戶外教育', desc: '舉辦戶外教學，相關通知將另行發放。', color: '#ce93d8', note: 392.00 },
+    { month: '11月', date: '11/29', title: '學藝競賽', desc: '校內學藝競賽，鼓勵孩子展現才華。', color: '#e8643a', note: 440.00 },
+    { month: '12月', date: '12/21', title: '校慶運動會', desc: '校慶運動會，歡迎家長踴躍參加！', color: '#ef5350', note: 523.25 },
+    { month: '1月', date: '1/14–15', title: '期末評量', desc: '期末評量，為學期學習畫下句點。', color: '#ffb74d', note: 587.33 },
+    { month: '1月', date: '1/20', title: '休業式', desc: '舉行休業式，準備迎接寒假！', color: '#4fc3f7', note: 659.25 },
+    { month: '2月', date: '2/5', title: '開學日', desc: '下學期開學日，期待孩子們回到校園！', color: '#81c784', note: 783.99 }
+  ];
+  const tlDots = document.getElementById('tlDots');
+  const tlCard = document.getElementById('tlCard');
+  if (!tlDots) return;
+  let activeIdx = -1;
+
+  tlDots.innerHTML = EVENTS.map((ev, i) =>
+    `<div class="tl-dot" data-idx="${i}">
+      <div class="tl-dot-date">${ev.date}</div>
+      <div class="tl-dot-circle" style="border-color:${ev.color};background:rgba(255,255,255,0.05)"></div>
+      <div class="tl-dot-label">${ev.title}</div>
+    </div>`
+  ).join('');
+
+  tlDots.querySelectorAll('.tl-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.idx);
+      if (idx === activeIdx) {
+        activeIdx = -1;
+        tlDots.querySelectorAll('.tl-dot').forEach(d => d.classList.remove('active'));
+        tlCard.innerHTML = '<div class="tl-card-placeholder">🎯 點擊上方事件展開行程</div>';
+        return;
+      }
+      activeIdx = idx;
+      tlDots.querySelectorAll('.tl-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      const ev = EVENTS[idx];
+      tlCard.innerHTML = `
+        <div class="tl-card-title">${ev.title}</div>
+        <div class="tl-card-date">${ev.month} · ${ev.date}</div>
+        <div class="tl-card-desc">${ev.desc}</div>
+        <div class="tl-card-note">♪ ${['Do','Re','Mi','Fa','So','La','Si','Do','Re'][idx]} · ${ev.note.toFixed(0)} Hz</div>
+      `;
+      tlCard.style.borderColor = ev.color;
+      playNote(ev.note, 0.6);
+      vibrate([15, 25, 15]);
+      if (window.fireConfetti) fireConfetti(25);
+    });
+  });
+})();
+
+/* ─── 成績計算與加權模擬器 ─── */
+(function() {
+  const dailyItems = [
+    { key: 'hw', weight: 0.30 },
+    { key: 'quiz', weight: 0.40 },
+    { key: 'part', weight: 0.30 }
+  ];
+  const examItems = [
+    { key: 'mid', weight: 0.50 },
+    { key: 'final', weight: 0.50 }
+  ];
+  const sliders = document.querySelectorAll('.grade-item input[type="range"]');
+  const dailyWeighted = document.getElementById('dailyWeighted');
+  const examWeighted = document.getElementById('examWeighted');
+  const legendDailyS = document.getElementById('legendDailyS');
+  const legendExamS = document.getElementById('legendExamS');
+
+  function drawPieChart(dailyScore, examScore, dailyPct, examPct, total) {
+    const canvas = document.getElementById('gradePie');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const size = 260;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+    ctx.scale(dpr, dpr);
+
+    const cx = size / 2, cy = size / 2;
+    const outerR = 105, innerR = 62;
+    const startAngle = -Math.PI / 2;
+
+    ctx.clearRect(0, 0, size, size);
+
+    const dailyAngle = (dailyPct / 100) * Math.PI * 2;
+
+    if (dailyPct > 0) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerR, startAngle, startAngle + dailyAngle);
+      ctx.arc(cx, cy, innerR, startAngle + dailyAngle, startAngle, true);
+      ctx.closePath();
+      ctx.fillStyle = '#4fc3f7';
+      ctx.fill();
+    }
+
+    if (examPct > 0) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerR, startAngle + dailyAngle, startAngle + Math.PI * 2);
+      ctx.arc(cx, cy, innerR, startAngle + Math.PI * 2, startAngle + dailyAngle, true);
+      ctx.closePath();
+      ctx.fillStyle = '#e8643a';
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, innerR - 1, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(26,26,46,0.95)';
+    ctx.fill();
+
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 30px "Segoe UI", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(total.toFixed(1), cx, cy - 6);
+    ctx.font = '12px "Segoe UI", sans-serif';
+    ctx.fillStyle = '#888';
+    ctx.fillText('學期總成績', cx, cy + 16);
+
+    const labelR = (outerR + innerR) / 2;
+    ctx.font = 'bold 14px "Segoe UI", sans-serif';
+    ctx.fillStyle = '#fff';
+    if (dailyPct > 5) {
+      const mid = startAngle + dailyAngle / 2;
+      ctx.fillText(Math.round(dailyPct) + '%', cx + Math.cos(mid) * labelR, cy + Math.sin(mid) * labelR);
+    }
+    if (examPct > 5) {
+      const mid = startAngle + dailyAngle + (Math.PI * 2 - dailyAngle) / 2;
+      ctx.fillText(Math.round(examPct) + '%', cx + Math.cos(mid) * labelR, cy + Math.sin(mid) * labelR);
+    }
+  }
+
+  function calc() {
+    let dailySum = 0;
+    sliders.forEach(sl => {
+      const item = sl.closest('.grade-item');
+      if (!item || item.dataset.cat !== 'daily') return;
+      const def = dailyItems.find(d => d.key === item.dataset.key);
+      if (!def) return;
+      dailySum += parseFloat(sl.value) * def.weight;
+      const el = item.querySelector('.grade-score');
+      if (el) el.textContent = Math.round(parseFloat(sl.value));
+    });
+    dailyWeighted.textContent = dailySum.toFixed(1);
+
+    let examSum = 0;
+    sliders.forEach(sl => {
+      const item = sl.closest('.grade-item');
+      if (!item || item.dataset.cat !== 'exam') return;
+      const def = examItems.find(d => d.key === item.dataset.key);
+      if (!def) return;
+      examSum += parseFloat(sl.value) * def.weight;
+      const el = item.querySelector('.grade-score');
+      if (el) el.textContent = Math.round(parseFloat(sl.value));
+    });
+    examWeighted.textContent = examSum.toFixed(1);
+
+    const total = dailySum * 0.5 + examSum * 0.5;
+
+    if (legendDailyS) legendDailyS.textContent = dailySum.toFixed(1);
+    if (legendExamS) legendExamS.textContent = examSum.toFixed(1);
+
+    drawPieChart(dailySum, examSum, 50, 50, total);
+  }
+
+  sliders.forEach(sl => sl.addEventListener('input', calc));
+  calc();
+})();
+
+/* ─── 整合：既存元件加入五感回饋 ─── */
+
+/* 文字雲送出 */
+document.addEventListener('DOMContentLoaded', function() {
+  const wcBtn = document.getElementById('wc-btn');
+  if (wcBtn) {
+    wcBtn.addEventListener('click', function wcSound() {
+      playClickSound();
+      vibrate(20);
+      if (window.fireConfetti) fireConfetti(40);
+      setTimeout(playChord, 150);
+    });
+  }
+  const wcInput = document.getElementById('wc-input');
+  if (wcInput) {
+    wcInput.addEventListener('keypress', function wcKey(e) {
+      if (e.key === 'Enter') {
+        setTimeout(() => {
+          playClickSound();
+          vibrate(20);
+          if (window.fireConfetti) fireConfetti(40);
+          setTimeout(playChord, 150);
+        }, 50);
+      }
+    });
+  }
+});
+
+/* 文字雲即時更新音效 */
+const _origRender = renderWC;
+renderWC = function() {
+  _origRender();
+  if (wcData.length > 0) playRefreshSound();
+};
+
+/* 測驗題 1 */
+(function() {
+  const container = document.getElementById('quizOptions');
+  if (!container) return;
+  const btns = container.querySelectorAll('.quiz-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', function quizSound() {
+      if (btn.disabled) return;
+      playClickSound();
+      vibrate(15);
+      setTimeout(() => {
+        const idx = parseInt(btn.dataset.index);
+        if (idx === 2) {
+          if (window.fireConfetti) fireConfetti(50);
+          setTimeout(playChord, 100);
+        }
+      }, 200);
+    });
+  });
+})();
+
+/* 測驗題 2 */
+(function() {
+  const container = document.getElementById('quizOptions2');
+  if (!container) return;
+  const btns = container.querySelectorAll('.quiz-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', function quizSound2() {
+      if (btn.disabled) return;
+      playClickSound();
+      vibrate(15);
+      setTimeout(() => {
+        const idx = parseInt(btn.dataset.index);
+        if (idx === 2) {
+          if (window.fireConfetti) fireConfetti(50);
+          setTimeout(playChord, 100);
+        }
+      }, 200);
+    });
+  });
+})();
+
+/* 拖拉排序確認 */
+(function() {
+  const checkBtn = document.getElementById('dragCheckBtn');
+  if (!checkBtn) return;
+  checkBtn.addEventListener('click', function dragSound() {
+    playClickSound();
+    vibrate([20, 30, 20]);
+    setTimeout(() => {
+      const feedback = document.getElementById('dragFeedback');
+      if (feedback && feedback.textContent.includes('太棒了')) {
+        if (window.fireConfetti) fireConfetti(60);
+        setTimeout(playChord, 150);
+      }
+    }, 100);
+  });
+})();
+
+/* 主題切換音效 */
+document.querySelectorAll('.theme-dot').forEach(dot => {
+  dot.addEventListener('click', function themeSound() {
+    playItemSound();
+    vibrate(10);
+  });
+});
+
+/* 翻頁音效 */
+Reveal.on('slidechanged', function() {
+  playNavSound();
+  vibrate(8);
 });
 </script>
 
