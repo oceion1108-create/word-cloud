@@ -90,7 +90,8 @@ body {
   background: rgba(255,255,255,0.04); border-radius: 16px; overflow: hidden;
   position: relative; border: 1px solid rgba(255,255,255,0.07); height: 520px;
 }
-#wordcloud-canvas { width: 100%; height: 100%; display: block; }
+#wordcloud-canvas { width: 100%; height: 100%; display: block; position: relative; z-index: 1; }
+#confetti-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
 .empty-hint {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
   color: #444; font-size: 0.9rem; text-align: center; pointer-events: none; line-height: 2;
@@ -104,10 +105,129 @@ body {
 #qrcode { background: #fff; border-radius: 10px; padding: 8px; line-height: 0; }
 #qrcode img, #qrcode canvas { display: block; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+.timeline-section {
+  margin-top: 36px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+  padding: 24px 28px 20px;
+}
+.tl-header { font-size: 0.95rem; color: #4fc3f7; font-weight: 700; margin-bottom: 22px; letter-spacing: 0.04em; }
+.tl-track-wrap { position: relative; padding: 10px 0 28px; overflow-x: auto; }
+.tl-line {
+  position: absolute; top: 50%; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, rgba(79,195,247,0.2), rgba(79,195,247,0.6), rgba(232,100,58,0.6), rgba(232,100,58,0.2));
+  transform: translateY(-50%); border-radius: 2px;
+}
+.tl-dots { display: flex; justify-content: space-between; position: relative; min-width: 560px; }
+.tl-dot {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; position: relative; z-index: 1; flex: 1;
+  transition: transform 0.25s;
+}
+.tl-dot:hover { transform: translateY(-4px); }
+.tl-dot-circle {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2.5px solid; transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.tl-dot.active .tl-dot-circle {
+  box-shadow: 0 0 14px currentColor;
+  transform: scale(1.25);
+}
+.tl-dot-label {
+  font-size: 0.7rem; color: #888; white-space: nowrap;
+  transition: color 0.3s;
+}
+.tl-dot.active .tl-dot-label { color: #fff; font-weight: 600; }
+.tl-dot-date {
+  font-size: 0.6rem; color: #555; white-space: nowrap;
+}
+.tl-card {
+  margin-top: 6px; padding: 18px 20px;
+  background: rgba(255,255,255,0.06); border-radius: 12px;
+  border-left: 3px solid #4fc3f7;
+  min-height: 60px; transition: all 0.35s ease;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.tl-card .tl-card-title { font-size: 1.05rem; font-weight: 700; color: #fff; }
+.tl-card .tl-card-date { font-size: 0.8rem; color: #4fc3f7; }
+.tl-card .tl-card-desc { font-size: 0.85rem; color: #ccc; line-height: 1.6; }
+.tl-card .tl-card-note {
+  margin-top: 6px; font-size: 0.75rem; color: #e8643a;
+  display: flex; align-items: center; gap: 6px;
+}
+.tl-card-placeholder { color: #555; font-size: 0.85rem; text-align: center; padding: 14px 0; }
+.grade-section {
+  margin-top: 28px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+  padding: 24px 28px 20px;
+}
+.grade-header { font-size: 0.95rem; color: #4fc3f7; font-weight: 700; margin-bottom: 18px; letter-spacing: 0.04em; }
+.grade-weight-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  font-size: 0.85rem; color: #aaa;
+}
+.grade-weight-row input[type="range"] { flex: 1; }
+.grade-weight-val { color: #4fc3f7; font-weight: 700; min-width: 60px; text-align: center; }
+.grade-cols { display: flex; gap: 20px; margin-bottom: 18px; }
+.grade-col { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.grade-col-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.03em; }
+.grade-item {
+  background: rgba(255,255,255,0.05); border-radius: 10px; padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.grade-item-header {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; color: #ccc; margin-bottom: 6px;
+}
+.grade-sub { color: #666; font-size: 0.75em; }
+.grade-score { color: #fff; font-weight: 700; min-width: 28px; text-align: right; }
+.grade-item input[type="range"] { width: 100%; }
+.grade-subtotal {
+  font-size: 0.8rem; color: #888; text-align: right; padding: 4px 4px 0;
+}
+.grade-subtotal span { color: #fff; font-weight: 700; }
+.grade-result {
+  background: rgba(255,255,255,0.06); border-radius: 12px;
+  padding: 16px 20px; border: 1px solid rgba(255,255,255,0.08);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.grade-result-main { display: flex; align-items: baseline; gap: 8px; justify-content: center; }
+.grade-result-label { font-size: 0.85rem; color: #888; }
+.grade-result-score { font-size: 2.2rem; font-weight: 800; letter-spacing: 0.02em; transition: color 0.3s; }
+.grade-result-unit { font-size: 0.9rem; color: #666; }
+.grade-result-bar-wrap {
+  height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;
+}
+.grade-result-bar {
+  height: 100%; border-radius: 3px; transition: width 0.3s, background 0.3s;
+}
+
+/* HSL 漸變滑桿 */
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  height: 5px; border-radius: 3px; outline: none;
+  background: linear-gradient(90deg, #ef5350, #ffb74d, #81c784);
+  transition: background 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: #4fc3f7; border: 2px solid #fff; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3); transition: background 0.2s;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #4fc3f7; border: 2px solid #fff; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
 @media (max-width: 768px) {
   .left-panel { flex: 1 1 100%; }
   .canvas-wrap { min-width: 100%; height: 360px; }
   .header h1 { font-size: 1.3rem; }
+  .tl-dots { min-width: 420px; }
+  .tl-dot-label { font-size: 0.6rem; }
+  .grade-cols { flex-direction: column; }
+  .grade-result-score { font-size: 1.6rem; }
 }
 </style>
 </head>
@@ -149,8 +269,9 @@ body {
       </div>
     </div>
 
-    <div class="canvas-wrap">
+    <div class="canvas-wrap" id="canvasWrap">
       <canvas id="wordcloud-canvas"></canvas>
+      <canvas id="confetti-canvas"></canvas>
       <div class="empty-hint" id="emptyHint">
         寫下第一個期望<br>文字雲將為您綻放 ✨
       </div>
@@ -158,6 +279,84 @@ body {
   </div>
 
   <div class="status" id="status"></div>
+
+  <div class="timeline-section">
+    <div class="tl-header">📅 時光軌道 · 重要行事曆</div>
+    <div class="tl-track-wrap">
+      <div class="tl-line"></div>
+      <div class="tl-dots" id="tlDots"></div>
+    </div>
+    <div class="tl-card" id="tlCard"></div>
+  </div>
+
+  <div class="grade-section" id="gradeSection">
+    <div class="grade-header">📊 成績計算與加權模擬器</div>
+    <div class="grade-weight-row">
+      <span>日常</span>
+      <input type="range" id="weightSlider" min="0" max="100" value="40">
+      <span>考試</span>
+      <span class="grade-weight-val" id="weightVal">40 : 60</span>
+    </div>
+    <div class="grade-cols">
+      <div class="grade-col">
+        <div class="grade-col-title" style="color:#4fc3f7">📘 日常成績</div>
+        <div class="grade-item" data-cat="daily" data-key="hw">
+          <div class="grade-item-header">
+            <span>作業 <span class="grade-sub">(30%)</span></span>
+            <span class="grade-score" id="dailyHwVal">85</span>
+          </div>
+          <input type="range" class="grade-slider" min="0" max="100" value="85">
+        </div>
+        <div class="grade-item" data-cat="daily" data-key="quiz">
+          <div class="grade-item-header">
+            <span>小考 <span class="grade-sub">(40%)</span></span>
+            <span class="grade-score" id="dailyQuizVal">72</span>
+          </div>
+          <input type="range" class="grade-slider" min="0" max="100" value="72">
+        </div>
+        <div class="grade-item" data-cat="daily" data-key="part">
+          <div class="grade-item-header">
+            <span>課堂參與 <span class="grade-sub">(30%)</span></span>
+            <span class="grade-score" id="dailyPartVal">90</span>
+          </div>
+          <input type="range" class="grade-slider" min="0" max="100" value="90">
+        </div>
+        <div class="grade-subtotal">
+          日常加權：<span id="dailyWeighted">82.5</span> 分
+        </div>
+      </div>
+      <div class="grade-col">
+        <div class="grade-col-title" style="color:#e8643a">📕 考試成績</div>
+        <div class="grade-item" data-cat="exam" data-key="mid">
+          <div class="grade-item-header">
+            <span>期中考 <span class="grade-sub">(50%)</span></span>
+            <span class="grade-score" id="examMidVal">68</span>
+          </div>
+          <input type="range" class="grade-slider" min="0" max="100" value="68">
+        </div>
+        <div class="grade-item" data-cat="exam" data-key="final">
+          <div class="grade-item-header">
+            <span>期末考 <span class="grade-sub">(50%)</span></span>
+            <span class="grade-score" id="examFinalVal">76</span>
+          </div>
+          <input type="range" class="grade-slider" min="0" max="100" value="76">
+        </div>
+        <div class="grade-subtotal">
+          考試加權：<span id="examWeighted">72.0</span> 分
+        </div>
+      </div>
+    </div>
+    <div class="grade-result" id="gradeResult">
+      <div class="grade-result-main">
+        <span class="grade-result-label">學期總成績</span>
+        <span class="grade-result-score" id="finalScore">76.2</span>
+        <span class="grade-result-unit">分</span>
+      </div>
+      <div class="grade-result-bar-wrap">
+        <div class="grade-result-bar" id="resultBar" style="width:76.2%"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -243,11 +442,17 @@ function updateRank() {
   }
 
   rankList.innerHTML = entries.slice(0, 15).map(([word, count], i) =>
-    `<div class="rank-item">
+    `<div class="rank-item" data-word="${word}">
       <span class="r-word">${i + 1}. ${word}</span>
       <span class="r-count">${count}</span>
     </div>`
   ).join('');
+  document.querySelectorAll('.rank-item').forEach(el => {
+    el.addEventListener('click', () => {
+      playItemSound();
+      vibrate(10);
+    });
+  });
 }
 
 function processWords(docs) {
@@ -258,6 +463,7 @@ function processWords(docs) {
   });
   updateRank();
   renderWordCloud();
+  playRefreshSound();
 }
 
 const unsubscribe = db.collection(COLLECTION).onSnapshot(snapshot => {
@@ -303,6 +509,7 @@ document.querySelectorAll('.quick-tag').forEach(tag => {
 
 clearBtn.addEventListener('click', async () => {
   if (!confirm('確定清除所有文字？')) return;
+  playChord(); vibrate([60, 40, 60, 40, 80]); fireConfetti(80);
   clearBtn.disabled = true;
   try {
     const snapshot = await db.collection(COLLECTION).get();
@@ -327,6 +534,363 @@ new QRCode(document.getElementById('qrcode'), {
   colorLight: '#ffffff',
   correctLevel: QRCode.CorrectLevel.H
 });
+
+/* ─── 五感互動機制 ─── */
+
+/* 1. Web Audio API — 科幻音效 */
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx || audioCtx.state === 'closed') {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch (e) { return null; }
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+function playClickSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(600, now);
+  osc.frequency.exponentialRampToValueAtTime(1800, now + 0.06);
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(3000, now);
+  filter.frequency.exponentialRampToValueAtTime(500, now + 0.08);
+  gain.gain.setValueAtTime(0.15, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.12);
+}
+
+function playRefreshSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(400, now);
+  osc.frequency.exponentialRampToValueAtTime(1200, now + 0.15);
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(800, now);
+  filter.frequency.exponentialRampToValueAtTime(2000, now + 0.15);
+  filter.Q.setValueAtTime(2, now);
+  gain.gain.setValueAtTime(0.08, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.2);
+  const noise = ctx.createOscillator();
+  const noiseGain = ctx.createGain();
+  noise.type = 'sawtooth';
+  noise.frequency.setValueAtTime(80, now);
+  noise.frequency.exponentialRampToValueAtTime(40, now + 0.15);
+  noiseGain.gain.setValueAtTime(0.03, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  noise.connect(noiseGain); noiseGain.connect(ctx.destination);
+  noise.start(now); noise.stop(now + 0.15);
+}
+
+function playNote(freq, dur) {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, now);
+  osc.frequency.exponentialRampToValueAtTime(freq * 1.01, now + dur * 0.3);
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(3000, now);
+  filter.frequency.exponentialRampToValueAtTime(600, now + dur * 0.8);
+  gain.gain.setValueAtTime(0, now);
+  gain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+  gain.gain.setValueAtTime(0.10, now + dur * 0.5);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+  osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + dur + 0.05);
+}
+
+function playItemSound() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, now);
+  osc.frequency.exponentialRampToValueAtTime(1760, now + 0.04);
+  gain.gain.setValueAtTime(0.06, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(now); osc.stop(now + 0.08);
+}
+
+function playChord() {
+  const ctx = getAudioCtx(); if (!ctx) return;
+  const now = ctx.currentTime;
+  const freqs = [523.25, 659.25, 783.99, 1046.5];
+  freqs.forEach((f, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(f, now);
+    osc.frequency.exponentialRampToValueAtTime(f * 1.02, now + 0.4);
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2000 + i * 500, now);
+    filter.frequency.exponentialRampToValueAtTime(400, now + 0.6);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.linearRampToValueAtTime(0.06, now + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+    osc.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+    osc.start(now + i * 0.06); osc.stop(now + 0.9);
+  });
+}
+
+/* 2. Web Vibration API — 觸覺回饋 */
+function vibrate(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
+/* 3. Canvas Confetti — 重力彩帶物理 */
+const confettiCanvas = document.getElementById('confetti-canvas');
+if (confettiCanvas) {
+  const confettiCtx = confettiCanvas.getContext('2d');
+  let particles = [];
+  let confettiAnimId = null;
+  const GRAVITY = 0.12;
+  const DRAG = 0.98;
+  const COLORS_CONFETTI = ['#4fc3f7','#e8643a','#81c784','#ffb74d','#ce93d8','#f48fb1','#80deea','#ffeb3b','#ff6f00'];
+
+  function resizeConfettiCanvas() {
+    const wrap = document.getElementById('canvasWrap');
+    if (!wrap) return;
+    const w = wrap.clientWidth, h = wrap.clientHeight;
+    confettiCanvas.width = w * window.devicePixelRatio;
+    confettiCanvas.height = h * window.devicePixelRatio;
+    confettiCanvas.style.width = w + 'px';
+    confettiCanvas.style.height = h + 'px';
+    confettiCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+
+  function createConfetti(count) {
+    const wrap = document.getElementById('canvasWrap');
+    if (!wrap) return;
+    const w = wrap.clientWidth, h = wrap.clientHeight;
+    for (let i = 0; i < count; i++) {
+      const isRibbon = Math.random() > 0.5;
+      particles.push({
+        x: w * 0.2 + Math.random() * w * 0.6,
+        y: h * 0.1 + Math.random() * h * 0.2,
+        vx: (Math.random() - 0.5) * 6,
+        vy: -Math.random() * 8 - 3,
+        w: isRibbon ? 8 + Math.random() * 6 : 4 + Math.random() * 4,
+        h: isRibbon ? 3 + Math.random() * 3 : 4 + Math.random() * 4,
+        color: COLORS_CONFETTI[Math.floor(Math.random() * COLORS_CONFETTI.length)],
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.2,
+        alpha: 0.9 + Math.random() * 0.1,
+        life: 1,
+        decay: 0.005 + Math.random() * 0.008,
+        shape: isRibbon ? 'ribbon' : 'rect'
+      });
+    }
+  }
+
+  function animateConfetti() {
+    const wrap = document.getElementById('canvasWrap');
+    if (!wrap) return;
+    const w = wrap.clientWidth, h = wrap.clientHeight;
+    confettiCtx.clearRect(0, 0, w, h);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vy += GRAVITY;
+      p.vx *= DRAG;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      p.life -= p.decay;
+      if (p.y > h + 20 || p.x < -20 || p.x > w + 20 || p.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+      confettiCtx.save();
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate(p.rotation);
+      confettiCtx.globalAlpha = p.life * p.alpha;
+      confettiCtx.fillStyle = p.color;
+      if (p.shape === 'ribbon') {
+        confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        confettiCtx.fillRect(-p.w / 2 + 2, -p.h / 2 - 1, p.w * 0.6, p.h * 0.5);
+      } else {
+        confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      }
+      confettiCtx.restore();
+    }
+    if (particles.length > 0) {
+      confettiAnimId = requestAnimationFrame(animateConfetti);
+    } else {
+      confettiCtx.clearRect(0, 0, w, h);
+      confettiAnimId = null;
+    }
+  }
+
+  function fireConfetti(count) {
+    resizeConfettiCanvas();
+    createConfetti(count || 60);
+    if (!confettiAnimId) animateConfetti();
+  }
+
+  window.addEventListener('resize', resizeConfettiCanvas);
+}
+
+/* 4. 整合到現有事件 */
+submitBtn.addEventListener('click', function onSend() {
+  const word = wordInput.value.trim();
+  if (!word) return;
+  playClickSound(); vibrate(20); fireConfetti(40);
+  setTimeout(playChord, 150);
+});
+
+document.querySelectorAll('.quick-tag').forEach(tag => {
+  tag.addEventListener('click', function onQuickTag() {
+    const word = tag.dataset.word;
+    if (!word) return;
+    playClickSound(); vibrate([15, 30, 15]); fireConfetti(50);
+    setTimeout(playChord, 150);
+  });
+});
+
+/* ─── 時光軌道 · 重要行事曆 ─── */
+const TL_EVENTS = [
+  { month: '2月', date: '2/11', title: '開學日', desc: '第二學期正式開始，請提醒孩子準備好學用品與寒假作業。', color: '#4fc3f7', note: 261.63 },
+  { month: '3月', date: '3/15', title: '家長日', desc: '親師座談會，瞭解孩子在校學習狀況與本學期教學重點。', color: '#81c784', note: 293.66 },
+  { month: '4月', date: '4/14–18', title: '期中考', desc: '第一次定期評量，請協助孩子規劃複習進度，保持正常作息。', color: '#ffb74d', note: 329.63 },
+  { month: '5月', date: '5/10', title: '校外教學', desc: '前往天文館參訪，結合自然科學課程，當天請穿運動服。', color: '#ce93d8', note: 392.00 },
+  { month: '5月', date: '5/24', title: '運動會', desc: '年度運動會，歡迎家長到校為孩子加油，活動預計 16:00 結束。', color: '#e8643a', note: 440.00 },
+  { month: '6月', date: '6/16–20', title: '期末考', desc: '第二次定期評量，請督促孩子妥善整理各科重點筆記。', color: '#ef5350', note: 523.25 },
+  { month: '6月', date: '6/30', title: '休業式', desc: '學期結束，發放成績單與暑假通知，預祝假期愉快！', color: '#4fc3f7', note: 587.33 }
+];
+
+const tlDots = document.getElementById('tlDots');
+const tlCard = document.getElementById('tlCard');
+let activeDotIdx = -1;
+
+function renderTimeline() {
+  tlDots.innerHTML = TL_EVENTS.map((ev, i) =>
+    `<div class="tl-dot" data-idx="${i}">
+      <div class="tl-dot-date">${ev.date}</div>
+      <div class="tl-dot-circle" style="border-color:${ev.color};background:rgba(255,255,255,0.05)"></div>
+      <div class="tl-dot-label">${ev.title}</div>
+    </div>`
+  ).join('');
+
+  tlDots.querySelectorAll('.tl-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.idx);
+      if (idx === activeDotIdx) {
+        activeDotIdx = -1;
+        tlDots.querySelectorAll('.tl-dot').forEach(d => d.classList.remove('active'));
+        tlCard.innerHTML = '<div class="tl-card-placeholder">點擊上方事件展開行程</div>';
+        return;
+      }
+      activeDotIdx = idx;
+      tlDots.querySelectorAll('.tl-dot').forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      const ev = TL_EVENTS[idx];
+      tlCard.innerHTML = `
+        <div class="tl-card-title">${ev.title}</div>
+        <div class="tl-card-date">${ev.month} · ${ev.date}</div>
+        <div class="tl-card-desc">${ev.desc}</div>
+        <div class="tl-card-note">♪ ${['Do','Re','Mi','Fa','So','La','Si'][idx]} · ${ev.note.toFixed(0)} Hz</div>
+      `;
+      tlCard.style.borderColor = ev.color;
+      playNote(ev.note, 0.6);
+      vibrate([15, 25, 15]);
+      fireConfetti(25);
+    });
+  });
+}
+
+renderTimeline();
+
+/* ─── 成績計算與加權模擬器 ─── */
+const dailyItems = [
+  { key: 'hw', label: '作業', weight: 0.30 },
+  { key: 'quiz', label: '小考', weight: 0.40 },
+  { key: 'part', label: '課堂參與', weight: 0.30 }
+];
+const examItems = [
+  { key: 'mid', label: '期中考', weight: 0.50 },
+  { key: 'final', label: '期末考', weight: 0.50 }
+];
+const gradeSliders = document.querySelectorAll('.grade-item input[type="range"]');
+const weightSlider = document.getElementById('weightSlider');
+const weightVal = document.getElementById('weightVal');
+const dailyWeighted = document.getElementById('dailyWeighted');
+const examWeighted = document.getElementById('examWeighted');
+const finalScore = document.getElementById('finalScore');
+const resultBar = document.getElementById('resultBar');
+
+function hslColor(val) {
+  return `hsl(${Math.round(val * 1.2)}, 85%, 55%)`;
+}
+
+function calcGrades() {
+  const w = parseFloat(weightSlider.value);
+  const dailyRatio = w / 100;
+  const examRatio = (100 - w) / 100;
+  weightVal.textContent = `${w} : ${100 - w}`;
+
+  let dailySum = 0;
+  gradeSliders.forEach(slider => {
+    const item = slider.closest('.grade-item');
+    if (item.dataset.cat !== 'daily') return;
+    const key = item.dataset.key;
+    const def = dailyItems.find(d => d.key === key);
+    if (!def) return;
+    const score = parseFloat(slider.value);
+    dailySum += score * def.weight;
+    const el = item.querySelector('.grade-score');
+    if (el) el.textContent = Math.round(score);
+  });
+  dailyWeighted.textContent = dailySum.toFixed(1);
+
+  let examSum = 0;
+  gradeSliders.forEach(slider => {
+    const item = slider.closest('.grade-item');
+    if (item.dataset.cat !== 'exam') return;
+    const key = item.dataset.key;
+    const def = examItems.find(d => d.key === key);
+    if (!def) return;
+    const score = parseFloat(slider.value);
+    examSum += score * def.weight;
+    const el = item.querySelector('.grade-score');
+    if (el) el.textContent = Math.round(score);
+  });
+  examWeighted.textContent = examSum.toFixed(1);
+
+  const total = dailySum * dailyRatio + examSum * examRatio;
+  const color = hslColor(total);
+  finalScore.textContent = total.toFixed(1);
+  finalScore.style.color = color;
+  resultBar.style.width = total + '%';
+  resultBar.style.background = color;
+}
+
+gradeSliders.forEach(slider => {
+  slider.addEventListener('input', calcGrades);
+});
+
+weightSlider.addEventListener('input', calcGrades);
+
+calcGrades();
 </script>
 </body>
 </html>
