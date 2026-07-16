@@ -1182,7 +1182,7 @@ document.addEventListener('DOMContentLoaded', function() {
     qrEl.innerHTML = '<div style="font-size:0.7em;color:#888;text-align:center;line-height:1.5;">📱<br>部署後<br>自動啟用</div>';
     document.getElementById('qr-hint').textContent = '部署至 GitHub Pages 後即可掃描';
   } else if (typeof QRCode !== 'undefined') {
-    var submitUrl = window.location.origin + window.location.pathname.replace(/index\.html$/, '') + 'submit.html';
+    var submitUrl = 'https://oceion1108-create.github.io/word-cloud/submit.html';
     new QRCode(qrEl, { text: submitUrl, width: 140, height: 140, colorDark: '#0d1117', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
   }
 
