@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三年四班 班親會</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+  <style>
+    :root {
+      --accent:  #e8643a;
+      --accent2: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+    }
+    .reveal { font-family: 'Segoe UI', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: inherit; font-weight: 700; }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .controls { color: var(--accent2); }
+    .reveal .slide-number { font-size: 14px; color: #888; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block; background: var(--accent); color: #fff;
+      padding: 4px 14px; border-radius: 20px; font-size: 0.55em;
+      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: #888; }
+    .title-slide .emoji-deco { font-size: 4em; margin-bottom: 0.2em; }
+
+    .stat-row { display: flex; gap: 20px; justify-content: center; margin-top: 1em; }
+    .stat-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; padding: 20px 26px; text-align: center; flex: 1;
+    }
+    .stat-card .num { font-size: 1.8em; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-card .label { font-size: 0.42em; color: #ccc; margin-top: 6px; }
+
+    .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.6em; }
+    .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 0.6em; }
+    .grid-4col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
+
+    .card {
+      background: rgba(255,255,255,0.05); border-radius: 10px;
+      padding: 16px; text-align: center;
+    }
+    .card h3 { font-size: 0.5em; margin-bottom: 8px; }
+    .card ul { list-style: none; padding: 0; margin: 0; }
+    .card ul li { font-size: 0.38em; padding: 4px 0; color: #bbb; }
+    .card ul li::before { content: "✦ "; opacity: 0.5; }
+
+    .table-wrap {
+      width: 100%; max-width: 800px; margin: 0 auto;
+    }
+    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.45em; }
+    .table-wrap th, .table-wrap td {
+      padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center;
+    }
+    .table-wrap th { background: rgba(79,195,247,0.15); color: var(--accent2); font-weight: 700; }
+
+    .timeline { position: relative; padding-left: 36px; margin-top: 0.6em; text-align: left; display: inline-block; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 4px; bottom: 4px;
+      width: 2px; background: rgba(255,255,255,0.2);
+    }
+    .timeline-item { position: relative; margin-bottom: 10px; font-size: 0.42em; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -28px; top: 4px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid #1a1a2e;
+    }
+    .timeline-item .ti-date { color: var(--accent); font-weight: 700; font-size: 1.1em; display: inline; margin-right: 10px; }
+    .timeline-item .ti-text { color: #ccc; display: inline; }
+
+    .cloud-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 0.6em; }
+    .cloud-item {
+      background: rgba(255,255,255,0.08); border-radius: 40px; padding: 14px 8px;
+      text-align: center; font-size: 0.5em; font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .cloud-item:hover { transform: scale(1.06); background: rgba(79,195,247,0.15); }
+
+    .pillar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 0.6em; }
+    .pillar {
+      background: rgba(255,255,255,0.06); border-radius: 14px;
+      padding: 20px 14px; text-align: center;
+      border-top: 3px solid var(--accent2);
+    }
+    .pillar .p-icon { font-size: 2em; margin-bottom: 6px; }
+    .pillar h3 { font-size: 0.55em; color: var(--accent2); margin-bottom: 10px; }
+    .pillar ul { list-style: none; padding: 0; margin: 0; }
+    .pillar ul li { font-size: 0.38em; padding: 3px 0; color: #bbb; }
+    .pillar ul li::before { content: "· "; opacity: 0.5; }
+
+    .action-list { width: 100%; max-width: 700px; margin: 0 auto; }
+    .action-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: rgba(255,255,255,0.06); border-radius: 12px;
+      padding: 14px 18px; margin-bottom: 12px; text-align: left;
+    }
+    .action-num {
+      font-size: 1.2em; font-weight: 900; color: var(--accent);
+      min-width: 36px; text-align: center; line-height: 1.2;
+    }
+    .action-content { flex: 1; }
+    .action-content h3 { font-size: 0.5em; margin-bottom: 4px; color: #eee; }
+    .action-content p { font-size: 0.38em; color: #aaa; line-height: 1.6; margin: 0; }
+
+    .contact-card {
+      background: rgba(255,255,255,0.06); border-radius: 16px;
+      padding: 24px 32px; max-width: 450px; margin: 0.6em auto 0; text-align: left;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 14px; padding: 10px 0;
+      font-size: 0.48em; color: #ccc;
+    }
+    .contact-item .c-icon { font-size: 1.4em; }
+    .contact-item .c-label { font-weight: 700; color: var(--accent2); min-width: 44px; }
+
+    .quote-box {
+      background: rgba(255,255,255,0.05); border-left: 4px solid var(--accent);
+      border-radius: 8px; padding: 20px 24px; margin: 0.8em auto;
+      font-size: 0.7em; color: #ddd; font-style: italic; line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .end-slide { text-align: center; }
+    .end-slide .big-emoji { font-size: 4em; margin-bottom: 0.3em; }
+    .end-slide h1 { font-size: 2.5em; }
+    .end-slide .tagline { font-size: 0.6em; color: #aaa; margin-top: 0.5em; }
+
+    .grade-box {
+      background: rgba(255,255,255,0.06); border-radius: 16px;
+      padding: 20px 28px; max-width: 480px; margin: 0.6em auto 0;
+    }
+    .grade-box .g-num { font-size: 1.6em; font-weight: 900; color: var(--accent); }
+    .grade-box .g-label { font-size: 0.42em; color: #ccc; margin-top: 2px; }
+    .grade-box .g-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 16px 0; }
+    .grade-box .g-sub { font-size: 0.35em; color: #888; margin-top: 4px; }
+
+    .wc-section {
+      display: grid; grid-template-columns: 220px 1fr; gap: 14px; height: 420px; margin-top: 0.4em;
+    }
+    .wc-left { display: flex; flex-direction: column; gap: 10px; }
+    .wc-input-box {
+      background: rgba(255,255,255,0.06); border-radius: 10px; padding: 14px;
+    }
+    .wc-input-box label { font-size: 0.38em; color: var(--accent2); font-weight: 700; display: block; margin-bottom: 8px; }
+    .wc-input-box input {
+      width: 100%; padding: 8px 12px; border-radius: 8px;
+      border: 1px solid rgba(79,195,247,0.3);
+      background: rgba(255,255,255,0.08); color: #fff; font-size: 13px;
+      box-sizing: border-box; font-family: inherit; outline: none;
+    }
+    .wc-input-box button {
+      width: 100%; margin-top: 8px; padding: 9px;
+      background: var(--accent2); color: #0d1117; border: none;
+      border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer;
+    }
+    .wc-rank {
+      background: rgba(255,255,255,0.06); border-radius: 10px; padding: 14px;
+      flex: 1; overflow: hidden; display: flex; flex-direction: column;
+    }
+    .wc-rank .rank-header {
+      font-size: 0.38em; color: var(--accent2); font-weight: 700; margin-bottom: 8px;
+    }
+    .wc-rank .rank-header .live {
+      display: inline-block; background: #ff4757; color: #fff;
+      padding: 2px 7px; border-radius: 10px; font-size: 0.85em;
+      animation: pulse 1.5s infinite; margin-left: 4px;
+    }
+    .wc-rank .rank-list { font-size: 0.34em; overflow-y: auto; flex: 1; color: #ccc; }
+    .wc-rank .rank-footer {
+      margin-top: 8px; font-size: 0.32em; color: #666;
+      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px;
+    }
+    .wc-canvas-wrap {
+      background: rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden;
+      position: relative; border: 1px solid rgba(255,255,255,0.07);
+    }
+    .wc-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
+    .wc-empty {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      color: #444; font-size: 0.42em; text-align: center;
+      pointer-events: none; line-height: 2;
+    }
+
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    @media (max-width: 768px) {
+      .wc-section { grid-template-columns: 1fr; height: auto; }
+      .wc-canvas-wrap { height: 300px; }
+      .cloud-grid { grid-template-columns: repeat(2,1fr); }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .grid-2col, .grid-3col, .grid-4col { grid-template-columns: 1fr; }
+      .stat-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 50%, #16213e 100%)"
+             data-background-opacity="1">
+      <div class="title-slide">
+        <div class="emoji-deco">🏫</div>
+        <div class="tag">2026 學年度 · 班親會</div>
+        <h1>三年四班 班親會</h1>
+        <p style="font-size:0.7em;color:var(--accent);margin-top:0.3em;">歡迎光臨</p>
+        <p class="author">導師：楊明道</p>
+      </div>
+    </section>
+
+    <!-- 2. 互動文字雲 -->
+    <section id="slide-wordcloud" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
+      <h2 style="font-size:1.1em; margin-bottom:0.3em;">寫下您對孩子的期望</h2>
+      <div style="display:flex; gap:14px; height:420px; margin-top:0.3em;">
+        <!-- 左欄：QR Code + 說明 -->
+        <div style="flex:0 0 180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
+          <div style="background:#fff; border-radius:12px; padding:10px; width:160px; height:160px; display:flex; align-items:center; justify-content:center;">
+            <div id="qrcode"></div>
+          </div>
+          <div id="qr-hint" style="font-size:0.35em; color:#aaa; text-align:center; line-height:1.6;">
+            掃描 QR Code<br>用手機送出您的祝福 ✨
+          </div>
+        </div>
+        <!-- 中欄：輸入 + 排行 -->
+        <div style="flex:1; display:flex; flex-direction:column; gap:10px; min-width:0;">
+          <div class="wc-input-box">
+            <label>輸入您的期許與祝福</label>
+            <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20" />
+            <button id="wc-btn">送出 ↵</button>
+          </div>
+          <div class="wc-rank">
+            <div class="rank-header">熱門關鍵詞 <span class="live">LIVE</span></div>
+            <div class="rank-list" id="wc-list"></div>
+            <div class="rank-footer">
+              總提交：<span id="wc-total" style="color:var(--accent);font-weight:700;">0</span>　
+              不同答案：<span id="wc-unique" style="color:var(--accent2);font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+        <!-- 右欄：文字雲 -->
+        <div class="wc-canvas-wrap" style="flex:1.5;">
+          <canvas id="wc-canvas"></canvas>
+          <div class="wc-empty" id="wc-empty">
+            輸入第一個答案<br>文字雲就會出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 歡迎蒞臨 -->
+    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%)">
+      <h2>歡迎各位家長的蒞臨</h2>
+      <div style="font-size:4em;margin-bottom:0.2em;">🧸</div>
+      <div class="quote-box">有您對孩子的關心，真好！</div>
+    </section>
+
+    <!-- 4. 班級概況 -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
+      <h2>一、班級概況</h2>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="num">25</div>
+          <div class="label">學生人數</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">14</div>
+          <div class="label">👦 男生</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">11</div>
+          <div class="label">👧 女生</div>
+        </div>
+      </div>
+      <p style="font-size:0.45em;color:#888;margin-top:0.6em;">導師：楊明道</p>
+    </section>
+
+    <!-- 5. 科任老師 -->
+    <section data-background-gradient="linear-gradient(135deg, #16213e 0%, #0d1117 100%)">
+      <h2>本班科任老師</h2>
+      <div class="table-wrap">
+        <table>
+          <tr><th>領域</th><th>老師</th><th>領域</th><th>老師</th></tr>
+          <tr><td>英語</td><td>吳敏琿老師</td><td>自然</td><td>謝馨儀老師</td></tr>
+          <tr><td>音樂</td><td>陳萱宇老師</td><td>美勞</td><td>李心蘋老師</td></tr>
+          <tr><td>台語/電腦</td><td>李佩蓉老師</td><td>雙語健康</td><td>郭瑾融老師</td></tr>
+          <tr><td>外師</td><td>Cindy老師</td><td>體育</td><td>鄭勝鍇老師</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. 學校重要行事 -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
+      <h2>本學期學校重要行事</h2>
+      <div class="timeline">
+        <div class="timeline-item"><span class="ti-date">9/20</span><span class="ti-text">防災演練</span></div>
+        <div class="timeline-item"><span class="ti-date">10/22</span><span class="ti-text">流感疫苗</span></div>
+        <div class="timeline-item"><span class="ti-date">11/7-8</span><span class="ti-text">期中評量</span></div>
+        <div class="timeline-item"><span class="ti-date">11/14</span><span class="ti-text">戶外教育</span></div>
+        <div class="timeline-item"><span class="ti-date">11/29</span><span class="ti-text">學藝競賽</span></div>
+        <div class="timeline-item"><span class="ti-date">12/21</span><span class="ti-text">校慶運動會</span></div>
+        <div class="timeline-item"><span class="ti-date">1/14-15</span><span class="ti-text">期末評量</span></div>
+        <div class="timeline-item"><span class="ti-date">1/20</span><span class="ti-text">休業式</span></div>
+        <div class="timeline-item"><span class="ti-date">2/5</span><span class="ti-text">開學日</span></div>
+      </div>
+    </section>
+
+    <!-- 7. 班級目標 -->
+    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)">
+      <h2>二、本班班級目標</h2>
+      <div class="cloud-grid">
+        <div class="cloud-item">☀️ 善行</div>
+        <div class="cloud-item">🙏 感恩</div>
+        <div class="cloud-item">💖 惜福</div>
+        <div class="cloud-item">🧹 習勞</div>
+        <div class="cloud-item">🏃 健康</div>
+        <div class="cloud-item">✨ 正向</div>
+        <div class="cloud-item">🤝 合作</div>
+        <div class="cloud-item">📚 精進</div>
+      </div>
+    </section>
+
+    <!-- 8. 課程安排(1) 作業 -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
+      <h2>三、經營方式：課程安排 (1)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">作業</h3>
+      <div class="grid-2col">
+        <div class="card">
+          <h3>📖 國語</h3>
+          <ul>
+            <li>預習單</li>
+            <li>生字本</li>
+            <li>圈詞本</li>
+            <li>國語習作</li>
+            <li>寫作練習</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🔢 數學</h3>
+          <ul>
+            <li>數學習作</li>
+            <li>重點複習</li>
+            <li>作業本</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 課程安排(2) 評量方式 -->
+    <section data-background-gradient="linear-gradient(135deg, #16213e 0%, #0d1117 100%)">
+      <h2>三、經營方式：課程安排 (2)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">評量方式</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>國語評量</th><th>數學評量</th></tr>
+          <tr><td>聽寫</td><td>隨堂考</td></tr>
+          <tr><td>每課練習卷</td><td>單元卷</td></tr>
+          <tr><td>考前複習卷</td><td>考前複習卷</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10. 成績計算 -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
+      <h2>三、經營方式：課程安排 (3)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">成績計算</h3>
+      <div class="grade-box">
+        <div class="g-num">50%</div>
+        <div class="g-label">平時成績</div>
+        <div style="font-size:0.35em;color:#888;margin-top:2px;">（包含作業繳交與學習態度）</div>
+        <div class="g-divider"></div>
+        <div class="g-num">50%</div>
+        <div class="g-label">期中、期末考成績</div>
+        <div class="g-sub">（依據學校規定之比例計算）</div>
+      </div>
+    </section>
+
+    <!-- 11. 班級特色 -->
+    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%)">
+      <h2>三、經營方式：班級特色</h2>
+      <div class="pillar-grid">
+        <div class="pillar">
+          <div class="p-icon">📖</div>
+          <h3>閱讀</h3>
+          <ul>
+            <li>晨讀時間</li>
+            <li>布可星球書籍輪閱</li>
+            <li>雲水書車</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="p-icon">📜</div>
+          <h3>讀經</h3>
+          <ul>
+            <li>古今背書方法</li>
+            <li>部首表</li>
+            <li>弟子規</li>
+          </ul>
+        </div>
+        <div class="pillar">
+          <div class="p-icon">🏃</div>
+          <h3>運動</h3>
+          <ul>
+            <li>晨光跑步</li>
+            <li>跳繩活動</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. 家長配合(一) -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #16213e 100%)">
+      <h2>家長配合協助事項 (一)</h2>
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-num">1</div>
+          <div class="action-content">
+            <h3>培養孩子自理能力</h3>
+            <p>請協助引導準時上學、吃早餐、整理書包、定期剪指甲。</p>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">2</div>
+          <div class="action-content">
+            <h3>聯絡簿及功課每日簽名</h3>
+            <p>藉此掌握孩子每日的學習狀況。</p>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">3</div>
+          <div class="action-content">
+            <h3>協助督促作業訂正</h3>
+            <p>確實訂正能幫助孩子真正吸收知識。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. 家長配合(二) -->
+    <section data-background-gradient="linear-gradient(135deg, #16213e 0%, #0d1117 100%)">
+      <h2>家長配合協助事項 (二)</h2>
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-num">4</div>
+          <div class="action-content">
+            <h3>單純的學習環境</h3>
+            <p>勿攜帶零食、玩具及教學無關物品到校。</p>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">5</div>
+          <div class="action-content">
+            <h3>請假請主動聯繫</h3>
+            <p>為了孩子安全，請假請務必通知（可透過 Line 聯繫）。</p>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">6</div>
+          <div class="action-content">
+            <h3>隨時保持溝通</h3>
+            <p>有任何狀況請隨時與導師聯繫，親師合作最重要！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. 親師聯絡方式 -->
+    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
+      <h2>親師聯絡方式</h2>
+      <div class="contact-card">
+        <div class="contact-item">
+          <span class="c-icon">📱</span>
+          <span><span class="c-label">手機</span> 0972-862870</span>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">☎️</span>
+          <span><span class="c-label">學校</span> 06-7222227</span>
+        </div>
+        <div class="contact-item">
+          <span class="c-icon">💬</span>
+          <span><span class="c-label">LINE@</span> 請掃描加入班級群組</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. 感謝聆聽 -->
+    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%)">
+      <div class="end-slide">
+        <div class="big-emoji">🎉</div>
+        <h1 style="color:var(--accent2);">感謝聆聽</h1>
+        <p class="tagline">期待與您攜手，陪伴孩子快樂成長！</p>
+        <div style="font-size:2em;margin-top:0.5em;opacity:0.5;">🌟🌈👨‍👩‍👧‍👦</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+
+<!-- 文字雲：Firebase Firestore 即時同步，掃 QR Code 即可參與 -->
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCJlbk8bKzgBJ7evlZZlhtatgjPsQsVZR8",
+  authDomain: "word-cloud-6e807.firebaseapp.com",
+  projectId: "word-cloud-6e807",
+  storageBucket: "word-cloud-6e807.firebasestorage.app",
+  appId: "1:584148582276:web:ff042e07f80583fe6a67d1"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const COLLECTION = 'wordcloud_words';
+const COLORS  = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+let wcData = [];
+
+function renderWC() {
+  const listEl = document.getElementById('wc-list');
+  const total = wcData.reduce((s, [,c]) => s + c, 0);
+  document.getElementById('wc-total').textContent = total;
+  document.getElementById('wc-unique').textContent = wcData.length;
+  listEl.innerHTML = wcData.slice(0, 12).map(([w, c]) =>
+    `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+    </div>`
+  ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+  document.getElementById('wc-empty').style.display = wcData.length > 0 ? 'none' : '';
+  const canvas = document.getElementById('wc-canvas');
+  if (!canvas || typeof WordCloud === 'undefined') return;
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width < 10 || rect.height < 10) return;
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  if (wcData.length === 0) return;
+  const maxCount = wcData[0][1];
+  WordCloud(canvas, {
+    list: wcData.map(([w, c]) => [w, Math.max(18, Math.round((c / maxCount) * 76))]),
+    gridSize: 6, weightFactor: 1,
+    fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+    color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+    backgroundColor: 'transparent', rotateRatio: 0.3, shuffle: true,
+  });
+}
+
+function processWords(docs) {
+  const freq = {};
+  docs.forEach(doc => {
+    const word = (doc.data().word || '').trim();
+    if (word) freq[word] = (freq[word] || 0) + 1;
+  });
+  wcData = Object.entries(freq).sort((a, b) => b[1] - a[1]);
+  renderWC();
+}
+
+async function submitWord(word) {
+  try {
+    await db.collection(COLLECTION).add({
+      word,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (e) {
+    console.error('Firestore submit error:', e);
+  }
+}
+
+window.wcSubmit = function() {
+  const input = document.getElementById('wc-input');
+  const word = input.value.trim();
+  if (!word) return;
+  input.value = '';
+  submitWord(word);
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  const qrEl = document.getElementById('qrcode');
+  if (window.location.protocol === 'file:') {
+    qrEl.innerHTML = '<div style="font-size:0.7em;color:#888;text-align:center;line-height:1.5;">📱<br>部署後<br>自動啟用</div>';
+    document.getElementById('qr-hint').textContent = '部署至 GitHub Pages 後即可掃描';
+  } else if (typeof QRCode !== 'undefined') {
+    var submitUrl = window.location.origin + window.location.pathname.replace(/index\.html$/, '') + 'submit.html';
+    new QRCode(qrEl, { text: submitUrl, width: 140, height: 140, colorDark: '#0d1117', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
+  }
+
+  db.collection(COLLECTION).onSnapshot(snapshot => {
+    processWords(snapshot.docs);
+  }, error => {
+    console.error('Firestore error:', error);
+  });
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(renderWC, 150);
+  });
+});
+</script>
+
+</body>
+</html>

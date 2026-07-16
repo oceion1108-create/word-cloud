@@ -1,3 +1,6 @@
 node_modules/
 firebase-debug.log
 .firebase/
+
+server_out.txt
+server_err.txt
