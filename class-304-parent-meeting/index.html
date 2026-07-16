@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>銝僑? ?剛扛????鈭?撘瑕???/title>
+  <title>三年四班 班親會 — 互動強化版</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
@@ -85,7 +85,7 @@
     .card h3 { font-size: 0.5em; margin-bottom: 8px; }
     .card ul { list-style: none; padding: 0; margin: 0; }
     .card ul li { font-size: 0.38em; padding: 4px 0; color: #bbb; }
-    .card ul li::before { content: "??"; opacity: 0.5; }
+    .card ul li::before { content: "✦ "; opacity: 0.5; }
     .table-wrap { width: 100%; max-width: 800px; margin: 0 auto; }
     .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.45em; }
     .table-wrap th, .table-wrap td {
@@ -123,7 +123,7 @@
     .pillar h3 { font-size: 0.55em; color: var(--accent2); margin-bottom: 10px; }
     .pillar ul { list-style: none; padding: 0; margin: 0; }
     .pillar ul li { font-size: 0.38em; padding: 3px 0; color: #bbb; }
-    .pillar ul li::before { content: "繚 "; opacity: 0.5; }
+    .pillar ul li::before { content: "· "; opacity: 0.5; }
     .action-list { width: 100%; max-width: 700px; margin: 0 auto; }
     .action-item {
       display: flex; gap: 16px; align-items: flex-start;
@@ -213,7 +213,7 @@
     }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-    /* === 銝駁????? === */
+    /* === 主題切換按鈕 === */
     .theme-switcher {
       position: fixed; top: 16px; right: 16px; z-index: 999;
       display: flex; gap: 6px; background: rgba(0,0,0,0.5);
@@ -232,7 +232,7 @@
     .theme-dot[data-theme="purple"]  { background: linear-gradient(135deg,#140d1f,#221a2e); }
     .theme-dot[data-theme="green"]   { background: linear-gradient(135deg,#0d1f12,#1a2e1f); }
 
-    /* === 皜祇?憿?=== */
+    /* === 測驗題 === */
     .quiz-question { font-size: 0.65em; font-weight: 700; margin-bottom: 0.6em; color: #fff; }
     .quiz-options { display: flex; flex-direction: column; gap: 10px; max-width: 520px; margin: 0 auto; }
     .quiz-btn {
@@ -257,7 +257,7 @@
     .quiz-feedback.wrong { color: #ef5350; }
     .quiz-btn.reveal-answer { border-color: var(--success) !important; background: rgba(129,199,132,0.1) !important; }
 
-    /* === ???∠? === */
+    /* === 拖拉卡片 === */
     .drag-area {
       display: flex; flex-direction: column; gap: 8px; max-width: 540px; margin: 0.4em auto 0;
     }
@@ -287,7 +287,7 @@
     .drag-card.drag-correct { border-color: var(--success) !important; background: rgba(129,199,132,0.15) !important; }
     .drag-card.drag-wrong { border-color: #ef5350 !important; background: rgba(239,83,80,0.12) !important; }
 
-    /* === 皛?頛芣 === */
+    /* === 滑動輪播 === */
     .carousel-wrap {
       position: relative; max-width: 700px; margin: 0.4em auto 0; overflow: hidden;
       border-radius: 14px; background: var(--card-bg);
@@ -318,7 +318,7 @@
     }
     .carousel-dot.active { background: var(--accent2); width: 26px; border-radius: 5px; }
 
-    /* 摨鋆ˇ */
+    /* 底部裝飾 */
     .footer-brand {
       position: fixed; bottom: 16px; left: 16px; z-index: 999;
       font-size: 11px; color: rgba(255,255,255,0.2);
@@ -337,390 +337,392 @@
 </head>
 <body>
 
-<!-- 銝駁?????-->
+<!-- 主題切換器 -->
 <div class="theme-switcher" id="themeSwitcher">
-  <div class="theme-dot active" data-theme="default" title="瘛望絲??></div>
-  <div class="theme-dot" data-theme="teal" title="皝偌蝬?></div>
-  <div class="theme-dot" data-theme="warm" title="?璈?></div>
-  <div class="theme-dot" data-theme="purple" title="?啗﹝蝝?></div>
-  <div class="theme-dot" data-theme="green" title="璉格?蝬?></div>
+  <div class="theme-dot active" data-theme="default" title="深海色"></div>
+  <div class="theme-dot" data-theme="teal" title="湖水綠"></div>
+  <div class="theme-dot" data-theme="warm" title="暖陽橙"></div>
+  <div class="theme-dot" data-theme="purple" title="薰衣紫"></div>
+  <div class="theme-dot" data-theme="green" title="森林綠"></div>
 </div>
-<div class="footer-brand" id="footerBrand">??銝僑? ?剛扛??/div>
+<div class="footer-brand" id="footerBrand">✦ 三年四班 班親會</div>
 
 <div class="reveal">
   <div class="slides">
 
-    <!-- 1. 撠 -->
+    <!-- 1. 封面 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%)"
              data-background-opacity="1">
       <div class="title-slide">
-        <div class="emoji-deco">?</div>
-        <div class="tag">2026 摮詨僑摨?繚 ?剛扛??/div>
-        <h1>銝僑? ?剛扛??/h1>
-        <p style="font-size:0.7em;color:var(--accent);margin-top:0.3em;">甇∟??</p>
-        <p class="author">撠葦嚗???</p>
+        <div class="emoji-deco">🏫</div>
+        <div class="tag">2026 學年度 · 班親會</div>
+        <h1>三年四班 班親會</h1>
+        <p style="font-size:0.7em;color:var(--accent);margin-top:0.3em;">歡迎光臨</p>
+        <p class="author">導師：楊明道</p>
       </div>
     </section>
 
-    <!-- 2. 鈭?????-->
+    <!-- 2. 互動文字雲 -->
     <section id="slide-wordcloud" data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
-      <h2 style="font-size:1.1em; margin-bottom:0.3em;">撖思??典?摮拙?????/h2>
+      <h2 style="font-size:1.1em; margin-bottom:0.3em;">寫下您對孩子的期望</h2>
       <div style="display:flex; gap:14px; height:420px; margin-top:0.3em;">
         <div style="flex:0 0 180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
           <div style="background:#fff; border-radius:12px; padding:10px; width:160px; height:160px; display:flex; align-items:center; justify-content:center;">
             <div id="qrcode"></div>
           </div>
           <div id="qr-hint" style="font-size:0.35em; color:#aaa; text-align:center; line-height:1.6;">
-            ?? QR Code<br>?冽?璈?函?蟡? ??          </div>
+            掃描 QR Code<br>用手機送出您的祝福 ✨
+          </div>
         </div>
         <div style="flex:1; display:flex; flex-direction:column; gap:10px; min-width:0;">
           <div class="wc-input-box">
-            <label>頛詨?函??迂??蝳?/label>
-            <input id="wc-input" type="text" placeholder="頛詨?閰? maxlength="20" />
-            <button id="wc-btn">? ??/button>
+            <label>輸入您的期許與祝福</label>
+            <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20" />
+            <button id="wc-btn">送出 ↵</button>
           </div>
           <div class="wc-rank">
-            <div class="rank-header">?梢??閰?<span class="live">LIVE</span></div>
+            <div class="rank-header">熱門關鍵詞 <span class="live">LIVE</span></div>
             <div class="rank-list" id="wc-list"></div>
             <div class="rank-footer">
-              蝮賣?鈭歹?<span id="wc-total" style="color:var(--accent);font-weight:700;">0</span>?
-              銝?蝑?嚗?span id="wc-unique" style="color:var(--accent2);font-weight:700;">0</span>
+              總提交：<span id="wc-total" style="color:var(--accent);font-weight:700;">0</span>　
+              不同答案：<span id="wc-unique" style="color:var(--accent2);font-weight:700;">0</span>
             </div>
           </div>
         </div>
         <div class="wc-canvas-wrap" style="flex:1.5;">
           <canvas id="wc-canvas"></canvas>
           <div class="wc-empty" id="wc-empty">
-            頛詨蝚砌???獢?br>???脣停?????          </div>
+            輸入第一個答案<br>文字雲就會出現 ✨
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. 甇∟?? -->
+    <!-- 3. 歡迎蒞臨 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
-      <h2>甇∟???摰園????/h2>
-      <div style="font-size:4em;margin-bottom:0.2em;">?孛</div>
-      <div class="quote-box">?撠酋摮???嚗?憟踝?</div>
+      <h2>歡迎各位家長的蒞臨</h2>
+      <div style="font-size:4em;margin-bottom:0.2em;">🧸</div>
+      <div class="quote-box">有您對孩子的關心，真好！</div>
     </section>
 
-    <!-- 4. ?剔?璁? -->
+    <!-- 4. 班級概況 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
-      <h2>銝?蝝?瘜?/h2>
+      <h2>一、班級概況</h2>
       <div class="stat-row">
         <div class="stat-card">
           <div class="num">25</div>
-          <div class="label">摮貊?鈭箸</div>
+          <div class="label">學生人數</div>
         </div>
         <div class="stat-card">
           <div class="num">14</div>
-          <div class="label">? ?瑞?</div>
+          <div class="label">👦 男生</div>
         </div>
         <div class="stat-card">
           <div class="num">11</div>
-          <div class="label">? 憟喟?</div>
+          <div class="label">👧 女生</div>
         </div>
       </div>
-      <p style="font-size:0.45em;color:#888;margin-top:0.6em;">撠葦嚗???</p>
+      <p style="font-size:0.45em;color:#888;margin-top:0.6em;">導師：楊明道</p>
     </section>
 
-    <!-- 5. 蝘遙?葦 -->
+    <!-- 5. 科任老師 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
-      <h2>?祉蝘遙?葦</h2>
+      <h2>本班科任老師</h2>
       <div class="table-wrap">
         <table>
-          <tr><th>??</th><th>?葦</th><th>??</th><th>?葦</th></tr>
-          <tr><td>?梯?</td><td>?單??輯葦</td><td>?芰</td><td>雓成??葦</td></tr>
-          <tr><td>?單?</td><td>?唾摰葦</td><td>蝢?</td><td>???葦</td></tr>
-          <tr><td>?啗?/?餉</td><td>?蔗?葦</td><td>???亙熒</td><td>?剔?葦</td></tr>
-          <tr><td>憭葦</td><td>Cindy?葦</td><td>擃</td><td>?剖??葦</td></tr>
+          <tr><th>領域</th><th>老師</th><th>領域</th><th>老師</th></tr>
+          <tr><td>英語</td><td>吳敏琿老師</td><td>自然</td><td>謝馨儀老師</td></tr>
+          <tr><td>音樂</td><td>陳萱宇老師</td><td>美勞</td><td>李心蘋老師</td></tr>
+          <tr><td>台語/電腦</td><td>李佩蓉老師</td><td>雙語健康</td><td>郭瑾融老師</td></tr>
+          <tr><td>外師</td><td>Cindy老師</td><td>體育</td><td>鄭勝鍇老師</td></tr>
         </table>
       </div>
     </section>
 
-    <!-- 6. ??銵?????皛?頛芣 -->
+    <!-- 6. 重要行事曆 — 滑動輪播 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
-      <h2>?砍飛?飛?⊿?閬?鈭?/h2>
+      <h2>本學期學校重要行事</h2>
       <div class="carousel-wrap">
         <div class="carousel-track" id="carouselTrack">
           <div class="carousel-slide">
-            <div class="cs-icon">?儭?/div>
-            <h3>9?????脩瞍毀</h3>
-            <p>9 ??20 ?仿脰??冽?脩瞍毀嚗??飛???交?霈??/p>
+            <div class="cs-icon">🛡️</div>
+            <h3>9月 — 防災演練</h3>
+            <p>9 月 20 日進行全校防災演練，提升學生緊急應變能力。</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??</div>
-            <h3>10????瘚??怨?</h3>
-            <p>10 ??22 ?亙??????蝔殷?隢振?瑕‵撖怠????/p>
+            <div class="cs-icon">💉</div>
+            <h3>10月 — 流感疫苗</h3>
+            <p>10 月 22 日安排校園流感疫苗接種，請家長填寫同意書。</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??</div>
-            <h3>11?????葉閰?</h3>
-            <p>11 ??7-8 ?亥?銵?銝剛???隢??拙酋摮??拇???/p>
+            <div class="cs-icon">📝</div>
+            <h3>11月 — 期中評量</h3>
+            <p>11 月 7-8 日舉行期中評量，請協助孩子及早準備。</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??</div>
-            <h3>11?????嗅??</h3>
-            <p>11 ??14 ?亥?颲行憭?摮賂??賊??撠銵?整?/p>
+            <div class="cs-icon">🚌</div>
+            <h3>11月 — 戶外教育</h3>
+            <p>11 月 14 日舉辦戶外教學，相關通知將另行發放。</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">?</div>
-            <h3>11????摮貉?蝡嗉魚</h3>
-            <p>11 ??29 ?亥?銵?批飛?奎鞈踝?曌摮拙?撅???/p>
+            <div class="cs-icon">🎨</div>
+            <h3>11月 — 學藝競賽</h3>
+            <p>11 月 29 日舉行校內學藝競賽，鼓勵孩子展現才華。</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??儭?/div>
-            <h3>12?????⊥????/h3>
-            <p>12 ??21 ?亥?颲行?園???嚗迭餈振?瑁葩頨???</p>
+            <div class="cs-icon">🏟️</div>
+            <h3>12月 — 校慶運動會</h3>
+            <p>12 月 21 日舉辦校慶運動會，歡迎家長踴躍參加！</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??</div>
-            <h3>1?????閰?</h3>
-            <p>1 ??14-15 ?亥?銵??怨????箏飛?飛蝧銝暺?/p>
+            <div class="cs-icon">📖</div>
+            <h3>1月 — 期末評量</h3>
+            <p>1 月 14-15 日舉行期末評量，為學期學習畫下句點。</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??</div>
-            <h3>1????隡平撘?/h3>
-            <p>1 ??20 ?亥?銵?璆剖?嚗????亙???</p>
+            <div class="cs-icon">🎊</div>
+            <h3>1月 — 休業式</h3>
+            <p>1 月 20 日舉行休業式，準備迎接寒假！</p>
           </div>
           <div class="carousel-slide">
-            <div class="cs-icon">??</div>
-            <h3>2?????飛??/h3>
-            <p>2 ??5 ?亦銝飛??摮豢嚗?敺酋摮??唳??</p>
+            <div class="cs-icon">📚</div>
+            <h3>2月 — 開學日</h3>
+            <p>2 月 5 日為下學期開學日，期待孩子們回到校園！</p>
           </div>
         </div>
       </div>
       <div class="carousel-nav">
-        <button class="carousel-arrow" id="carouselPrev">??/button>
+        <button class="carousel-arrow" id="carouselPrev">‹</button>
         <div class="carousel-dots" id="carouselDots"></div>
-        <button class="carousel-arrow" id="carouselNext">??/button>
+        <button class="carousel-arrow" id="carouselNext">›</button>
       </div>
     </section>
 
-    <!-- 7. ?剔??格? -->
+    <!-- 7. 班級目標 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%)">
-      <h2>鈭?剔蝝璅?/h2>
+      <h2>二、本班班級目標</h2>
       <div class="cloud-grid">
-        <div class="cloud-item">?儭???</div>
-        <div class="cloud-item">?? ?</div>
-        <div class="cloud-item">?? ??</div>
-        <div class="cloud-item">?完 蝧?</div>
-        <div class="cloud-item">?? ?亙熒</div>
-        <div class="cloud-item">??甇??</div>
-        <div class="cloud-item">?? ??</div>
-        <div class="cloud-item">?? 蝎暸?/div>
+        <div class="cloud-item">☀️ 善行</div>
+        <div class="cloud-item">🙏 感恩</div>
+        <div class="cloud-item">💖 惜福</div>
+        <div class="cloud-item">🧹 習勞</div>
+        <div class="cloud-item">🏃 健康</div>
+        <div class="cloud-item">✨ 正向</div>
+        <div class="cloud-item">🤝 合作</div>
+        <div class="cloud-item">📚 精進</div>
       </div>
     </section>
 
-    <!-- 8. 隤脩?摰?(1) 雿平 -->
+    <!-- 8. 課程安排(1) 作業 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
-      <h2>銝??撘?隤脩?摰? (1)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">雿平</h3>
+      <h2>三、經營方式：課程安排 (1)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">作業</h3>
       <div class="grid-2col">
         <div class="card">
-          <h3>?? ??</h3>
+          <h3>📖 國語</h3>
           <ul>
-            <li>????/li>
-            <li>????/li>
-            <li>????/li>
-            <li>??蝧?</li>
-            <li>撖思?蝺渡?</li>
+            <li>預習單</li>
+            <li>生字本</li>
+            <li>圈詞本</li>
+            <li>國語習作</li>
+            <li>寫作練習</li>
           </ul>
         </div>
         <div class="card">
-          <h3>? ?詨飛</h3>
+          <h3>🔢 數學</h3>
           <ul>
-            <li>?詨飛蝧?</li>
-            <li>??銴?</li>
-            <li>雿平??/li>
+            <li>數學習作</li>
+            <li>重點複習</li>
+            <li>作業本</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 9. 隤脩?摰?(2) 閰??孵? -->
+    <!-- 9. 課程安排(2) 評量方式 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
-      <h2>銝??撘?隤脩?摰? (2)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">閰??孵?</h3>
+      <h2>三、經營方式：課程安排 (2)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">評量方式</h3>
       <div class="table-wrap">
         <table>
-          <tr><th>??閰?</th><th>?詨飛閰?</th></tr>
-          <tr><td>?賢神</td><td>?典???/td></tr>
-          <tr><td>瘥玨蝺渡???/td><td>?桀???/td></tr>
-          <tr><td>??銴???/td><td>??銴???/td></tr>
+          <tr><th>國語評量</th><th>數學評量</th></tr>
+          <tr><td>聽寫</td><td>隨堂考</td></tr>
+          <tr><td>每課練習卷</td><td>單元卷</td></tr>
+          <tr><td>考前複習卷</td><td>考前複習卷</td></tr>
         </table>
       </div>
     </section>
 
-    <!-- 10. ?蜀閮? -->
+    <!-- 10. 成績計算 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
-      <h2>銝??撘?隤脩?摰? (3)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">?蜀閮?</h3>
+      <h2>三、經營方式：課程安排 (3)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">成績計算</h3>
       <div class="grade-box">
         <div class="g-num">50%</div>
-        <div class="g-label">撟單??蜀</div>
-        <div style="font-size:0.35em;color:#888;margin-top:2px;">嚗??思?璆剔像鈭方?摮貊??漲嚗?/div>
+        <div class="g-label">平時成績</div>
+        <div style="font-size:0.35em;color:#888;margin-top:2px;">（包含作業繳交與學習態度）</div>
         <div class="g-divider"></div>
         <div class="g-num">50%</div>
-        <div class="g-label">?葉???怨?蝮?/div>
-        <div class="g-sub">嚗??飛?∟?摰?瘥?閮?嚗?/div>
+        <div class="g-label">期中、期末考成績</div>
+        <div class="g-sub">（依據學校規定之比例計算）</div>
       </div>
     </section>
 
-    <!-- 11. ?剔??寡 -->
+    <!-- 11. 班級特色 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
-      <h2>銝??撘??剔??寡</h2>
+      <h2>三、經營方式：班級特色</h2>
       <div class="pillar-grid">
         <div class="pillar">
-          <div class="p-icon">??</div>
-          <h3>?梯?</h3>
+          <div class="p-icon">📖</div>
+          <h3>閱讀</h3>
           <ul>
-            <li>?刻???</li>
-            <li>撣???貊?頛芷</li>
-            <li>?脫偌?貉?</li>
+            <li>晨讀時間</li>
+            <li>布可星球書籍輪閱</li>
+            <li>雲水書車</li>
           </ul>
         </div>
         <div class="pillar">
-          <div class="p-icon">??</div>
-          <h3>霈蝬?/h3>
+          <div class="p-icon">📜</div>
+          <h3>讀經</h3>
           <ul>
-            <li>?支???寞?</li>
-            <li>?券?銵?/li>
-            <li>撘?閬?/li>
+            <li>古今背書方法</li>
+            <li>部首表</li>
+            <li>弟子規</li>
           </ul>
         </div>
         <div class="pillar">
-          <div class="p-icon">??</div>
-          <h3>??</h3>
+          <div class="p-icon">🏃</div>
+          <h3>運動</h3>
           <ul>
-            <li>?典?頝郊</li>
-            <li>頝喟鼎瘣餃?</li>
+            <li>晨光跑步</li>
+            <li>跳繩活動</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 12. 摰園皜祇?憿?-->
+    <!-- 12. 家長測驗題 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg3) 100%)">
-      <h2>?? 撠葫撽??其?閫??撠?</h2>
-      <p class="quiz-question" id="quizQuestion">隞乩?雿??胯?剔??剔??格?嚗?/p>
+      <h2>🧐 小測驗：您了解多少？</h2>
+      <p class="quiz-question" id="quizQuestion">以下何者「不是」本班的班級目標？</p>
       <div class="quiz-options" id="quizOptions">
-        <button class="quiz-btn" data-index="0"><span class="q-letter">A</span> ?</button>
-        <button class="quiz-btn" data-index="1"><span class="q-letter">B</span> ??</button>
-        <button class="quiz-btn" data-index="2"><span class="q-letter">C</span> 蝡嗥</button>
-        <button class="quiz-btn" data-index="3"><span class="q-letter">D</span> ??</button>
+        <button class="quiz-btn" data-index="0"><span class="q-letter">A</span> 感恩</button>
+        <button class="quiz-btn" data-index="1"><span class="q-letter">B</span> 善行</button>
+        <button class="quiz-btn" data-index="2"><span class="q-letter">C</span> 競爭</button>
+        <button class="quiz-btn" data-index="3"><span class="q-letter">D</span> 合作</button>
       </div>
       <div class="quiz-feedback" id="quizFeedback"></div>
     </section>
 
-    <!-- 13. 摰園??(銝) -->
+    <!-- 13. 家長配合(一) -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg3) 100%)">
-      <h2>摰園???鈭? (銝)</h2>
+      <h2>家長配合協助事項 (一)</h2>
       <div class="action-list">
         <div class="action-item">
           <div class="action-num">1</div>
           <div class="action-content">
-            <h3>?寥?摮拙??芰??賢?</h3>
-            <p>隢??拙?撠???摮詻??拚?????????/p>
+            <h3>培養孩子自理能力</h3>
+            <p>請協助引導準時上學、吃早餐、整理書包、定期剪指甲。</p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">2</div>
           <div class="action-content">
-            <h3>?舐窗蝪踹??玨瘥蝪賢?</h3>
-            <p>?迨?摮拙?瘥?飛蝧?瘜?/p>
+            <h3>聯絡簿及功課每日簽名</h3>
+            <p>藉此掌握孩子每日的學習狀況。</p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">3</div>
           <div class="action-content">
-            <h3>????雿平閮迤</h3>
-            <p>蝣箏祕閮迤?賢鼠?拙酋摮?甇??嗥霅?/p>
+            <h3>協助督促作業訂正</h3>
+            <p>確實訂正能幫助孩子真正吸收知識。</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 14. ???∠?嚗?閬扳?摨?-->
+    <!-- 14. 拖拉卡片：重要性排序 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
-      <h2>?? ????嚗振?瑞??芸?隞餃?</h2>
-      <p style="font-size:0.38em;color:var(--text2);margin-bottom:0.2em;">??∠?嚗??箸隤????扛撣怠?雿???/p>
+      <h2>👆 拖拉排序：家長的優先任務</h2>
+      <p style="font-size:0.38em;color:var(--text2);margin-bottom:0.2em;">拖曳卡片，排出您認為最重要的親師合作事項</p>
       <div class="drag-area" id="dragArea">
         <div class="drag-card" draggable="true" data-answer="3">
-          <span class="drag-handle">??/span>
+          <span class="drag-handle">⠿</span>
           <span class="drag-order">1</span>
-          <span>?寥?摮拙??芰??賢?</span>
+          <span>培養孩子自理能力</span>
         </div>
         <div class="drag-card" draggable="true" data-answer="1">
-          <span class="drag-handle">??/span>
+          <span class="drag-handle">⠿</span>
           <span class="drag-order">2</span>
-          <span>?舐窗蝪踵??亦偷??/span>
+          <span>聯絡簿每日簽名</span>
         </div>
         <div class="drag-card" draggable="true" data-answer="2">
-          <span class="drag-handle">??/span>
+          <span class="drag-handle">⠿</span>
           <span class="drag-order">3</span>
-          <span>???雿平閮迤</span>
+          <span>督促作業訂正</span>
         </div>
         <div class="drag-card" draggable="true" data-answer="4">
-          <span class="drag-handle">??/span>
+          <span class="drag-handle">⠿</span>
           <span class="drag-order">4</span>
-          <span>靽?閬芸葦皞?/span>
+          <span>保持親師溝通</span>
         </div>
       </div>
-      <button class="drag-check-btn" id="dragCheckBtn">??蝣箄???</button>
+      <button class="drag-check-btn" id="dragCheckBtn">✓ 確認排序</button>
       <div class="drag-feedback" id="dragFeedback"></div>
     </section>
 
-    <!-- 15. 摰園??(鈭? -->
+    <!-- 15. 家長配合(二) -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
-      <h2>摰園???鈭? (鈭?</h2>
+      <h2>家長配合協助事項 (二)</h2>
       <div class="action-list">
         <div class="action-item">
           <div class="action-num">4</div>
           <div class="action-content">
-            <h3>?桃??飛蝧憓?/h3>
-            <p>?踵?撣園憌?瑕??飛?⊿??拙??唳??/p>
+            <h3>單純的學習環境</h3>
+            <p>勿攜帶零食、玩具及教學無關物品到校。</p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">5</div>
           <div class="action-content">
-            <h3>隢?隢蜓?蝜?/h3>
-            <p>?箔?摮拙?摰嚗??????嚗?? Line ?舐鼠嚗?/p>
+            <h3>請假請主動聯繫</h3>
+            <p>為了孩子安全，請假請務必通知（可透過 Line 聯繫）。</p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">6</div>
           <div class="action-content">
-            <h3>?冽?靽?皞?/h3>
-            <p>?遙雿?瘜??冽???撣怨蝜恬?閬芸葦?????嚗?/p>
+            <h3>隨時保持溝通</h3>
+            <p>有任何狀況請隨時與導師聯繫，親師合作最重要！</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 16. 閬芸葦?舐窗?孵? -->
+    <!-- 16. 親師聯絡方式 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
-      <h2>閬芸葦?舐窗?孵?</h2>
+      <h2>親師聯絡方式</h2>
       <div class="contact-card">
         <div class="contact-item">
-          <span class="c-icon">?</span>
-          <span><span class="c-label">??</span> 0972-862870</span>
+          <span class="c-icon">📱</span>
+          <span><span class="c-label">手機</span> 0972-862870</span>
         </div>
         <div class="contact-item">
-          <span class="c-icon">??</span>
-          <span><span class="c-label">摮豢</span> 06-7222227</span>
+          <span class="c-icon">☎️</span>
+          <span><span class="c-label">學校</span> 06-7222227</span>
         </div>
         <div class="contact-item">
-          <span class="c-icon">?</span>
-          <span><span class="c-label">LINE@</span> 隢????亦蝝黎蝯?/span>
+          <span class="c-icon">💬</span>
+          <span><span class="c-label">LINE@</span> 請掃描加入班級群組</span>
         </div>
       </div>
     </section>
 
-    <!-- 17. 皜祇?憿?2嚗??撘?-->
+    <!-- 17. 測驗題 2：評量方式 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%)">
-      <h2>?? 撠葫撽??蜀閮?</h2>
-      <p class="quiz-question" id="quizQuestion2">?砍飛??銝剜??怨??蜀??撠?靘?</p>
+      <h2>🧐 小測驗：成績計算</h2>
+      <p class="quiz-question" id="quizQuestion2">本學期期中期末考佔成績的多少比例？</p>
       <div class="quiz-options" id="quizOptions2">
         <button class="quiz-btn" data-index="0"><span class="q-letter">A</span> 30%</button>
         <button class="quiz-btn" data-index="1"><span class="q-letter">B</span> 40%</button>
@@ -730,13 +732,13 @@
       <div class="quiz-feedback" id="quizFeedback2"></div>
     </section>
 
-    <!-- 18. ??? -->
+    <!-- 18. 感謝聆聽 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
       <div class="end-slide">
-        <div class="big-emoji">??</div>
-        <h1 style="color:var(--accent2);">???</h1>
-        <p class="tagline">?????嚗隡游酋摮翰璅??瘀?</p>
-        <div style="font-size:2em;margin-top:0.5em;opacity:0.5;">???????抽?把??/div>
+        <div class="big-emoji">🎉</div>
+        <h1 style="color:var(--accent2);">感謝聆聽</h1>
+        <p class="tagline">期待與您攜手，陪伴孩子快樂成長！</p>
+        <div style="font-size:2em;margin-top:0.5em;opacity:0.5;">🌟🌈👨‍👩‍👧‍👦</div>
       </div>
     </section>
 
@@ -760,7 +762,7 @@
 </script>
 
 <script>
-// === 銝駁??? ===
+// === 主題切換 ===
 (function() {
   const dots = document.querySelectorAll('.theme-dot');
   const revealEl = document.querySelector('.reveal');
@@ -774,7 +776,7 @@
   });
 })();
 
-// === 頛芣 ===
+// === 輪播 ===
 (function() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
@@ -809,7 +811,7 @@
   });
 })();
 
-// === 皜祇?憿?1 ===
+// === 測驗題 1 ===
 (function() {
   const container = document.getElementById('quizOptions');
   const feedback = document.getElementById('quizFeedback');
@@ -825,14 +827,14 @@
       btn.classList.add(idx === correctIndex ? 'correct' : 'wrong');
       if (idx !== correctIndex) btns[correctIndex].classList.add('reveal-answer');
       feedback.textContent = idx === correctIndex
-        ? '??蝑?鈭??祉?格??舀??押?銵?蝳??摨瑯迤??雿移??
-        : '????喇?蝡嗥???胯?剔??格???;
+        ? '✅ 答對了！本班目標是感恩、善行、惜福、習勞、健康、正向、合作、精進'
+        : '❌ 再想想… 競爭「不是」本班的目標喔';
       feedback.className = 'quiz-feedback ' + (idx === correctIndex ? 'correct' : 'wrong');
     });
   });
 })();
 
-// === 皜祇?憿?2 ===
+// === 測驗題 2 ===
 (function() {
   const container = document.getElementById('quizOptions2');
   const feedback = document.getElementById('quizFeedback2');
@@ -848,14 +850,14 @@
       btn.classList.add(idx === correctIndex ? 'correct' : 'wrong');
       if (idx !== correctIndex) btns[correctIndex].classList.add('reveal-answer');
       feedback.textContent = idx === correctIndex
-        ? '??蝑?鈭??葉???撟單??蜀?? 50%'
-        : '??蝑???50%嚗?撟單??蜀??銝??;
+        ? '✅ 答對了！期中期末考和平時成績各佔 50%'
+        : '❌ 答案是 50%，與平時成績各佔一半';
       feedback.className = 'quiz-feedback ' + (idx === correctIndex ? 'correct' : 'wrong');
     });
   });
 })();
 
-// === ???∠??? ===
+// === 拖拉卡片排序 ===
 (function() {
   const area = document.getElementById('dragArea');
   const checkBtn = document.getElementById('dragCheckBtn');
@@ -916,13 +918,13 @@
       }
     });
     feedback.textContent = allCorrect
-      ? '??憭芣?鈭??閬芸葦????????摨?'
-      : '? 撱箄降??嚗??芰??賢? ?∟蝯∠倏蝪賢? ?Ｖ?璆剛?甇????????;
+      ? '✅ 太棒了！這是親師合作最重要的優先順序！'
+      : '💡 建議順序：①自理能力 ②聯絡簿簽名 ③作業訂正 ④保持溝通';
     feedback.style.color = allCorrect ? 'var(--success)' : '#ffb74d';
   });
 })();
 
-// === ???莎?Firebase Firestore ?單??郊 ===
+// === 文字雲：Firebase Firestore 即時同步 ===
 const firebaseConfig = {
   apiKey: "AIzaSyCJlbk8bKzgBJ7evlZZlhtatgjPsQsVZR8",
   authDomain: "word-cloud-6e807.firebaseapp.com",
@@ -945,7 +947,7 @@ function renderWC() {
     `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
       <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
     </div>`
-  ).join('') || '<div style="color:#555;padding:8px 0;">撠鞈?</div>';
+  ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
   document.getElementById('wc-empty').style.display = wcData.length > 0 ? 'none' : '';
   const canvas = document.getElementById('wc-canvas');
   if (!canvas || typeof WordCloud === 'undefined') return;
@@ -1001,8 +1003,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const qrEl = document.getElementById('qrcode');
   if (window.location.protocol === 'file:') {
-    qrEl.innerHTML = '<div style="font-size:0.7em;color:#888;text-align:center;line-height:1.5;">?<br>?函蔡敺?br>?芸??</div>';
-    document.getElementById('qr-hint').textContent = '?函蔡??GitHub Pages 敺?舀???;
+    qrEl.innerHTML = '<div style="font-size:0.7em;color:#888;text-align:center;line-height:1.5;">📱<br>部署後<br>自動啟用</div>';
+    document.getElementById('qr-hint').textContent = '部署至 GitHub Pages 後即可掃描';
   } else if (typeof QRCode !== 'undefined') {
     var submitUrl = window.location.origin + window.location.pathname.replace(/index\.html$/, '') + 'submit.html';
     new QRCode(qrEl, { text: submitUrl, width: 140, height: 140, colorDark: '#0d1117', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
