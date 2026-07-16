@@ -845,6 +845,37 @@
       <div class="drag-feedback" id="dragFeedback"></div>
     </section>
 
+    <!-- 15b. 承諾 Checklist -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%)">
+      <h2>🤝 親師承諾 Checklist</h2>
+      <p style="font-size:0.38em;color:var(--text2);margin-bottom:0.6em;">點擊下方項目，許下您對孩子本學期的承諾</p>
+      <div class="checklist" style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:10px;">
+        <label class="check-item" style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all 0.25s;font-size:0.45em;text-align:left;">
+          <input type="checkbox" style="width:20px;height:20px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0;">
+          <span>每天陪孩子閱讀 20 分鐘，養成閱讀習慣</span>
+        </label>
+        <label class="check-item" style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all 0.25s;font-size:0.45em;text-align:left;">
+          <input type="checkbox" style="width:20px;height:20px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0;">
+          <span>每日檢查聯絡簿並簽名，關心學習進度</span>
+        </label>
+        <label class="check-item" style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all 0.25s;font-size:0.45em;text-align:left;">
+          <input type="checkbox" style="width:20px;height:20px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0;">
+          <span>督促孩子按時完成作業並確實訂正</span>
+        </label>
+        <label class="check-item" style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all 0.25s;font-size:0.45em;text-align:left;">
+          <input type="checkbox" style="width:20px;height:20px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0;">
+          <span>控制孩子使用 3C 產品的時間</span>
+        </label>
+        <label class="check-item" style="display:flex;align-items:center;gap:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:14px 18px;cursor:pointer;transition:all 0.25s;font-size:0.45em;text-align:left;">
+          <input type="checkbox" style="width:20px;height:20px;accent-color:var(--accent2);cursor:pointer;flex-shrink:0;">
+          <span>積極參與學校活動，與老師保持良好溝通</span>
+        </label>
+      </div>
+      <div style="text-align:center;margin-top:16px;min-height:1.5em;">
+        <span id="checkCount" style="font-size:0.45em;color:var(--text2);">已承諾 0 / 5 項</span>
+      </div>
+    </section>
+
     <!-- 16. 親師聯絡方式 -->
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
       <h2>親師聯絡方式</h2>
@@ -1555,8 +1586,24 @@ function vibrate(pattern) {
     drawPieChart(dailySum, examSum, 50, 50, total);
   }
 
-  sliders.forEach(sl => sl.addEventListener('input', calc));
+  sliders.forEach(sl => {
+    sl.addEventListener('input', calc);
+    sl.addEventListener('input', function sliderSound() {
+      playItemSound();
+      vibrate(6);
+    });
+  });
   calc();
+})();
+
+/* 行事曆時間線點擊音效（已內建 vibrate）— 補充 playClickSound */
+(function() {
+  const tlDots = document.querySelectorAll('.tl-dot');
+  tlDots.forEach(dot => {
+    dot.addEventListener('click', function tlSound() {
+      playClickSound();
+    });
+  });
 })();
 
 /* ─── 整合：既存元件加入五感回饋 ─── */
@@ -1654,12 +1701,39 @@ renderWC = function() {
 })();
 
 /* 主題切換音效 */
-document.querySelectorAll('.theme-dot').forEach(dot => {
-  dot.addEventListener('click', function themeSound() {
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', function themeSound() {
     playItemSound();
     vibrate(10);
   });
 });
+
+/* 承諾 Checklist 音效 */
+(function() {
+  const checks = document.querySelectorAll('.check-item input[type="checkbox"]');
+  const countEl = document.getElementById('checkCount');
+  checks.forEach(cb => {
+    cb.addEventListener('change', function() {
+      const checked = document.querySelectorAll('.check-item input[type="checkbox"]:checked').length;
+      if (countEl) countEl.textContent = '已承諾 ' + checked + ' / 5 項';
+      if (this.checked) {
+        playItemSound();
+        vibrate(10);
+        if (checked === 5) {
+          setTimeout(playChord, 200);
+          setTimeout(() => { if (window.fireConfetti) fireConfetti(80); }, 300);
+          if (countEl) { countEl.textContent = '🎉 全數承諾！攜手陪伴孩子成長！'; countEl.style.color = 'var(--success)'; }
+        }
+        const label = this.closest('.check-item');
+        if (label) label.style.borderColor = 'var(--success)';
+      } else {
+        const label = this.closest('.check-item');
+        if (label) label.style.borderColor = '';
+        if (countEl) { countEl.style.color = ''; }
+      }
+    });
+  });
+})();
 
 /* 翻頁音效 */
 Reveal.on('slidechanged', function() {
