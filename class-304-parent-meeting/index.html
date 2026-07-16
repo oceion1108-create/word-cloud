@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>三年四班 班親會</title>
+  <title>銝僑? ?剛扛????鈭?撘瑕???/title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
@@ -13,10 +13,37 @@
   <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
   <style>
     :root {
-      --accent:  #e8643a;
+      --bg1: #0d1117;
+      --bg2: #1a1a2e;
+      --bg3: #16213e;
+      --accent: #e8643a;
       --accent2: #4fc3f7;
       --success: #81c784;
-      --warn:    #ffb74d;
+      --warn: #ffb74d;
+      --text: #eee;
+      --text2: #aaa;
+      --card-bg: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.15);
+    }
+    .theme-teal {
+      --bg1: #0d1f1a; --bg2: #1a2e28; --bg3: #163e32;
+      --accent: #26a69a; --accent2: #80cbc4;
+      --success: #a5d6a7; --warn: #ffcc80;
+    }
+    .theme-warm {
+      --bg1: #1f120d; --bg2: #2e1d1a; --bg3: #3e2616;
+      --accent: #ff8a65; --accent2: #ffab91;
+      --success: #a5d6a7; --warn: #ffd54f;
+    }
+    .theme-purple {
+      --bg1: #140d1f; --bg2: #221a2e; --bg3: #2e163e;
+      --accent: #ce93d8; --accent2: #b39ddb;
+      --success: #a5d6a7; --warn: #ffe082;
+    }
+    .theme-green {
+      --bg1: #0d1f12; --bg2: #1a2e1f; --bg3: #163e1d;
+      --accent: #66bb6a; --accent2: #81c784;
+      --success: #a5d6a7; --warn: #ffd54f;
     }
     .reveal { font-family: 'Segoe UI', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; }
     .reveal h1, .reveal h2, .reveal h3 { font-family: inherit; font-weight: 700; }
@@ -24,48 +51,47 @@
     .reveal h2 { font-size: 1.5em; color: var(--accent2); }
     .reveal .progress { color: var(--accent); }
     .reveal .controls { color: var(--accent2); }
-    .reveal .slide-number { font-size: 14px; color: #888; }
-
+    .reveal .slide-number {
+      font-size: 13px; color: rgba(255,255,255,0.35);
+      background: rgba(0,0,0,0.4); padding: 4px 12px;
+      border-radius: 20px; backdrop-filter: blur(4px);
+      bottom: 16px !important; right: 16px !important;
+      left: auto !important; top: auto !important;
+      font-weight: 600; letter-spacing: 0.05em;
+    }
     .title-slide { text-align: center; }
     .title-slide .tag {
       display: inline-block; background: var(--accent); color: #fff;
       padding: 4px 14px; border-radius: 20px; font-size: 0.55em;
       letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
     }
-    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
-    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: #888; }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text2); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text2); }
     .title-slide .emoji-deco { font-size: 4em; margin-bottom: 0.2em; }
-
     .stat-row { display: flex; gap: 20px; justify-content: center; margin-top: 1em; }
     .stat-card {
-      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      background: var(--card-bg); border: 1px solid var(--card-border);
       border-radius: 12px; padding: 20px 26px; text-align: center; flex: 1;
     }
     .stat-card .num { font-size: 1.8em; font-weight: 800; color: var(--accent); line-height: 1; }
-    .stat-card .label { font-size: 0.42em; color: #ccc; margin-top: 6px; }
-
+    .stat-card .label { font-size: 0.42em; color: var(--text2); margin-top: 6px; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.6em; }
     .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 0.6em; }
     .grid-4col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
-
     .card {
-      background: rgba(255,255,255,0.05); border-radius: 10px;
+      background: var(--card-bg); border-radius: 10px;
       padding: 16px; text-align: center;
     }
     .card h3 { font-size: 0.5em; margin-bottom: 8px; }
     .card ul { list-style: none; padding: 0; margin: 0; }
     .card ul li { font-size: 0.38em; padding: 4px 0; color: #bbb; }
-    .card ul li::before { content: "✦ "; opacity: 0.5; }
-
-    .table-wrap {
-      width: 100%; max-width: 800px; margin: 0 auto;
-    }
+    .card ul li::before { content: "??"; opacity: 0.5; }
+    .table-wrap { width: 100%; max-width: 800px; margin: 0 auto; }
     .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.45em; }
     .table-wrap th, .table-wrap td {
       padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center;
     }
     .table-wrap th { background: rgba(79,195,247,0.15); color: var(--accent2); font-weight: 700; }
-
     .timeline { position: relative; padding-left: 36px; margin-top: 0.6em; text-align: left; display: inline-block; }
     .timeline::before {
       content: ''; position: absolute; left: 14px; top: 4px; bottom: 4px;
@@ -78,20 +104,18 @@
       background: var(--accent); border: 2px solid #1a1a2e;
     }
     .timeline-item .ti-date { color: var(--accent); font-weight: 700; font-size: 1.1em; display: inline; margin-right: 10px; }
-    .timeline-item .ti-text { color: #ccc; display: inline; }
-
+    .timeline-item .ti-text { color: var(--text2); display: inline; }
     .cloud-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 0.6em; }
     .cloud-item {
-      background: rgba(255,255,255,0.08); border-radius: 40px; padding: 14px 8px;
+      background: var(--card-bg); border-radius: 40px; padding: 14px 8px;
       text-align: center; font-size: 0.5em; font-weight: 700;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid var(--card-border);
       transition: transform 0.2s, background 0.2s;
     }
     .cloud-item:hover { transform: scale(1.06); background: rgba(79,195,247,0.15); }
-
     .pillar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 0.6em; }
     .pillar {
-      background: rgba(255,255,255,0.06); border-radius: 14px;
+      background: var(--card-bg); border-radius: 14px;
       padding: 20px 14px; text-align: center;
       border-top: 3px solid var(--accent2);
     }
@@ -99,12 +123,11 @@
     .pillar h3 { font-size: 0.55em; color: var(--accent2); margin-bottom: 10px; }
     .pillar ul { list-style: none; padding: 0; margin: 0; }
     .pillar ul li { font-size: 0.38em; padding: 3px 0; color: #bbb; }
-    .pillar ul li::before { content: "· "; opacity: 0.5; }
-
+    .pillar ul li::before { content: "繚 "; opacity: 0.5; }
     .action-list { width: 100%; max-width: 700px; margin: 0 auto; }
     .action-item {
       display: flex; gap: 16px; align-items: flex-start;
-      background: rgba(255,255,255,0.06); border-radius: 12px;
+      background: var(--card-bg); border-radius: 12px;
       padding: 14px 18px; margin-bottom: 12px; text-align: left;
     }
     .action-num {
@@ -113,46 +136,41 @@
     }
     .action-content { flex: 1; }
     .action-content h3 { font-size: 0.5em; margin-bottom: 4px; color: #eee; }
-    .action-content p { font-size: 0.38em; color: #aaa; line-height: 1.6; margin: 0; }
-
+    .action-content p { font-size: 0.38em; color: var(--text2); line-height: 1.6; margin: 0; }
     .contact-card {
-      background: rgba(255,255,255,0.06); border-radius: 16px;
+      background: var(--card-bg); border-radius: 16px;
       padding: 24px 32px; max-width: 450px; margin: 0.6em auto 0; text-align: left;
     }
     .contact-item {
       display: flex; align-items: center; gap: 14px; padding: 10px 0;
-      font-size: 0.48em; color: #ccc;
+      font-size: 0.48em; color: var(--text2);
     }
     .contact-item .c-icon { font-size: 1.4em; }
     .contact-item .c-label { font-weight: 700; color: var(--accent2); min-width: 44px; }
-
     .quote-box {
-      background: rgba(255,255,255,0.05); border-left: 4px solid var(--accent);
+      background: var(--card-bg); border-left: 4px solid var(--accent);
       border-radius: 8px; padding: 20px 24px; margin: 0.8em auto;
       font-size: 0.7em; color: #ddd; font-style: italic; line-height: 1.7;
       max-width: 600px;
     }
-
     .end-slide { text-align: center; }
     .end-slide .big-emoji { font-size: 4em; margin-bottom: 0.3em; }
     .end-slide h1 { font-size: 2.5em; }
-    .end-slide .tagline { font-size: 0.6em; color: #aaa; margin-top: 0.5em; }
-
+    .end-slide .tagline { font-size: 0.6em; color: var(--text2); margin-top: 0.5em; }
     .grade-box {
-      background: rgba(255,255,255,0.06); border-radius: 16px;
+      background: var(--card-bg); border-radius: 16px;
       padding: 20px 28px; max-width: 480px; margin: 0.6em auto 0;
     }
     .grade-box .g-num { font-size: 1.6em; font-weight: 900; color: var(--accent); }
-    .grade-box .g-label { font-size: 0.42em; color: #ccc; margin-top: 2px; }
+    .grade-box .g-label { font-size: 0.42em; color: var(--text2); margin-top: 2px; }
     .grade-box .g-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 16px 0; }
     .grade-box .g-sub { font-size: 0.35em; color: #888; margin-top: 4px; }
-
     .wc-section {
       display: grid; grid-template-columns: 220px 1fr; gap: 14px; height: 420px; margin-top: 0.4em;
     }
     .wc-left { display: flex; flex-direction: column; gap: 10px; }
     .wc-input-box {
-      background: rgba(255,255,255,0.06); border-radius: 10px; padding: 14px;
+      background: var(--card-bg); border-radius: 10px; padding: 14px;
     }
     .wc-input-box label { font-size: 0.38em; color: var(--accent2); font-weight: 700; display: block; margin-bottom: 8px; }
     .wc-input-box input {
@@ -167,7 +185,7 @@
       border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer;
     }
     .wc-rank {
-      background: rgba(255,255,255,0.06); border-radius: 10px; padding: 14px;
+      background: var(--card-bg); border-radius: 10px; padding: 14px;
       flex: 1; overflow: hidden; display: flex; flex-direction: column;
     }
     .wc-rank .rank-header {
@@ -178,7 +196,7 @@
       padding: 2px 7px; border-radius: 10px; font-size: 0.85em;
       animation: pulse 1.5s infinite; margin-left: 4px;
     }
-    .wc-rank .rank-list { font-size: 0.34em; overflow-y: auto; flex: 1; color: #ccc; }
+    .wc-rank .rank-list { font-size: 0.34em; overflow-y: auto; flex: 1; color: var(--text2); }
     .wc-rank .rank-footer {
       margin-top: 8px; font-size: 0.32em; color: #666;
       border-top: 1px solid rgba(255,255,255,0.08); padding-top: 6px;
@@ -193,8 +211,119 @@
       color: #444; font-size: 0.42em; text-align: center;
       pointer-events: none; line-height: 2;
     }
-
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+    /* === 銝駁????? === */
+    .theme-switcher {
+      position: fixed; top: 16px; right: 16px; z-index: 999;
+      display: flex; gap: 6px; background: rgba(0,0,0,0.5);
+      padding: 6px 10px; border-radius: 24px;
+      backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);
+    }
+    .theme-dot {
+      width: 22px; height: 22px; border-radius: 50%; cursor: pointer;
+      border: 2px solid transparent; transition: all 0.25s;
+    }
+    .theme-dot:hover { transform: scale(1.2); }
+    .theme-dot.active { border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    .theme-dot[data-theme="default"] { background: linear-gradient(135deg,#0d1117,#1a1a2e); }
+    .theme-dot[data-theme="teal"]    { background: linear-gradient(135deg,#0d1f1a,#1a2e28); }
+    .theme-dot[data-theme="warm"]    { background: linear-gradient(135deg,#1f120d,#2e1d1a); }
+    .theme-dot[data-theme="purple"]  { background: linear-gradient(135deg,#140d1f,#221a2e); }
+    .theme-dot[data-theme="green"]   { background: linear-gradient(135deg,#0d1f12,#1a2e1f); }
+
+    /* === 皜祇?憿?=== */
+    .quiz-question { font-size: 0.65em; font-weight: 700; margin-bottom: 0.6em; color: #fff; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; max-width: 520px; margin: 0 auto; }
+    .quiz-btn {
+      padding: 14px 20px; border-radius: 12px; border: 2px solid var(--card-border);
+      background: var(--card-bg); color: #ddd; font-size: 0.45em;
+      cursor: pointer; transition: all 0.25s; font-family: inherit;
+      text-align: left; display: flex; align-items: center; gap: 12px;
+    }
+    .quiz-btn:hover:not(:disabled) { border-color: var(--accent2); background: rgba(79,195,247,0.1); }
+    .quiz-btn .q-letter {
+      display: inline-flex; width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9em; flex-shrink: 0;
+    }
+    .quiz-btn.correct { border-color: var(--success) !important; background: rgba(129,199,132,0.15) !important; }
+    .quiz-btn.correct .q-letter { background: var(--success); color: #0d1117; }
+    .quiz-btn.wrong { border-color: #ef5350 !important; background: rgba(239,83,80,0.15) !important; }
+    .quiz-btn.wrong .q-letter { background: #ef5350; color: #fff; }
+    .quiz-btn:disabled { opacity: 0.6; cursor: default; }
+    .quiz-feedback { font-size: 0.4em; margin-top: 12px; min-height: 1.5em; font-weight: 600; }
+    .quiz-feedback.correct { color: var(--success); }
+    .quiz-feedback.wrong { color: #ef5350; }
+    .quiz-btn.reveal-answer { border-color: var(--success) !important; background: rgba(129,199,132,0.1) !important; }
+
+    /* === ???∠? === */
+    .drag-area {
+      display: flex; flex-direction: column; gap: 8px; max-width: 540px; margin: 0.4em auto 0;
+    }
+    .drag-card {
+      background: var(--card-bg); border: 2px solid var(--card-border);
+      border-radius: 10px; padding: 12px 18px; font-size: 0.42em;
+      cursor: grab; transition: all 0.2s; display: flex; align-items: center; gap: 12px;
+      user-select: none;
+    }
+    .drag-card:active { cursor: grabbing; opacity: 0.7; }
+    .drag-card.drag-over { border-color: var(--accent2); background: rgba(79,195,247,0.1); }
+    .drag-card .drag-handle {
+      color: #666; font-size: 1.2em; cursor: grab; flex-shrink: 0;
+    }
+    .drag-card .drag-order {
+      display: inline-flex; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent); color: #fff; align-items: center; justify-content: center;
+      font-size: 0.75em; font-weight: 700; flex-shrink: 0;
+    }
+    .drag-check-btn {
+      margin-top: 12px; padding: 10px 28px; border-radius: 10px; border: none;
+      background: var(--accent2); color: #0d1117; font-weight: 700; font-size: 0.4em;
+      cursor: pointer; font-family: inherit; transition: opacity 0.2s;
+    }
+    .drag-check-btn:hover { opacity: 0.85; }
+    .drag-feedback { font-size: 0.4em; margin-top: 10px; font-weight: 600; min-height: 1.5em; }
+    .drag-card.drag-correct { border-color: var(--success) !important; background: rgba(129,199,132,0.15) !important; }
+    .drag-card.drag-wrong { border-color: #ef5350 !important; background: rgba(239,83,80,0.12) !important; }
+
+    /* === 皛?頛芣 === */
+    .carousel-wrap {
+      position: relative; max-width: 700px; margin: 0.4em auto 0; overflow: hidden;
+      border-radius: 14px; background: var(--card-bg);
+    }
+    .carousel-track {
+      display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .carousel-slide {
+      min-width: 100%; padding: 28px 32px; box-sizing: border-box;
+      text-align: center;
+    }
+    .carousel-slide .cs-icon { font-size: 3em; margin-bottom: 0.2em; }
+    .carousel-slide h3 { font-size: 0.7em; color: var(--accent2); margin-bottom: 0.2em; }
+    .carousel-slide p { font-size: 0.4em; color: var(--text2); line-height: 1.7; max-width: 480px; margin: 0 auto; }
+    .carousel-nav {
+      display: flex; justify-content: center; gap: 12px; margin-top: 12px; align-items: center;
+    }
+    .carousel-arrow {
+      width: 36px; height: 36px; border-radius: 50%; border: none;
+      background: var(--card-bg); color: #fff; font-size: 1em; cursor: pointer;
+      transition: background 0.2s; display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-arrow:hover { background: rgba(255,255,255,0.15); }
+    .carousel-dots { display: flex; gap: 6px; }
+    .carousel-dot {
+      width: 10px; height: 10px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.25s;
+    }
+    .carousel-dot.active { background: var(--accent2); width: 26px; border-radius: 5px; }
+
+    /* 摨鋆ˇ */
+    .footer-brand {
+      position: fixed; bottom: 16px; left: 16px; z-index: 999;
+      font-size: 11px; color: rgba(255,255,255,0.2);
+      font-weight: 500; letter-spacing: 0.04em;
+    }
 
     @media (max-width: 768px) {
       .wc-section { grid-template-columns: 1fr; height: auto; }
@@ -207,302 +336,407 @@
   </style>
 </head>
 <body>
+
+<!-- 銝駁?????-->
+<div class="theme-switcher" id="themeSwitcher">
+  <div class="theme-dot active" data-theme="default" title="瘛望絲??></div>
+  <div class="theme-dot" data-theme="teal" title="皝偌蝬?></div>
+  <div class="theme-dot" data-theme="warm" title="?璈?></div>
+  <div class="theme-dot" data-theme="purple" title="?啗﹝蝝?></div>
+  <div class="theme-dot" data-theme="green" title="璉格?蝬?></div>
+</div>
+<div class="footer-brand" id="footerBrand">??銝僑? ?剛扛??/div>
+
 <div class="reveal">
   <div class="slides">
 
-    <!-- 1. 封面 -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 50%, #16213e 100%)"
+    <!-- 1. 撠 -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%)"
              data-background-opacity="1">
       <div class="title-slide">
-        <div class="emoji-deco">🏫</div>
-        <div class="tag">2026 學年度 · 班親會</div>
-        <h1>三年四班 班親會</h1>
-        <p style="font-size:0.7em;color:var(--accent);margin-top:0.3em;">歡迎光臨</p>
-        <p class="author">導師：楊明道</p>
+        <div class="emoji-deco">?</div>
+        <div class="tag">2026 摮詨僑摨?繚 ?剛扛??/div>
+        <h1>銝僑? ?剛扛??/h1>
+        <p style="font-size:0.7em;color:var(--accent);margin-top:0.3em;">甇∟??</p>
+        <p class="author">撠葦嚗???</p>
       </div>
     </section>
 
-    <!-- 2. 互動文字雲 -->
-    <section id="slide-wordcloud" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
-      <h2 style="font-size:1.1em; margin-bottom:0.3em;">寫下您對孩子的期望</h2>
+    <!-- 2. 鈭?????-->
+    <section id="slide-wordcloud" data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
+      <h2 style="font-size:1.1em; margin-bottom:0.3em;">撖思??典?摮拙?????/h2>
       <div style="display:flex; gap:14px; height:420px; margin-top:0.3em;">
-        <!-- 左欄：QR Code + 說明 -->
         <div style="flex:0 0 180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
           <div style="background:#fff; border-radius:12px; padding:10px; width:160px; height:160px; display:flex; align-items:center; justify-content:center;">
             <div id="qrcode"></div>
           </div>
           <div id="qr-hint" style="font-size:0.35em; color:#aaa; text-align:center; line-height:1.6;">
-            掃描 QR Code<br>用手機送出您的祝福 ✨
-          </div>
+            ?? QR Code<br>?冽?璈?函?蟡? ??          </div>
         </div>
-        <!-- 中欄：輸入 + 排行 -->
         <div style="flex:1; display:flex; flex-direction:column; gap:10px; min-width:0;">
           <div class="wc-input-box">
-            <label>輸入您的期許與祝福</label>
-            <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20" />
-            <button id="wc-btn">送出 ↵</button>
+            <label>頛詨?函??迂??蝳?/label>
+            <input id="wc-input" type="text" placeholder="頛詨?閰? maxlength="20" />
+            <button id="wc-btn">? ??/button>
           </div>
           <div class="wc-rank">
-            <div class="rank-header">熱門關鍵詞 <span class="live">LIVE</span></div>
+            <div class="rank-header">?梢??閰?<span class="live">LIVE</span></div>
             <div class="rank-list" id="wc-list"></div>
             <div class="rank-footer">
-              總提交：<span id="wc-total" style="color:var(--accent);font-weight:700;">0</span>　
-              不同答案：<span id="wc-unique" style="color:var(--accent2);font-weight:700;">0</span>
+              蝮賣?鈭歹?<span id="wc-total" style="color:var(--accent);font-weight:700;">0</span>?
+              銝?蝑?嚗?span id="wc-unique" style="color:var(--accent2);font-weight:700;">0</span>
             </div>
           </div>
         </div>
-        <!-- 右欄：文字雲 -->
         <div class="wc-canvas-wrap" style="flex:1.5;">
           <canvas id="wc-canvas"></canvas>
           <div class="wc-empty" id="wc-empty">
-            輸入第一個答案<br>文字雲就會出現 ✨
-          </div>
+            頛詨蝚砌???獢?br>???脣停?????          </div>
         </div>
       </div>
     </section>
 
-    <!-- 3. 歡迎蒞臨 -->
-    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%)">
-      <h2>歡迎各位家長的蒞臨</h2>
-      <div style="font-size:4em;margin-bottom:0.2em;">🧸</div>
-      <div class="quote-box">有您對孩子的關心，真好！</div>
+    <!-- 3. 甇∟?? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
+      <h2>甇∟???摰園????/h2>
+      <div style="font-size:4em;margin-bottom:0.2em;">?孛</div>
+      <div class="quote-box">?撠酋摮???嚗?憟踝?</div>
     </section>
 
-    <!-- 4. 班級概況 -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
-      <h2>一、班級概況</h2>
+    <!-- 4. ?剔?璁? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
+      <h2>銝?蝝?瘜?/h2>
       <div class="stat-row">
         <div class="stat-card">
           <div class="num">25</div>
-          <div class="label">學生人數</div>
+          <div class="label">摮貊?鈭箸</div>
         </div>
         <div class="stat-card">
           <div class="num">14</div>
-          <div class="label">👦 男生</div>
+          <div class="label">? ?瑞?</div>
         </div>
         <div class="stat-card">
           <div class="num">11</div>
-          <div class="label">👧 女生</div>
+          <div class="label">? 憟喟?</div>
         </div>
       </div>
-      <p style="font-size:0.45em;color:#888;margin-top:0.6em;">導師：楊明道</p>
+      <p style="font-size:0.45em;color:#888;margin-top:0.6em;">撠葦嚗???</p>
     </section>
 
-    <!-- 5. 科任老師 -->
-    <section data-background-gradient="linear-gradient(135deg, #16213e 0%, #0d1117 100%)">
-      <h2>本班科任老師</h2>
+    <!-- 5. 蝘遙?葦 -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
+      <h2>?祉蝘遙?葦</h2>
       <div class="table-wrap">
         <table>
-          <tr><th>領域</th><th>老師</th><th>領域</th><th>老師</th></tr>
-          <tr><td>英語</td><td>吳敏琿老師</td><td>自然</td><td>謝馨儀老師</td></tr>
-          <tr><td>音樂</td><td>陳萱宇老師</td><td>美勞</td><td>李心蘋老師</td></tr>
-          <tr><td>台語/電腦</td><td>李佩蓉老師</td><td>雙語健康</td><td>郭瑾融老師</td></tr>
-          <tr><td>外師</td><td>Cindy老師</td><td>體育</td><td>鄭勝鍇老師</td></tr>
+          <tr><th>??</th><th>?葦</th><th>??</th><th>?葦</th></tr>
+          <tr><td>?梯?</td><td>?單??輯葦</td><td>?芰</td><td>雓成??葦</td></tr>
+          <tr><td>?單?</td><td>?唾摰葦</td><td>蝢?</td><td>???葦</td></tr>
+          <tr><td>?啗?/?餉</td><td>?蔗?葦</td><td>???亙熒</td><td>?剔?葦</td></tr>
+          <tr><td>憭葦</td><td>Cindy?葦</td><td>擃</td><td>?剖??葦</td></tr>
         </table>
       </div>
     </section>
 
-    <!-- 6. 學校重要行事 -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
-      <h2>本學期學校重要行事</h2>
-      <div class="timeline">
-        <div class="timeline-item"><span class="ti-date">9/20</span><span class="ti-text">防災演練</span></div>
-        <div class="timeline-item"><span class="ti-date">10/22</span><span class="ti-text">流感疫苗</span></div>
-        <div class="timeline-item"><span class="ti-date">11/7-8</span><span class="ti-text">期中評量</span></div>
-        <div class="timeline-item"><span class="ti-date">11/14</span><span class="ti-text">戶外教育</span></div>
-        <div class="timeline-item"><span class="ti-date">11/29</span><span class="ti-text">學藝競賽</span></div>
-        <div class="timeline-item"><span class="ti-date">12/21</span><span class="ti-text">校慶運動會</span></div>
-        <div class="timeline-item"><span class="ti-date">1/14-15</span><span class="ti-text">期末評量</span></div>
-        <div class="timeline-item"><span class="ti-date">1/20</span><span class="ti-text">休業式</span></div>
-        <div class="timeline-item"><span class="ti-date">2/5</span><span class="ti-text">開學日</span></div>
+    <!-- 6. ??銵?????皛?頛芣 -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
+      <h2>?砍飛?飛?⊿?閬?鈭?/h2>
+      <div class="carousel-wrap">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <div class="cs-icon">?儭?/div>
+            <h3>9?????脩瞍毀</h3>
+            <p>9 ??20 ?仿脰??冽?脩瞍毀嚗??飛???交?霈??/p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??</div>
+            <h3>10????瘚??怨?</h3>
+            <p>10 ??22 ?亙??????蝔殷?隢振?瑕‵撖怠????/p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??</div>
+            <h3>11?????葉閰?</h3>
+            <p>11 ??7-8 ?亥?銵?銝剛???隢??拙酋摮??拇???/p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??</div>
+            <h3>11?????嗅??</h3>
+            <p>11 ??14 ?亥?颲行憭?摮賂??賊??撠銵?整?/p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">?</div>
+            <h3>11????摮貉?蝡嗉魚</h3>
+            <p>11 ??29 ?亥?銵?批飛?奎鞈踝?曌摮拙?撅???/p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??儭?/div>
+            <h3>12?????⊥????/h3>
+            <p>12 ??21 ?亥?颲行?園???嚗迭餈振?瑁葩頨???</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??</div>
+            <h3>1?????閰?</h3>
+            <p>1 ??14-15 ?亥?銵??怨????箏飛?飛蝧銝暺?/p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??</div>
+            <h3>1????隡平撘?/h3>
+            <p>1 ??20 ?亥?銵?璆剖?嚗????亙???</p>
+          </div>
+          <div class="carousel-slide">
+            <div class="cs-icon">??</div>
+            <h3>2?????飛??/h3>
+            <p>2 ??5 ?亦銝飛??摮豢嚗?敺酋摮??唳??</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-arrow" id="carouselPrev">??/button>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-arrow" id="carouselNext">??/button>
       </div>
     </section>
 
-    <!-- 7. 班級目標 -->
-    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)">
-      <h2>二、本班班級目標</h2>
+    <!-- 7. ?剔??格? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%)">
+      <h2>鈭?剔蝝璅?/h2>
       <div class="cloud-grid">
-        <div class="cloud-item">☀️ 善行</div>
-        <div class="cloud-item">🙏 感恩</div>
-        <div class="cloud-item">💖 惜福</div>
-        <div class="cloud-item">🧹 習勞</div>
-        <div class="cloud-item">🏃 健康</div>
-        <div class="cloud-item">✨ 正向</div>
-        <div class="cloud-item">🤝 合作</div>
-        <div class="cloud-item">📚 精進</div>
+        <div class="cloud-item">?儭???</div>
+        <div class="cloud-item">?? ?</div>
+        <div class="cloud-item">?? ??</div>
+        <div class="cloud-item">?完 蝧?</div>
+        <div class="cloud-item">?? ?亙熒</div>
+        <div class="cloud-item">??甇??</div>
+        <div class="cloud-item">?? ??</div>
+        <div class="cloud-item">?? 蝎暸?/div>
       </div>
     </section>
 
-    <!-- 8. 課程安排(1) 作業 -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
-      <h2>三、經營方式：課程安排 (1)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">作業</h3>
+    <!-- 8. 隤脩?摰?(1) 雿平 -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
+      <h2>銝??撘?隤脩?摰? (1)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">雿平</h3>
       <div class="grid-2col">
         <div class="card">
-          <h3>📖 國語</h3>
+          <h3>?? ??</h3>
           <ul>
-            <li>預習單</li>
-            <li>生字本</li>
-            <li>圈詞本</li>
-            <li>國語習作</li>
-            <li>寫作練習</li>
+            <li>????/li>
+            <li>????/li>
+            <li>????/li>
+            <li>??蝧?</li>
+            <li>撖思?蝺渡?</li>
           </ul>
         </div>
         <div class="card">
-          <h3>🔢 數學</h3>
+          <h3>? ?詨飛</h3>
           <ul>
-            <li>數學習作</li>
-            <li>重點複習</li>
-            <li>作業本</li>
+            <li>?詨飛蝧?</li>
+            <li>??銴?</li>
+            <li>雿平??/li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 9. 課程安排(2) 評量方式 -->
-    <section data-background-gradient="linear-gradient(135deg, #16213e 0%, #0d1117 100%)">
-      <h2>三、經營方式：課程安排 (2)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">評量方式</h3>
+    <!-- 9. 隤脩?摰?(2) 閰??孵? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
+      <h2>銝??撘?隤脩?摰? (2)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">閰??孵?</h3>
       <div class="table-wrap">
         <table>
-          <tr><th>國語評量</th><th>數學評量</th></tr>
-          <tr><td>聽寫</td><td>隨堂考</td></tr>
-          <tr><td>每課練習卷</td><td>單元卷</td></tr>
-          <tr><td>考前複習卷</td><td>考前複習卷</td></tr>
+          <tr><th>??閰?</th><th>?詨飛閰?</th></tr>
+          <tr><td>?賢神</td><td>?典???/td></tr>
+          <tr><td>瘥玨蝺渡???/td><td>?桀???/td></tr>
+          <tr><td>??銴???/td><td>??銴???/td></tr>
         </table>
       </div>
     </section>
 
-    <!-- 10. 成績計算 -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
-      <h2>三、經營方式：課程安排 (3)</h2>
-      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">成績計算</h3>
+    <!-- 10. ?蜀閮? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
+      <h2>銝??撘?隤脩?摰? (3)</h2>
+      <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">?蜀閮?</h3>
       <div class="grade-box">
         <div class="g-num">50%</div>
-        <div class="g-label">平時成績</div>
-        <div style="font-size:0.35em;color:#888;margin-top:2px;">（包含作業繳交與學習態度）</div>
+        <div class="g-label">撟單??蜀</div>
+        <div style="font-size:0.35em;color:#888;margin-top:2px;">嚗??思?璆剔像鈭方?摮貊??漲嚗?/div>
         <div class="g-divider"></div>
         <div class="g-num">50%</div>
-        <div class="g-label">期中、期末考成績</div>
-        <div class="g-sub">（依據學校規定之比例計算）</div>
+        <div class="g-label">?葉???怨?蝮?/div>
+        <div class="g-sub">嚗??飛?∟?摰?瘥?閮?嚗?/div>
       </div>
     </section>
 
-    <!-- 11. 班級特色 -->
-    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%)">
-      <h2>三、經營方式：班級特色</h2>
+    <!-- 11. ?剔??寡 -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
+      <h2>銝??撘??剔??寡</h2>
       <div class="pillar-grid">
         <div class="pillar">
-          <div class="p-icon">📖</div>
-          <h3>閱讀</h3>
+          <div class="p-icon">??</div>
+          <h3>?梯?</h3>
           <ul>
-            <li>晨讀時間</li>
-            <li>布可星球書籍輪閱</li>
-            <li>雲水書車</li>
+            <li>?刻???</li>
+            <li>撣???貊?頛芷</li>
+            <li>?脫偌?貉?</li>
           </ul>
         </div>
         <div class="pillar">
-          <div class="p-icon">📜</div>
-          <h3>讀經</h3>
+          <div class="p-icon">??</div>
+          <h3>霈蝬?/h3>
           <ul>
-            <li>古今背書方法</li>
-            <li>部首表</li>
-            <li>弟子規</li>
+            <li>?支???寞?</li>
+            <li>?券?銵?/li>
+            <li>撘?閬?/li>
           </ul>
         </div>
         <div class="pillar">
-          <div class="p-icon">🏃</div>
-          <h3>運動</h3>
+          <div class="p-icon">??</div>
+          <h3>??</h3>
           <ul>
-            <li>晨光跑步</li>
-            <li>跳繩活動</li>
+            <li>?典?頝郊</li>
+            <li>頝喟鼎瘣餃?</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 12. 家長配合(一) -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #16213e 100%)">
-      <h2>家長配合協助事項 (一)</h2>
+    <!-- 12. 摰園皜祇?憿?-->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg3) 100%)">
+      <h2>?? 撠葫撽??其?閫??撠?</h2>
+      <p class="quiz-question" id="quizQuestion">隞乩?雿??胯?剔??剔??格?嚗?/p>
+      <div class="quiz-options" id="quizOptions">
+        <button class="quiz-btn" data-index="0"><span class="q-letter">A</span> ?</button>
+        <button class="quiz-btn" data-index="1"><span class="q-letter">B</span> ??</button>
+        <button class="quiz-btn" data-index="2"><span class="q-letter">C</span> 蝡嗥</button>
+        <button class="quiz-btn" data-index="3"><span class="q-letter">D</span> ??</button>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </section>
+
+    <!-- 13. 摰園??(銝) -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg3) 100%)">
+      <h2>摰園???鈭? (銝)</h2>
       <div class="action-list">
         <div class="action-item">
           <div class="action-num">1</div>
           <div class="action-content">
-            <h3>培養孩子自理能力</h3>
-            <p>請協助引導準時上學、吃早餐、整理書包、定期剪指甲。</p>
+            <h3>?寥?摮拙??芰??賢?</h3>
+            <p>隢??拙?撠???摮詻??拚?????????/p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">2</div>
           <div class="action-content">
-            <h3>聯絡簿及功課每日簽名</h3>
-            <p>藉此掌握孩子每日的學習狀況。</p>
+            <h3>?舐窗蝪踹??玨瘥蝪賢?</h3>
+            <p>?迨?摮拙?瘥?飛蝧?瘜?/p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">3</div>
           <div class="action-content">
-            <h3>協助督促作業訂正</h3>
-            <p>確實訂正能幫助孩子真正吸收知識。</p>
+            <h3>????雿平閮迤</h3>
+            <p>蝣箏祕閮迤?賢鼠?拙酋摮?甇??嗥霅?/p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 13. 家長配合(二) -->
-    <section data-background-gradient="linear-gradient(135deg, #16213e 0%, #0d1117 100%)">
-      <h2>家長配合協助事項 (二)</h2>
+    <!-- 14. ???∠?嚗?閬扳?摨?-->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
+      <h2>?? ????嚗振?瑞??芸?隞餃?</h2>
+      <p style="font-size:0.38em;color:var(--text2);margin-bottom:0.2em;">??∠?嚗??箸隤????扛撣怠?雿???/p>
+      <div class="drag-area" id="dragArea">
+        <div class="drag-card" draggable="true" data-answer="3">
+          <span class="drag-handle">??/span>
+          <span class="drag-order">1</span>
+          <span>?寥?摮拙??芰??賢?</span>
+        </div>
+        <div class="drag-card" draggable="true" data-answer="1">
+          <span class="drag-handle">??/span>
+          <span class="drag-order">2</span>
+          <span>?舐窗蝪踵??亦偷??/span>
+        </div>
+        <div class="drag-card" draggable="true" data-answer="2">
+          <span class="drag-handle">??/span>
+          <span class="drag-order">3</span>
+          <span>???雿平閮迤</span>
+        </div>
+        <div class="drag-card" draggable="true" data-answer="4">
+          <span class="drag-handle">??/span>
+          <span class="drag-order">4</span>
+          <span>靽?閬芸葦皞?/span>
+        </div>
+      </div>
+      <button class="drag-check-btn" id="dragCheckBtn">??蝣箄???</button>
+      <div class="drag-feedback" id="dragFeedback"></div>
+    </section>
+
+    <!-- 15. 摰園??(鈭? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
+      <h2>摰園???鈭? (鈭?</h2>
       <div class="action-list">
         <div class="action-item">
           <div class="action-num">4</div>
           <div class="action-content">
-            <h3>單純的學習環境</h3>
-            <p>勿攜帶零食、玩具及教學無關物品到校。</p>
+            <h3>?桃??飛蝧憓?/h3>
+            <p>?踵?撣園憌?瑕??飛?⊿??拙??唳??/p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">5</div>
           <div class="action-content">
-            <h3>請假請主動聯繫</h3>
-            <p>為了孩子安全，請假請務必通知（可透過 Line 聯繫）。</p>
+            <h3>隢?隢蜓?蝜?/h3>
+            <p>?箔?摮拙?摰嚗??????嚗?? Line ?舐鼠嚗?/p>
           </div>
         </div>
         <div class="action-item">
           <div class="action-num">6</div>
           <div class="action-content">
-            <h3>隨時保持溝通</h3>
-            <p>有任何狀況請隨時與導師聯繫，親師合作最重要！</p>
+            <h3>?冽?靽?皞?/h3>
+            <p>?遙雿?瘜??冽???撣怨蝜恬?閬芸葦?????嚗?/p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 14. 親師聯絡方式 -->
-    <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #1a1a2e 100%)">
-      <h2>親師聯絡方式</h2>
+    <!-- 16. 閬芸葦?舐窗?孵? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
+      <h2>閬芸葦?舐窗?孵?</h2>
       <div class="contact-card">
         <div class="contact-item">
-          <span class="c-icon">📱</span>
-          <span><span class="c-label">手機</span> 0972-862870</span>
+          <span class="c-icon">?</span>
+          <span><span class="c-label">??</span> 0972-862870</span>
         </div>
         <div class="contact-item">
-          <span class="c-icon">☎️</span>
-          <span><span class="c-label">學校</span> 06-7222227</span>
+          <span class="c-icon">??</span>
+          <span><span class="c-label">摮豢</span> 06-7222227</span>
         </div>
         <div class="contact-item">
-          <span class="c-icon">💬</span>
-          <span><span class="c-label">LINE@</span> 請掃描加入班級群組</span>
+          <span class="c-icon">?</span>
+          <span><span class="c-label">LINE@</span> 隢????亦蝝黎蝯?/span>
         </div>
       </div>
     </section>
 
-    <!-- 15. 感謝聆聽 -->
-    <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #0d1117 100%)">
+    <!-- 17. 皜祇?憿?2嚗??撘?-->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%)">
+      <h2>?? 撠葫撽??蜀閮?</h2>
+      <p class="quiz-question" id="quizQuestion2">?砍飛??銝剜??怨??蜀??撠?靘?</p>
+      <div class="quiz-options" id="quizOptions2">
+        <button class="quiz-btn" data-index="0"><span class="q-letter">A</span> 30%</button>
+        <button class="quiz-btn" data-index="1"><span class="q-letter">B</span> 40%</button>
+        <button class="quiz-btn" data-index="2"><span class="q-letter">C</span> 50%</button>
+        <button class="quiz-btn" data-index="3"><span class="q-letter">D</span> 60%</button>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback2"></div>
+    </section>
+
+    <!-- 18. ??? -->
+    <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
       <div class="end-slide">
-        <div class="big-emoji">🎉</div>
-        <h1 style="color:var(--accent2);">感謝聆聽</h1>
-        <p class="tagline">期待與您攜手，陪伴孩子快樂成長！</p>
-        <div style="font-size:2em;margin-top:0.5em;opacity:0.5;">🌟🌈👨‍👩‍👧‍👦</div>
+        <div class="big-emoji">??</div>
+        <h1 style="color:var(--accent2);">???</h1>
+        <p class="tagline">?????嚗隡游酋摮翰璅??瘀?</p>
+        <div style="font-size:2em;margin-top:0.5em;opacity:0.5;">???????抽?把??/div>
       </div>
     </section>
 
@@ -519,13 +753,176 @@
     center: true,
     progress: true,
     controls: true,
+    mouseWheel: true,
     slideNumber: 'c/t',
     plugins: []
   });
 </script>
 
-<!-- 文字雲：Firebase Firestore 即時同步，掃 QR Code 即可參與 -->
 <script>
+// === 銝駁??? ===
+(function() {
+  const dots = document.querySelectorAll('.theme-dot');
+  const revealEl = document.querySelector('.reveal');
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      dots.forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+      const theme = dot.dataset.theme;
+      revealEl.className = 'reveal' + (theme === 'default' ? '' : ' theme-' + theme);
+    });
+  });
+})();
+
+// === 頛芣 ===
+(function() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+  const slides = track.querySelectorAll('.carousel-slide');
+  const dotsContainer = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  let current = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(index) {
+    current = index;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    goTo(current);
+  });
+  nextBtn.addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    goTo(current);
+  });
+})();
+
+// === 皜祇?憿?1 ===
+(function() {
+  const container = document.getElementById('quizOptions');
+  const feedback = document.getElementById('quizFeedback');
+  if (!container) return;
+  const btns = container.querySelectorAll('.quiz-btn');
+  const correctIndex = 2;
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btns.forEach(b => { b.disabled = true; });
+      const idx = parseInt(btn.dataset.index);
+      btn.classList.add(idx === correctIndex ? 'correct' : 'wrong');
+      if (idx !== correctIndex) btns[correctIndex].classList.add('reveal-answer');
+      feedback.textContent = idx === correctIndex
+        ? '??蝑?鈭??祉?格??舀??押?銵?蝳??摨瑯迤??雿移??
+        : '????喇?蝡嗥???胯?剔??格???;
+      feedback.className = 'quiz-feedback ' + (idx === correctIndex ? 'correct' : 'wrong');
+    });
+  });
+})();
+
+// === 皜祇?憿?2 ===
+(function() {
+  const container = document.getElementById('quizOptions2');
+  const feedback = document.getElementById('quizFeedback2');
+  if (!container) return;
+  const btns = container.querySelectorAll('.quiz-btn');
+  const correctIndex = 2;
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btns.forEach(b => { b.disabled = true; });
+      const idx = parseInt(btn.dataset.index);
+      btn.classList.add(idx === correctIndex ? 'correct' : 'wrong');
+      if (idx !== correctIndex) btns[correctIndex].classList.add('reveal-answer');
+      feedback.textContent = idx === correctIndex
+        ? '??蝑?鈭??葉???撟單??蜀?? 50%'
+        : '??蝑???50%嚗?撟單??蜀??銝??;
+      feedback.className = 'quiz-feedback ' + (idx === correctIndex ? 'correct' : 'wrong');
+    });
+  });
+})();
+
+// === ???∠??? ===
+(function() {
+  const area = document.getElementById('dragArea');
+  const checkBtn = document.getElementById('dragCheckBtn');
+  const feedback = document.getElementById('dragFeedback');
+  if (!area) return;
+
+  let dragSrc = null;
+
+  area.querySelectorAll('.drag-card').forEach(card => {
+    card.addEventListener('dragstart', e => {
+      dragSrc = card;
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    card.addEventListener('dragover', e => {
+      e.preventDefault();
+      card.classList.add('drag-over');
+    });
+    card.addEventListener('dragleave', () => {
+      card.classList.remove('drag-over');
+    });
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      card.classList.remove('drag-over');
+      if (dragSrc && dragSrc !== card) {
+        const children = Array.from(area.children);
+        const srcIdx = children.indexOf(dragSrc);
+        const tgtIdx = children.indexOf(card);
+        if (srcIdx < tgtIdx) {
+          area.insertBefore(dragSrc, card.nextSibling);
+        } else {
+          area.insertBefore(dragSrc, card);
+        }
+        updateOrders();
+      }
+    });
+    card.addEventListener('dragend', () => {
+      area.querySelectorAll('.drag-card').forEach(c => c.classList.remove('drag-over'));
+    });
+  });
+
+  function updateOrders() {
+    area.querySelectorAll('.drag-card').forEach((card, i) => {
+      card.querySelector('.drag-order').textContent = i + 1;
+    });
+  }
+
+  checkBtn.addEventListener('click', () => {
+    const cards = area.querySelectorAll('.drag-card');
+    const correctOrder = ['3', '1', '2', '4'];
+    let allCorrect = true;
+    cards.forEach((card, i) => {
+      card.classList.remove('drag-correct', 'drag-wrong');
+      if (card.dataset.answer === correctOrder[i]) {
+        card.classList.add('drag-correct');
+      } else {
+        card.classList.add('drag-wrong');
+        allCorrect = false;
+      }
+    });
+    feedback.textContent = allCorrect
+      ? '??憭芣?鈭??閬芸葦????????摨?'
+      : '? 撱箄降??嚗??芰??賢? ?∟蝯∠倏蝪賢? ?Ｖ?璆剛?甇????????;
+    feedback.style.color = allCorrect ? 'var(--success)' : '#ffb74d';
+  });
+})();
+
+// === ???莎?Firebase Firestore ?單??郊 ===
 const firebaseConfig = {
   apiKey: "AIzaSyCJlbk8bKzgBJ7evlZZlhtatgjPsQsVZR8",
   authDomain: "word-cloud-6e807.firebaseapp.com",
@@ -548,7 +945,7 @@ function renderWC() {
     `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
       <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
     </div>`
-  ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+  ).join('') || '<div style="color:#555;padding:8px 0;">撠鞈?</div>';
   document.getElementById('wc-empty').style.display = wcData.length > 0 ? 'none' : '';
   const canvas = document.getElementById('wc-canvas');
   if (!canvas || typeof WordCloud === 'undefined') return;
@@ -604,8 +1001,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const qrEl = document.getElementById('qrcode');
   if (window.location.protocol === 'file:') {
-    qrEl.innerHTML = '<div style="font-size:0.7em;color:#888;text-align:center;line-height:1.5;">📱<br>部署後<br>自動啟用</div>';
-    document.getElementById('qr-hint').textContent = '部署至 GitHub Pages 後即可掃描';
+    qrEl.innerHTML = '<div style="font-size:0.7em;color:#888;text-align:center;line-height:1.5;">?<br>?函蔡敺?br>?芸??</div>';
+    document.getElementById('qr-hint').textContent = '?函蔡??GitHub Pages 敺?舀???;
   } else if (typeof QRCode !== 'undefined') {
     var submitUrl = window.location.origin + window.location.pathname.replace(/index\.html$/, '') + 'submit.html';
     new QRCode(qrEl, { text: submitUrl, width: 140, height: 140, colorDark: '#0d1117', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
