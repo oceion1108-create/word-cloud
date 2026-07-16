@@ -3,50 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>即時文字雲</title>
+<title>親師心語 — 文字雲</title>
 <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.0.2/wordcloud2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-h1 { color: #1a365d; margin: 20px 0 10px; font-size: 2rem; }
-.subtitle { color: #4a5568; margin-bottom: 20px; }
-.submit-area { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; align-items: center; }
-input[type="text"] { padding: 12px 20px; font-size: 1.1rem; border: 2px solid #e2e8f0; border-radius: 10px; width: 250px; outline: none; transition: border-color 0.2s; }
-input[type="text"]:focus { border-color: #4299e1; }
-button { padding: 12px 28px; font-size: 1.1rem; background: #4299e1; color: #fff; border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; font-weight: 600; }
-button:hover { background: #3182ce; }
-button:active { transform: scale(0.98); }
-.word-count { color: #718096; font-size: 0.95rem; margin-bottom: 10px; }
-#wordcloud-canvas { width: 100%; max-width: 900px; height: 600px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-.status { margin-top: 12px; color: #48bb78; font-size: 0.9rem; min-height: 1.4em; }
-.clear-btn { background: #fc8181; margin-left: 10px; }
-.clear-btn:hover { background: #f56565; }
-.cloud-area { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 1020px; }
-#wordcloud-canvas { width: 100%; max-width: 900px; height: 600px; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.08); flex: 1; min-width: 300px; }
-#qrcode { padding: 4px; background: #fff; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); line-height: 0; }
+body {
+  font-family: 'Segoe UI', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  background: linear-gradient(135deg, #0d1117 0%, #1a1a2e 50%, #16213e 100%);
+  min-height: 100vh; color: #eee; padding: 30px 20px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.container { width: 100%; max-width: 1100px; }
+.header { text-align: center; margin-bottom: 28px; }
+.header h1 { font-size: 1.8rem; color: #4fc3f7; margin-bottom: 8px; letter-spacing: 0.04em; }
+.header .subtitle { font-size: 0.95rem; color: #aaa; line-height: 1.7; max-width: 600px; margin: 0 auto; }
+.header .subtitle em { color: #e8643a; font-style: normal; font-weight: 600; }
+.main-area {
+  display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; justify-content: center;
+}
+.left-panel {
+  flex: 0 0 260px; display: flex; flex-direction: column; gap: 16px;
+}
+.input-card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px; padding: 18px;
+}
+.input-card label {
+  font-size: 0.8rem; color: #4fc3f7; font-weight: 700; display: block; margin-bottom: 10px;
+}
+.input-card input {
+  width: 100%; padding: 10px 14px; border-radius: 10px;
+  border: 1px solid rgba(79,195,247,0.25);
+  background: rgba(255,255,255,0.08); color: #fff; font-size: 14px;
+  outline: none; font-family: inherit; transition: border-color 0.2s;
+}
+.input-card input:focus { border-color: #4fc3f7; }
+.input-card input::placeholder { color: #666; }
+.input-card .btn-row { display: flex; gap: 8px; margin-top: 10px; }
+.input-card .btn-row button {
+  flex: 1; padding: 10px; border: none; border-radius: 10px;
+  font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit;
+  transition: opacity 0.2s;
+}
+.input-card .btn-row .submit-btn { background: #4fc3f7; color: #0d1117; }
+.input-card .btn-row .submit-btn:hover { opacity: 0.85; }
+.input-card .btn-row .clear-btn { background: rgba(239,83,80,0.2); color: #ef5350; }
+.input-card .btn-row .clear-btn:hover { background: rgba(239,83,80,0.35); }
+.quick-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick-tag {
+  padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06); color: #ccc; font-size: 0.8rem;
+  cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap;
+}
+.quick-tag:hover { border-color: #4fc3f7; background: rgba(79,195,247,0.12); color: #fff; }
+.rank-card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px; padding: 16px; flex: 1;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.rank-card .rank-header {
+  font-size: 0.8rem; color: #4fc3f7; font-weight: 700; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.rank-card .rank-header .live {
+  display: inline-block; background: #ff4757; color: #fff;
+  padding: 2px 8px; border-radius: 10px; font-size: 0.7em;
+  animation: pulse 1.5s infinite;
+}
+.rank-card .rank-list { font-size: 0.75rem; overflow-y: auto; flex: 1; color: #bbb; }
+.rank-card .rank-list .rank-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.rank-card .rank-list .rank-item .r-word { color: #eee; }
+.rank-card .rank-list .rank-item .r-count { color: #e8643a; font-weight: 700; font-size: 0.85em; }
+.rank-card .rank-footer {
+  margin-top: 10px; font-size: 0.7rem; color: #666;
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; text-align: center;
+}
+.rank-card .rank-footer span { font-weight: 700; }
+.canvas-wrap {
+  flex: 1; min-width: 300px; max-width: 650px;
+  background: rgba(255,255,255,0.04); border-radius: 16px; overflow: hidden;
+  position: relative; border: 1px solid rgba(255,255,255,0.07); height: 520px;
+}
+#wordcloud-canvas { width: 100%; height: 100%; display: block; }
+.empty-hint {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  color: #444; font-size: 0.9rem; text-align: center; pointer-events: none; line-height: 2;
+}
+.status { text-align: center; margin-top: 16px; font-size: 0.85rem; min-height: 1.4em; }
+.status.success { color: #81c784; }
+.status.error { color: #ef5350; }
+.qr-area {
+  display: flex; justify-content: center; margin-bottom: 12px;
+}
+#qrcode { background: #fff; border-radius: 10px; padding: 8px; line-height: 0; }
 #qrcode img, #qrcode canvas { display: block; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@media (max-width: 768px) {
+  .left-panel { flex: 1 1 100%; }
+  .canvas-wrap { min-width: 100%; height: 360px; }
+  .header h1 { font-size: 1.3rem; }
+}
 </style>
 </head>
 <body>
-<h1>即時文字雲</h1>
-<p class="subtitle">輸入文字，所有人的回應會即時顯示在雲端</p>
+<div class="container">
+  <div class="header">
+    <h1>親師心語：凝聚對孩子的期望文字雲</h1>
+    <p class="subtitle">
+      寫下您對孩子本學期的期望（例如：平安健康、主動積極、交到朋友），
+      詞彙將即時飛入中心的<em>文字雲</em>中。
+      字詞重複率越高，字體會變得越大、越<em>閃耀</em>！
+    </p>
+  </div>
 
-<div class="submit-area">
-  <div id="qrcode"></div>
-  <input type="text" id="wordInput" placeholder="輸入你想說的話…" maxlength="30">
-  <button id="submitBtn">送出</button>
-  <button id="clearBtn" class="clear-btn">清除全部</button>
+  <div class="qr-area"><div id="qrcode"></div></div>
+
+  <div class="main-area">
+    <div class="left-panel">
+      <div class="input-card">
+        <label>✏️ 寫下您的期望</label>
+        <input type="text" id="wordInput" placeholder="例如：平安健康…" maxlength="20">
+        <div class="btn-row">
+          <button class="submit-btn" id="submitBtn">送出</button>
+          <button class="clear-btn" id="clearBtn">清除全部</button>
+        </div>
+      </div>
+      <div class="quick-tags">
+        <span class="quick-tag" data-word="健康成長">健康成長 🏃‍♂️</span>
+        <span class="quick-tag" data-word="知書達禮">知書達禮 📖</span>
+        <span class="quick-tag" data-word="勇敢自信">勇敢自信 ✨</span>
+        <span class="quick-tag" data-word="交到朋友">交到朋友 🤝</span>
+      </div>
+      <div class="rank-card">
+        <div class="rank-header">📊 熱門排行 <span class="live">LIVE</span></div>
+        <div class="rank-list" id="rankList"></div>
+        <div class="rank-footer">
+          共 <span id="totalCount">0</span> 筆 · <span id="uniqueCount">0</span> 個不重複詞
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <canvas id="wordcloud-canvas"></canvas>
+      <div class="empty-hint" id="emptyHint">
+        寫下第一個期望<br>文字雲將為您綻放 ✨
+      </div>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
 </div>
-
-<p class="word-count" id="wordCount">目前 0 筆</p>
-<div class="cloud-area">
-  <canvas id="wordcloud-canvas"></canvas>
-
-</div>
-<p class="status" id="status"></p>
 
 <script>
 const firebaseConfig = {
@@ -56,20 +168,26 @@ const firebaseConfig = {
   storageBucket: "word-cloud-6e807.firebasestorage.app",
   appId: "1:584148582276:web:ff042e07f80583fe6a67d1"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const COLLECTION = 'wordcloud_words';
+const COLORS = ['#4fc3f7','#e8643a','#81c784','#ffb74d','#ce93d8','#f48fb1','#80deea','#aed581'];
+
 const canvas = document.getElementById('wordcloud-canvas');
 const wordInput = document.getElementById('wordInput');
 const submitBtn = document.getElementById('submitBtn');
 const clearBtn = document.getElementById('clearBtn');
 const statusEl = document.getElementById('status');
-const wordCountEl = document.getElementById('wordCount');
+const rankList = document.getElementById('rankList');
+const totalCount = document.getElementById('totalCount');
+const uniqueCount = document.getElementById('uniqueCount');
+const emptyHint = document.getElementById('emptyHint');
+
+let freqData = {};
 
 function setStatus(msg, isError) {
   statusEl.textContent = msg;
-  statusEl.style.color = isError ? '#fc8181' : '#48bb78';
+  statusEl.className = 'status ' + (isError ? 'error' : 'success');
 }
 
 function resizeCanvas() {
@@ -80,52 +198,66 @@ function resizeCanvas() {
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 }
 
-function renderWordCloud(words) {
+function renderWordCloud() {
   resizeCanvas();
   const rect = canvas.getBoundingClientRect();
-  const list = words.map(w => [w.word, w.count]);
+  const entries = Object.entries(freqData);
+  const list = entries.map(([w, c]) => [w, c]);
+
+  if (list.length === 0) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    emptyHint.style.display = '';
+    return;
+  }
+  emptyHint.style.display = 'none';
+
   try {
-    if (list.length === 0) {
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, rect.width, rect.height);
-      ctx.fillStyle = '#a0aec0';
-      ctx.font = '20px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('還沒有文字，快來輸入第一個吧！', rect.width / 2, rect.height / 2);
-      return;
-    }
+    const maxCount = list[0][1];
     WordCloud(canvas, {
       list: list,
       gridSize: Math.round(16 * rect.width / 800),
-      weightFactor: function (w) { return Math.pow(w, 0.6) * (rect.width / 20); },
-      fontFamily: 'Segoe UI, Arial, sans-serif',
-      color: function () {
-        const colors = ['#4299e1','#48bb78','#ed8936','#9f7aea','#fc8181','#f6ad55','#68d391','#a3bffa'];
-        return colors[Math.floor(Math.random() * colors.length)];
-      },
-      rotateRatio: 0.3,
+      weightFactor: w => Math.pow(w / maxCount, 0.6) * (rect.width / 8),
+      fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      rotateRatio: 0.2,
       shuffle: true,
       shape: 'circle',
       ellipticity: 0.65,
       weightMode: 'size',
       clearCanvas: true,
-      backgroundColor: '#ffffff'
+      backgroundColor: 'transparent'
     });
-  } catch (e) {
-    console.error(e);
+  } catch (e) { console.error(e); }
+}
+
+function updateRank() {
+  const entries = Object.entries(freqData).sort((a, b) => b[1] - a[1]);
+  const total = entries.reduce((s, [,c]) => s + c, 0);
+  totalCount.textContent = total;
+  uniqueCount.textContent = entries.length;
+
+  if (entries.length === 0) {
+    rankList.innerHTML = '<div style="color:#555;padding:12px 0;text-align:center;font-size:0.8rem;">還沒有資料</div>';
+    return;
   }
+
+  rankList.innerHTML = entries.slice(0, 15).map(([word, count], i) =>
+    `<div class="rank-item">
+      <span class="r-word">${i + 1}. ${word}</span>
+      <span class="r-count">${count}</span>
+    </div>`
+  ).join('');
 }
 
 function processWords(docs) {
-  const freq = {};
+  freqData = {};
   docs.forEach(doc => {
     const word = (doc.data().word || '').trim();
-    if (word) freq[word] = (freq[word] || 0) + 1;
+    if (word) freqData[word] = (freqData[word] || 0) + 1;
   });
-  const list = Object.entries(freq).map(([word, count]) => ({ word, count }));
-  list.sort((a, b) => b.count - a.count);
-  wordCountEl.textContent = `目前 ${docs.length} 筆，共 ${list.length} 個不重複詞`;
-  renderWordCloud(list);
+  updateRank();
+  renderWordCloud();
 }
 
 const unsubscribe = db.collection(COLLECTION).onSnapshot(snapshot => {
@@ -135,24 +267,38 @@ const unsubscribe = db.collection(COLLECTION).onSnapshot(snapshot => {
   setStatus('連線錯誤，請檢查 Firebase 設定', true);
 });
 
-submitBtn.addEventListener('click', async () => {
-  const word = wordInput.value.trim();
-  if (!word) { setStatus('請輸入文字', true); return; }
+async function submitWord(word) {
   submitBtn.disabled = true;
   try {
-    await db.collection(COLLECTION).add({ word, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    await db.collection(COLLECTION).add({
+      word,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
     wordInput.value = '';
-    setStatus('已送出！');
+    setStatus('已送出！感謝您的分享 💝');
   } catch (e) {
     setStatus('送出失敗: ' + e.message, true);
   } finally {
     submitBtn.disabled = false;
-    wordInput.focus();
+    if (document.activeElement !== wordInput) wordInput.focus();
   }
+}
+
+submitBtn.addEventListener('click', () => {
+  const word = wordInput.value.trim();
+  if (!word) { setStatus('請輸入您對孩子的期望', true); return; }
+  submitWord(word);
 });
 
 wordInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') submitBtn.click();
+});
+
+document.querySelectorAll('.quick-tag').forEach(tag => {
+  tag.addEventListener('click', () => {
+    const word = tag.dataset.word;
+    if (word) submitWord(word);
+  });
 });
 
 clearBtn.addEventListener('click', async () => {
@@ -171,18 +317,13 @@ clearBtn.addEventListener('click', async () => {
   }
 });
 
-window.addEventListener('resize', () => {
-  const docs = [];
-  db.collection(COLLECTION).get().then(sn => processWords(sn.docs));
-});
-
-wordInput.focus();
+window.addEventListener('resize', () => renderWordCloud());
 
 new QRCode(document.getElementById('qrcode'), {
   text: window.location.href,
   width: 80,
   height: 80,
-  colorDark: '#1a365d',
+  colorDark: '#0d1117',
   colorLight: '#ffffff',
   correctLevel: QRCode.CorrectLevel.H
 });
