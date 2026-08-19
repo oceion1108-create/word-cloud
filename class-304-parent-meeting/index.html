@@ -125,11 +125,22 @@
       background: var(--card-bg); border-radius: 14px;
       padding: 20px 14px; text-align: center;
       border-top: 3px solid var(--accent2);
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      cursor: default;
     }
-    .pillar .p-icon { font-size: 2em; margin-bottom: 6px; }
-    .pillar h3 { font-size: 0.55em; color: var(--accent2); margin-bottom: 10px; }
+    .pillar:hover {
+      transform: translateY(-6px) scale(1.03);
+      background: rgba(79,195,247,0.12);
+      border-top-color: var(--accent);
+      box-shadow: 0 12px 36px rgba(79,195,247,0.25);
+    }
+    .pillar .p-icon { font-size: 2.2em; margin-bottom: 6px; transition: transform 0.3s; }
+    .pillar:hover .p-icon { transform: scale(1.2); }
+    .pillar h3 { font-size: 0.7em; color: var(--accent2); margin-bottom: 10px; transition: color 0.3s; }
+    .pillar:hover h3 { color: #fff; }
     .pillar ul { list-style: none; padding: 0; margin: 0; }
-    .pillar ul li { font-size: 0.38em; padding: 3px 0; color: #bbb; }
+    .pillar ul li { font-size: 0.52em; padding: 4px 0; color: #bbb; transition: color 0.3s; }
+    .pillar:hover ul li { color: #ddd; }
     .pillar ul li::before { content: "· "; opacity: 0.5; }
     .action-list { width: 100%; max-width: 700px; margin: 0 auto; }
     .action-item {
@@ -683,7 +694,7 @@
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg1) 100%)">
       <h2>三、經營方式：班級特色</h2>
       <div class="pillar-grid">
-        <div class="pillar">
+        <div class="pillar" onmouseenter="playItemSound();vibrate(8);">
           <div class="p-icon">📖</div>
           <h3>閱讀</h3>
           <ul>
@@ -692,7 +703,7 @@
             <li>雲水書車</li>
           </ul>
         </div>
-        <div class="pillar">
+        <div class="pillar" onmouseenter="playItemSound();vibrate(8);">
           <div class="p-icon">📜</div>
           <h3>讀經</h3>
           <ul>
@@ -701,7 +712,7 @@
             <li>弟子規</li>
           </ul>
         </div>
-        <div class="pillar">
+        <div class="pillar" onmouseenter="playItemSound();vibrate(8);">
           <div class="p-icon">🏃</div>
           <h3>運動</h3>
           <ul>
