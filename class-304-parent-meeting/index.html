@@ -62,32 +62,44 @@
     .title-slide { text-align: center; }
     .title-slide .tag {
       display: inline-block; background: var(--accent); color: #fff;
-      padding: 4px 14px; border-radius: 20px; font-size: 0.55em;
+      padding: 4px 14px; border-radius: 20px; font-size: 0.65em;
       letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
     }
-    .title-slide .subtitle { font-size: 0.75em; color: var(--text2); margin-top: 0.5em; }
-    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text2); }
+    .title-slide .subtitle { font-size: 0.85em; color: var(--text2); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.6em; color: var(--text2); }
     .title-slide .emoji-deco { font-size: 4em; margin-bottom: 0.2em; }
     .stat-row { display: flex; gap: 20px; justify-content: center; margin-top: 1em; }
     .stat-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
       border-radius: 12px; padding: 20px 26px; text-align: center; flex: 1;
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px) scale(1.04);
+      border-color: var(--accent2);
+      box-shadow: 0 8px 28px rgba(79,195,247,0.2);
     }
     .stat-card .num { font-size: 1.8em; font-weight: 800; color: var(--accent); line-height: 1; }
-    .stat-card .label { font-size: 0.42em; color: var(--text2); margin-top: 6px; }
+    .stat-card .label { font-size: 0.52em; color: var(--text2); margin-top: 6px; }
     .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.6em; }
     .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 0.6em; }
     .grid-4col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-top: 0.6em; }
     .card {
       background: var(--card-bg); border-radius: 10px;
       padding: 16px; text-align: center;
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px) scale(1.03);
+      background: rgba(79,195,247,0.1);
+      box-shadow: 0 8px 28px rgba(79,195,247,0.2);
     }
     .card h3 { font-size: 0.7em; margin-bottom: 8px; }
     .card ul { list-style: none; padding: 0; margin: 0; }
     .card ul li { font-size: 0.55em; padding: 4px 0; color: #bbb; }
     .card ul li::before { content: "✦ "; opacity: 0.5; }
     .table-wrap { width: 100%; max-width: 800px; margin: 0 auto; }
-    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.72em; }
+    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
     .table-wrap th, .table-wrap td {
       padding: 16px 14px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center;
     }
@@ -97,7 +109,7 @@
       content: ''; position: absolute; left: 14px; top: 4px; bottom: 4px;
       width: 2px; background: rgba(255,255,255,0.2);
     }
-    .timeline-item { position: relative; margin-bottom: 10px; font-size: 0.42em; }
+    .timeline-item { position: relative; margin-bottom: 10px; font-size: 0.52em; }
     .timeline-item::before {
       content: ''; position: absolute; left: -28px; top: 4px;
       width: 10px; height: 10px; border-radius: 50%;
@@ -147,42 +159,63 @@
       display: flex; gap: 16px; align-items: flex-start;
       background: var(--card-bg); border-radius: 12px;
       padding: 14px 18px; margin-bottom: 12px; text-align: left;
+      transition: all 0.3s ease;
+    }
+    .action-item:hover {
+      transform: translateX(6px);
+      background: rgba(79,195,247,0.08);
+      border-left: 3px solid var(--accent);
     }
     .action-num {
       font-size: 1.2em; font-weight: 900; color: var(--accent);
       min-width: 36px; text-align: center; line-height: 1.2;
     }
     .action-content { flex: 1; }
-    .action-content h3 { font-size: 0.5em; margin-bottom: 4px; color: #eee; }
-    .action-content p { font-size: 0.38em; color: var(--text2); line-height: 1.6; margin: 0; }
+    .action-content h3 { font-size: 0.62em; margin-bottom: 4px; color: #eee; }
+    .action-content p { font-size: 0.48em; color: var(--text2); line-height: 1.6; margin: 0; }
     .contact-card {
       background: var(--card-bg); border-radius: 16px;
       padding: 24px 32px; max-width: 450px; margin: 0.6em auto 0; text-align: left;
+      transition: all 0.3s ease;
+    }
+    .contact-card:hover {
+      box-shadow: 0 8px 28px rgba(79,195,247,0.12);
     }
     .contact-item {
       display: flex; align-items: center; gap: 14px; padding: 10px 0;
-      font-size: 0.48em; color: var(--text2);
+      font-size: 0.58em; color: var(--text2);
+      transition: all 0.3s ease;
     }
+    .contact-item:hover { color: #fff; transform: translateX(6px); }
     .contact-item .c-icon { font-size: 1.4em; }
     .contact-item .c-label { font-weight: 700; color: var(--accent2); min-width: 44px; }
     .quote-box {
       background: var(--card-bg); border-left: 4px solid var(--accent);
       border-radius: 8px; padding: 20px 24px; margin: 0.8em auto;
-      font-size: 0.7em; color: #ddd; font-style: italic; line-height: 1.7;
-      max-width: 600px;
+      font-size: 0.82em; color: #ddd; font-style: italic; line-height: 1.7;
+      max-width: 600px; transition: all 0.3s ease;
+    }
+    .quote-box:hover {
+      border-left-color: var(--accent2);
+      box-shadow: 0 4px 20px rgba(79,195,247,0.15);
     }
     .end-slide { text-align: center; }
     .end-slide .big-emoji { font-size: 4em; margin-bottom: 0.3em; }
     .end-slide h1 { font-size: 2.5em; }
-    .end-slide .tagline { font-size: 0.6em; color: var(--text2); margin-top: 0.5em; }
+    .end-slide .tagline { font-size: 0.72em; color: var(--text2); margin-top: 0.5em; }
     .grade-box {
       background: var(--card-bg); border-radius: 16px;
       padding: 20px 28px; max-width: 480px; margin: 0.6em auto 0;
+      transition: all 0.3s ease;
     }
-    .grade-box .g-num { font-size: 1.6em; font-weight: 900; color: var(--accent); }
-    .grade-box .g-label { font-size: 0.42em; color: var(--text2); margin-top: 2px; }
+    .grade-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 28px rgba(79,195,247,0.15);
+    }
+    .grade-box .g-num { font-size: 1.8em; font-weight: 900; color: var(--accent); }
+    .grade-box .g-label { font-size: 0.52em; color: var(--text2); margin-top: 2px; }
     .grade-box .g-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 16px 0; }
-    .grade-box .g-sub { font-size: 0.35em; color: #888; margin-top: 4px; }
+    .grade-box .g-sub { font-size: 0.45em; color: #888; margin-top: 4px; }
     .wc-section {
       display: grid; grid-template-columns: 220px 1fr; gap: 14px; height: 420px; margin-top: 0.4em;
     }
@@ -190,7 +223,7 @@
     .wc-input-box {
       background: var(--card-bg); border-radius: 10px; padding: 14px;
     }
-    .wc-input-box label { font-size: 0.38em; color: var(--accent2); font-weight: 700; display: block; margin-bottom: 8px; }
+    .wc-input-box label { font-size: 0.48em; color: var(--accent2); font-weight: 700; display: block; margin-bottom: 8px; }
     .wc-input-box input {
       width: 100%; padding: 8px 12px; border-radius: 8px;
       border: 1px solid rgba(79,195,247,0.3);
@@ -252,11 +285,11 @@
     .theme-dot[data-theme="deepsea"] { background: linear-gradient(135deg,#0d111f,#141a2e); }
 
     /* === 測驗題 === */
-    .quiz-question { font-size: 0.65em; font-weight: 700; margin-bottom: 0.6em; color: #fff; }
+    .quiz-question { font-size: 0.78em; font-weight: 700; margin-bottom: 0.6em; color: #fff; }
     .quiz-options { display: flex; flex-direction: column; gap: 10px; max-width: 520px; margin: 0 auto; }
     .quiz-btn {
       padding: 14px 20px; border-radius: 12px; border: 2px solid var(--card-border);
-      background: var(--card-bg); color: #ddd; font-size: 0.45em;
+      background: var(--card-bg); color: #ddd; font-size: 0.55em;
       cursor: pointer; transition: all 0.25s; font-family: inherit;
       text-align: left; display: flex; align-items: center; gap: 12px;
     }
@@ -271,7 +304,7 @@
     .quiz-btn.wrong { border-color: #ef5350 !important; background: rgba(239,83,80,0.15) !important; }
     .quiz-btn.wrong .q-letter { background: #ef5350; color: #fff; }
     .quiz-btn:disabled { opacity: 0.6; cursor: default; }
-    .quiz-feedback { font-size: 0.4em; margin-top: 12px; min-height: 1.5em; font-weight: 600; }
+    .quiz-feedback { font-size: 0.5em; margin-top: 12px; min-height: 1.5em; font-weight: 600; }
     .quiz-feedback.correct { color: var(--success); }
     .quiz-feedback.wrong { color: #ef5350; }
     .quiz-btn.reveal-answer { border-color: var(--success) !important; background: rgba(129,199,132,0.1) !important; }
@@ -282,7 +315,7 @@
     }
     .drag-card {
       background: var(--card-bg); border: 2px solid var(--card-border);
-      border-radius: 10px; padding: 12px 18px; font-size: 0.42em;
+      border-radius: 10px; padding: 12px 18px; font-size: 0.52em;
       cursor: grab; transition: all 0.2s; display: flex; align-items: center; gap: 12px;
       user-select: none;
     }
@@ -526,15 +559,15 @@
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
       <h2>一、班級概況</h2>
       <div class="stat-row">
-        <div class="stat-card">
+        <div class="stat-card" onmouseenter="playItemSound();vibrate(5);">
           <div class="num">25</div>
           <div class="label">學生人數</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" onmouseenter="playItemSound();vibrate(5);">
           <div class="num">10</div>
           <div class="label">👦 男生</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card" onmouseenter="playItemSound();vibrate(5);">
           <div class="num">15</div>
           <div class="label">👧 女生</div>
         </div>
@@ -575,10 +608,10 @@
     <section data-background-gradient="linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%)">
       <h2>二、本班班級目標</h2>
       <div class="cloud-grid" style="grid-template-columns:repeat(4,1fr);">
-        <div class="cloud-item" style="font-size:0.75em;">善行感恩</div>
-        <div class="cloud-item" style="font-size:0.75em;">惜福習勞</div>
-        <div class="cloud-item" style="font-size:0.75em;">健康正向</div>
-        <div class="cloud-item" style="font-size:0.75em;">合作精進</div>
+        <div class="cloud-item" style="font-size:0.75em;" onmouseenter="playItemSound();vibrate(5);">善行感恩</div>
+        <div class="cloud-item" style="font-size:0.75em;" onmouseenter="playItemSound();vibrate(5);">惜福習勞</div>
+        <div class="cloud-item" style="font-size:0.75em;" onmouseenter="playItemSound();vibrate(5);">健康正向</div>
+        <div class="cloud-item" style="font-size:0.75em;" onmouseenter="playItemSound();vibrate(5);">合作精進</div>
       </div>
     </section>
 
@@ -587,7 +620,7 @@
       <h2>三、經營方式：課程安排 (1)</h2>
       <h3 style="font-size:0.8em;color:#888;margin-bottom:0.4em;">作業</h3>
       <div class="grid-2col">
-        <div class="card">
+        <div class="card" onmouseenter="playItemSound();vibrate(5);">
           <h3>📖 國語</h3>
           <ul>
             <li>預習單</li>
@@ -597,7 +630,7 @@
             <li>寫作練習</li>
           </ul>
         </div>
-        <div class="card">
+        <div class="card" onmouseenter="playItemSound();vibrate(5);">
           <h3>🔢 數學</h3>
           <ul>
             <li>數學習作</li>
@@ -740,21 +773,21 @@
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg3) 100%)">
       <h2>家長配合協助事項 (一)</h2>
       <div class="action-list">
-        <div class="action-item">
+        <div class="action-item" onmouseenter="playItemSound();vibrate(5);">
           <div class="action-num">1</div>
           <div class="action-content">
             <h3>培養孩子自理能力</h3>
             <p>請協助引導準時上學、吃早餐、整理書包、定期剪指甲。</p>
           </div>
         </div>
-        <div class="action-item">
+        <div class="action-item" onmouseenter="playItemSound();vibrate(5);">
           <div class="action-num">2</div>
           <div class="action-content">
             <h3>聯絡簿及功課每日簽名</h3>
             <p>藉此掌握孩子每日的學習狀況。</p>
           </div>
         </div>
-        <div class="action-item">
+        <div class="action-item" onmouseenter="playItemSound();vibrate(5);">
           <div class="action-num">3</div>
           <div class="action-content">
             <h3>協助督促作業訂正</h3>
@@ -768,21 +801,21 @@
     <section data-background-gradient="linear-gradient(135deg, var(--bg3) 0%, var(--bg1) 100%)">
       <h2>家長配合協助事項 (二)</h2>
       <div class="action-list">
-        <div class="action-item">
+        <div class="action-item" onmouseenter="playItemSound();vibrate(5);">
           <div class="action-num">4</div>
           <div class="action-content">
             <h3>單純的學習環境</h3>
             <p>勿攜帶零食、玩具及教學無關物品到校。</p>
           </div>
         </div>
-        <div class="action-item">
+        <div class="action-item" onmouseenter="playItemSound();vibrate(5);">
           <div class="action-num">5</div>
           <div class="action-content">
             <h3>請假請主動聯繫</h3>
             <p>為了孩子安全，請假請務必通知（可透過 Line 聯繫）。</p>
           </div>
         </div>
-        <div class="action-item">
+        <div class="action-item" onmouseenter="playItemSound();vibrate(5);">
           <div class="action-num">6</div>
           <div class="action-content">
             <h3>隨時保持溝通</h3>
@@ -857,15 +890,15 @@
     <section data-background-gradient="linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%)">
       <h2>親師聯絡方式</h2>
       <div class="contact-card">
-        <div class="contact-item">
+        <div class="contact-item" onmouseenter="playItemSound();vibrate(5);">
           <span class="c-icon">📱</span>
           <span><span class="c-label">手機</span> 0972-862870</span>
         </div>
-        <div class="contact-item">
+        <div class="contact-item" onmouseenter="playItemSound();vibrate(5);">
           <span class="c-icon">☎️</span>
           <span><span class="c-label">學校</span> 06-7222227</span>
         </div>
-        <div class="contact-item">
+        <div class="contact-item" onmouseenter="playItemSound();vibrate(5);">
           <span class="c-icon">💬</span>
           <span><span class="c-label">LINE@</span> 請掃描加入班級群組</span>
         </div>
