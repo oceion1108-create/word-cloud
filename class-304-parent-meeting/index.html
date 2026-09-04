@@ -383,42 +383,42 @@
     }
 
     /* 互動式時間線 */
-    .tl-wrap { max-width: 960px; margin: 0.4em auto 0; }
-    .tl-header { font-size: 0.55em; color: var(--accent2); font-weight: 700; margin-bottom: 16px; letter-spacing: 0.04em; }
-    .tl-track-wrap { position: relative; padding: 14px 0 24px; overflow-x: auto; }
+    .tl-wrap { max-width: 1080px; margin: 0.3em auto 0; }
+    .tl-header { font-size: 0.55em; color: var(--accent2); font-weight: 700; margin-bottom: 14px; letter-spacing: 0.04em; }
+    .tl-track-wrap { position: relative; padding: 16px 0 28px; overflow-x: auto; }
     .tl-line {
       position: absolute; top: 50%; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, rgba(79,195,247,0.2), rgba(79,195,247,0.6), rgba(232,100,58,0.6), rgba(232,100,58,0.2));
       transform: translateY(-50%); border-radius: 2px;
     }
-    .tl-dots { display: flex; justify-content: space-between; position: relative; min-width: 880px; gap: 6px; }
+    .tl-dots { display: flex; justify-content: space-between; position: relative; min-width: 1020px; gap: 10px; }
     .tl-dot {
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
       cursor: pointer; position: relative; z-index: 1; flex: 1;
       transition: transform 0.25s;
     }
     .tl-dot:hover { transform: translateY(-4px); }
     .tl-dot-circle {
-      width: 20px; height: 20px; border-radius: 50%;
+      width: 22px; height: 22px; border-radius: 50%;
       border: 2.5px solid; transition: all 0.3s;
     }
     .tl-dot.active .tl-dot-circle {
-      box-shadow: 0 0 14px currentColor;
-      transform: scale(1.3);
+      box-shadow: 0 0 16px currentColor;
+      transform: scale(1.35);
     }
-    .tl-dot-label { font-size: 0.45em; color: #999; white-space: nowrap; transition: color 0.3s; font-weight: 600; }
+    .tl-dot-label { font-size: 0.5em; color: #999; white-space: nowrap; transition: color 0.3s; font-weight: 600; }
     .tl-dot.active .tl-dot-label { color: #fff; font-weight: 700; }
-    .tl-dot-date { font-size: 0.38em; color: #666; white-space: nowrap; font-weight: 600; }
+    .tl-dot-date { font-size: 0.42em; color: #666; white-space: nowrap; font-weight: 600; }
     .tl-card {
-      margin-top: 10px; padding: 18px 24px;
-      background: var(--card-bg); border-radius: 12px;
+      margin-top: 12px; padding: 20px 28px;
+      background: var(--card-bg); border-radius: 14px;
       border-left: 4px solid var(--accent2);
       min-height: 60px; transition: all 0.35s ease;
       display: flex; flex-direction: column; gap: 6px;
     }
-    .tl-card .tl-card-title { font-size: 0.62em; font-weight: 700; color: #fff; }
-    .tl-card .tl-card-date { font-size: 0.48em; color: var(--accent2); font-weight: 600; }
-    .tl-card .tl-card-desc { font-size: 0.48em; color: #ccc; line-height: 1.7; }
+    .tl-card .tl-card-title { font-size: 0.72em; font-weight: 700; color: #fff; }
+    .tl-card .tl-card-date { font-size: 0.55em; color: var(--accent2); font-weight: 600; }
+    .tl-card .tl-card-desc { font-size: 0.55em; color: #ccc; line-height: 1.7; }
     .tl-card .tl-card-note {
       margin-top: 4px; font-size: 0.42em; color: var(--accent);
       display: flex; align-items: center; gap: 6px;
@@ -1435,11 +1435,11 @@ function vibrate(pattern) {
     { month: '10月', date: '10/9、10', title: '國慶日&調整放假', desc: '國慶日連假，10/9(五)、10/10(六)放假。', color: '#ef5350', note: 293.66 },
     { month: '10月', date: '10/20', title: '施打流感疫苗', desc: '全校施打流感疫苗，請留意通知單。', color: '#81c784', note: 329.63 },
     { month: '10月', date: '10/25、26', title: '光復節&調整放假', desc: '光復節連假，10/25(日)、10/26(一)放假。', color: '#ce93d8', note: 349.23 },
-    { month: '11月', date: '11/5、6', title: '期中評量', desc: '11/5(四)國語1~6課、自然一二單元、英語1~2單元+每周一句；11/6(五)數學1~4單元、社會1~3單元。', color: '#ffb74d', note: 392.00 },
+    { month: '11月', date: '11/5、6', title: '期中評量', desc: '11/5(四)～11/6(五)，各科期中評量。', color: '#ffb74d', note: 392.00 },
     { month: '11月', date: '11/24', title: '戶外教育', desc: '戶外教學日，請穿著校服並攜帶水壺。', color: '#4fc3f7', note: 440.00 },
     { month: '12月', date: '12/12、19', title: '校慶運動會', desc: '12/12(六)路跑&聖火傳遞(半天)；12/19(六)運動會(整天)。', color: '#e8643a', note: 523.25 },
     { month: '12月', date: '12/25、28', title: '行憲紀念日&補假', desc: '行憲紀念日放假及運動會補假，12/25(五)、12/28(一)放假。', color: '#ff8a65', note: 587.33 },
-    { month: '1月', date: '1/12、13', title: '期末評量', desc: '1/12(二)國語7~12課、自然三四單元、英語3~4單元+每周一句；1/13(三)數學5~9單元、社會4~5單元。', color: '#ffb74d', note: 622.25 },
+    { month: '1月', date: '1/12、13', title: '期末評量', desc: '1/12(二)～1/13(三)，各科期末評量。', color: '#ffb74d', note: 622.25 },
     { month: '1月', date: '1/20', title: '休業式', desc: '休業式，有供餐，12:00放學。', color: '#4fc3f7', note: 659.25 }
   ];
   const tlDots = document.getElementById('tlDots');
@@ -1470,7 +1470,7 @@ function vibrate(pattern) {
       const ev = EVENTS[idx];
       tlCard.innerHTML = `
         <div class="tl-card-title">${ev.title}</div>
-        <div class="tl-card-date">${ev.month} · ${ev.date}</div>
+        <div class="tl-card-date">${ev.date}</div>
         <div class="tl-card-desc">${ev.desc}</div>
         <div class="tl-card-note">♪ ${['Do','Re','Mi','Fa','So','La','Si','Do','Re'][idx]} · ${ev.note.toFixed(0)} Hz</div>
       `;
